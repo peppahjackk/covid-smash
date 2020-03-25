@@ -7,7 +7,14 @@ Vue.config.productionTip = false
 
 new Vue({
   data: {
-    COLORS: ['#ce1000', '#0b418d', '#ffca00', '#2a844a']
+    COLORS: ['#ce1000', '#0b418d', '#ffca00', '#2a844a'],
+    store: {
+      User: {
+        id: null,
+        name: null,
+        venmo: null,
+      }
+    },
   },
   render: h => h(App),
 }).$mount('#app')

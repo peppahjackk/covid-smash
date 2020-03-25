@@ -53,4 +53,78 @@ button {
       left: 0;
     }
   }
+
+  &.blue {
+    background: $blue;
+
+    &::before {
+      background-color: $blueDk;
+    }
+  }
+
+  &.red {
+    background: $red;
+
+    &::before {
+      background-color: $redDk;
+    }
+  }
+}
+
+.modal {
+  position: absolute;
+  max-width: 800px;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: $baseAccent;
+  padding: 30px 5% 50px;
+}
+
+.login-wrapper {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal-overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10,10,10,.6);
+  z-index: -1;
+  backdrop-filter: blur(4px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  width: 300px;
+  margin: auto;
+
+  input {
+    font-size: 16px;
+    margin-bottom: 1em;
+    color: $base;
+  }
+
+  button {
+    width: 200px;
+  }
+}
+
+.banner {
+  background-color: $baseAccent;
+  padding: 5px 0;
 }
