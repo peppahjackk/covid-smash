@@ -1,18 +1,56 @@
 .badge {
-  background: $green;
+  border: 5px solid $baseAccent;
+  display: inline-block;
+  width: 100px;
+  padding: 5px;
+  border-radius: $borderRadius;
+
+  p,h2 {
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    background: $green;
+    padding: 5px;
+    border-radius: 5px;
+  }
 }
 
 button {
   border: none;
-  border-radius: 5px;
+  border-radius: $borderRadius;
   outline: none;
   background: $green;
   color: $white;
   font-size: 16px;
-  padding: 5px 10px;
+  position: relative;
+  padding: 10px 20px;
 
   &.chosen {
     background: $baseAccent;
     pointer-events: none;
+  }
+
+  &::before {
+    @include psuedo;
+    top: 3px;
+    left: 3px;
+    background-color: $greenDk;
+    border-radius: 5px;
+    z-index: -1;
+  }
+
+  &:active, &.chosen {
+    transform: translate(3px, 3px);
+
+    &::before {
+      top: 0;
+      left: 0;
+    }
   }
 }

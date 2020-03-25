@@ -37,6 +37,7 @@ td {
   margin: 0;
   height: 45px;
   background: $yellow;
+  transition: width .25s ease;
 }
 
 .bar-label {

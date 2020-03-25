@@ -1,0 +1,11 @@
+.pick-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 800px;
+  margin: auto;
+
+  .badge {
+    width: 200px;
+  }
+}
