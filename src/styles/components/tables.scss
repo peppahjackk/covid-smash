@@ -1,0 +1,53 @@
+table {
+  width: 100%;
+
+  h1,h2,h3,h4,h5,p,li,div {
+    margin: 0;
+  }
+}
+
+tr {
+  height: 60px;
+  &:last-child {
+    td {
+      border-bottom: none;
+
+    }
+  }
+}
+
+td {
+  border-bottom: 1px solid $baseAccent;
+
+}
+
+.fighter-pool {
+  width: 60%;
+  background: $baseAccent;
+  padding: 3px 0;
+}
+
+.bar-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.bar-container {
+  padding: 0 5px;
+  margin: 0;
+  height: 45px;
+  background: $yellow;
+}
+
+.bar-label {
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  
+  p {
+    margin: 0;
+    padding: 8px;
+  }
+}
