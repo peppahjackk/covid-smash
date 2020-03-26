@@ -13,6 +13,9 @@ new Vue({
         id: null,
         name: null,
         venmo: null,
+      },
+      active_data: {
+        matches: [],
       }
     },
   },

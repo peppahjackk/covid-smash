@@ -4,17 +4,23 @@
       <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
       </div>
     <Dashboard></Dashboard>
+    <Admin></Admin>
     <Login v-if="!$root.store.User.name"></Login>
   </div>
 </template>
 
 <script>
+import Admin from './views/pages/Admin.vue';
 import Dashboard from './views/pages/Dashboard.vue';
 import Login from './views/components/Login';
 import uuidv4 from 'uuid/v4';
+import crud from '@/mixins/crud';
+
+import FAKE_MATCHES from './data/FAKE_matches.js';
 
 export default {
   name: 'App',
+  mixins: [crud],
   mounted: function() {
     let theUser = JSON.parse(localStorage.getItem('brosUser'));
 
@@ -27,6 +33,11 @@ export default {
     }
 
     this.$root.store.User = theUser;
+
+    this.getData_FAKE(FAKE_MATCHES).then((results)=>{
+      console.log(results);
+      this.$root.store.active_data.matches = results;
+    })
   },
   methods: {
     // TODO move this to a mixin or something
@@ -35,13 +46,12 @@ export default {
       this.$root.store.User.venmo = null;
       this.$root.store.User.id = null;
 
+      // TODO move this
       localStorage.setItem('brosUser', JSON.stringify(this.$root.store.User));
-      
-      // TODO move 
-      // location.reload();
     }
   },
   components: {
+    Admin,  
     Dashboard,
     Login
   }

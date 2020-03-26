@@ -1,5 +1,5 @@
 .badge {
-  border: 5px solid $baseAccent;
+  // border: 5px solid $baseAccent;
   display: inline-block;
   width: 100px;
   padding: 5px;
@@ -18,6 +18,21 @@
     background: $green;
     padding: 5px;
     border-radius: 5px;
+  }
+
+  &.horizontal {
+    width: auto;
+    display: flex;
+    align-items: center;
+
+    p {
+      padding-right: 8px;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-right: 8px;
+    }
   }
 }
 

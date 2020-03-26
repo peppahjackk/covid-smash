@@ -9,7 +9,7 @@
         <h2>${{ activeData.current_pool }}</h2>
       </div>
     </div>
-    <div class="pick-body-container">
+    <!-- <div class="pick-body-container">
       <table>
         <thead>
           <th>Pick</th>
@@ -40,13 +40,12 @@
           </td>
         </tr>
       </table>
-    </div>
+    </div> -->
   </div>
 </div>
 </template>
 
 <script>
-import crud from '@/mixins/crud';
 
 export default {
   data: function() {
@@ -63,7 +62,6 @@ export default {
       return total;
     }
   },
-  mixins: [crud],
   methods: {
     addBet: function() {
       console.log('add bet');
@@ -77,9 +75,7 @@ export default {
     }
   },
   created: function() {
-    this.getData_FAKE({data: [{match_id: 1, stage: 'RANDOM', fighters: '[{"name":"mario", "picks": 3},{"name":"link", "picks":1},{"name":"DK", "picks":2},{"name":"peach", "picks":5}]', in_progress: 0, pick_count: [3,2,1,0], pick_wager: 5, winning_figter:null, current_pool:30}]}).then((results)=>{
-      this.activeData = results;
-    })
+    
     // this.getActive().then((results)=>{
     //   console.log(this.activeData);
     //   this.activeData = results;

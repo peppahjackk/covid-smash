@@ -16,11 +16,15 @@ const crud = {
       })
     },
     getData_FAKE(mockData, time = 0) {
+      console.log(mockData);
       return new Promise((resolve)=> {
         setTimeout(()=> {
-          mockData.data[0].fighters = JSON.parse(mockData.data[0].fighters)
+
+          mockData.data.forEach((match)=>{
+            match.fighters = JSON.parse(match.fighters)
+          })
           
-          resolve(mockData.data[0])
+          resolve(mockData.data)
         },time)
       })
     }
