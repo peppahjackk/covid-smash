@@ -51,14 +51,16 @@ export default {
       console.log(this.$root.store);
     });
 
-    this.updateMatches();
+    this.fetchMatches();
+
+    window.setTimeout(this.fetchMatches, 5000);
     
-    this.$root.eventHub.$on("updateMatches", () => {
-      this.updateMatches();
+    this.$root.eventHub.$on("fetchMatches", () => {
+      this.fetchMatches();
     });
   },
   methods: {
-    updateMatches: function() {
+    fetchMatches: function() {
       this.getMatches().then(results => {
         console.log(results);
         this.$root.store.active_data.matches = results;

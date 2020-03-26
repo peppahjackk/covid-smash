@@ -105,7 +105,6 @@ export default {
       }
     },
     totalPicks: function() {
-      console.log(this.content);
       let total = 0;
       this.content.fighters.forEach(fighter => (total += fighter.pickers.length));
       return total;
@@ -114,8 +113,5 @@ export default {
       return this.totalPicks * this.content.pick_value;
     }
   },
-  mounted: function() {
-    console.log(this.content);
-  }
 };
 </script>

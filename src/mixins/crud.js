@@ -2,11 +2,26 @@ import axios from 'axios';
 
 const crud = {
   methods: {
+    updateMatches(data) {
+      let sqlData = data;
+      sqlData.req = 'update';
+      sqlData.table = 'matches';
+      console.log(sqlData);
+      
+      return axios.post('php/crud.php', sqlData)
+      .then((results)=>{
+        console.log(results)
+        return results;
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    },
     postMatch(data) {
       let theFighters = JSON.stringify(data.fighters);
       console.log('poist data', data, theFighters);
       return axios.post('php/crud.php', {
-        req: 'post_match',
+        req: 'insert',
         table: 'matches',
         stage: data.stage,
         fighters: theFighters,
@@ -27,8 +42,12 @@ const crud = {
       .then((results)=>{
         console.log(results.data)
         results.data.forEach((match)=>{
-          match.fighters = JSON.parse(match.fighters)
+          match.fighters = JSON.parse(match.fighters);
+          match.in_progress = parseInt(match.in_progress);
+          match.completed = parseInt(match.completed);
+          match.pick_value = parseInt(match.pick_value);
         })
+        
         return results.data;
       })
       .catch((error)=>{

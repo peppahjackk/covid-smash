@@ -60,19 +60,74 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   } else {
     echo "0 results";
   }
-} else if ($_POST["req"] === 'post_match') {
+} else if ($_POST["req"] === 'insert') {
   $stage = $_POST["stage"];
   $fighters = $_POST["fighters"];
   $pick_value = $_POST["pick_value"];
-  
+
   $sql = "INSERT INTO " . $table . " " .
-    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete) " .
-    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0 )";
+    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden) " .
+    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0 )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
   } else {
     echo 'Data logged';
+  }
+} else if ($_POST["req"] === 'update') {
+  $updateString = '';
+
+  if (isset($_POST["in_progress"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'in_progress = "' . json_encode($_POST["in_progress"]) . '"';
+  }
+
+  if (isset($_POST["complete"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'complete = ' . json_encode($_POST["complete"]);
+  }
+
+  if (isset($_POST["hidden"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'hidden = ' . json_encode($_POST["hidden"]);
+  }
+
+  if (isset($_POST["winning_fighter"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'winning_fighter = ' . json_encode($_POST["winning_fighter"]);
+  }
+
+  if (isset($_POST["winning_picker"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'winning_picker = ' . json_encode($_POST["winning_picker"]);
+  }
+
+
+  if ($errorMSG == "") {
+    $sqlSet = "UPDATE " . $table . " SET " . $updateString . $filter . $sort . $limit;
+
+    if ($conn->query($sqlSet) === FALSE) {
+      echo 'Error: ' . $sqlSet . '<br>' . $conn->error;
+    } else {
+      echo 'Settings saved';
+    }
+  } else {
+    echo $errorMSG;
   }
 }
 
