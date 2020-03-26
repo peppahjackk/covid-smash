@@ -65,6 +65,11 @@ export default {
         console.log(results);
         this.$root.store.active_data.matches = results;
       });
+
+      // this.getData_FAKE(FAKE_MATCHES).then(results => {
+      //   console.log(results);
+      //   this.$root.store.active_data.matches = results;
+      // })
     },
     // TODO move this to a mixin or something
     resetUser: function() {

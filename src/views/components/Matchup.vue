@@ -18,8 +18,9 @@
       >
         <td v-if="!admin">
           <button
-            @click="addBet();"
-            :class="[status === 'INACTIVE' ? '' : 'disabled']"
+            @click="addBet(fighter.name);"
+            :class="[status === 'INACTIVE' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '']"
+            :style="{backgroundColor: [fighter.pickers.length ? $root.COLORS[i] : '#666']}"
           >${{ content.pick_value }}</button>
         </td>
         <td v-if="admin">
@@ -67,9 +68,24 @@ export default {
     content: Object,
     fightNumber: Number
   },
+  data: function() {
+    return {
+      currentPick: ''
+    }
+  },
   methods: {
-    addBet() {
+    addBet(fighterName) {
       console.log("add bet");
+      this.currentPick = fighterName;
+
+      this.$emit('pickSelected', {
+        user_id: this.$root.store.User.id,
+        match_id: this.content.match_id,
+        name: this.$root.store.User.name,
+        pick_value: this.content.pick_value,
+        net_value: 0,
+        fighter: fighterName
+      })
     },
     calcPayout: function(picks) {
       if (picks) {

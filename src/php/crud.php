@@ -129,6 +129,24 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   } else {
     echo $errorMSG;
   }
+} else if ($_POST["req"] === 'replace') {
+  $stage = $_POST["stage"];
+  $fighter = $_POST["fighter"];
+  $name = $_POST["name"];
+  $pick_value = $_POST["pick_value"];
+  $match_id = $_POST["match_id"];
+  $user_id = $_POST["user_id"];
+  $pick_id = $_POST["pick_id"];
+
+  $sql = "REPLACE INTO " . $table . " " .
+    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter ) " .
+    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter' )";
+
+  if ($conn->query($sql) === FALSE) {
+    echo 'Error: ' . $sql . '<br>' . $conn->error;
+  } else {
+    echo 'Pick data logged';
+  }
 }
 
 exit;

@@ -53,9 +53,6 @@ export default {
         newBetsOpen = 0;
       }
 
-      console.log(this.betsOpen);
-      console.log('ip:', newBetsOpen);
-
       this.updateMatches({in_progress: newBetsOpen, filter: 'complete=0'}).then(results => {
         console.log(results);
         
