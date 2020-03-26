@@ -2,14 +2,34 @@ import axios from 'axios';
 
 const crud = {
   methods: {
-    getActive() {
+    postMatch(data) {
+      let theFighters = JSON.stringify(data.fighters);
+      console.log('poist data', data, theFighters);
       return axios.post('php/crud.php', {
-        table: 'active'
+        req: 'post_match',
+        table: 'matches',
+        stage: data.stage,
+        fighters: theFighters,
+        pick_value: data.pick_value
+      })
+      .then((results)=>{
+        console.log(results)
+        return results;
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    },
+    getMatches() {
+      return axios.post('php/crud.php', {
+        table: 'matches'
       })
       .then((results)=>{
         console.log(results.data)
-        results.data[0].fighters = JSON.parse(results.data[0].fighters)
-        return results.data[0];
+        results.data.forEach((match)=>{
+          match.fighters = JSON.parse(match.fighters)
+        })
+        return results.data;
       })
       .catch((error)=>{
         console.error(error)

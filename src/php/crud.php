@@ -11,8 +11,6 @@ if ($conn->connect_error) {
 // This houses all data passed by the javascript or communicating file
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-$input_table = $data->table;
-
 if (empty($_POST["table"])) {
   echo 'Error no table given';
 } else {
@@ -38,28 +36,46 @@ if (empty($_POST["limit"])) {
 }
 
 // Fetch All records
-if($input_table === 'matches'){
+if ($table === 'matches') {
   $table = $tableMatches;
-} else if ($input_table === 'picks') {
+} else if ($table === 'picks') {
   $table = $tablePicks;
-}
-
-$sql = "select * from " . $table . $filter . $sort . $limit;
-
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    // Add each row to an array we'll send to the front end
-    $rows[] = $row;
-  }
-
-  echo json_encode($rows);
-
 } else {
-  echo "0 results";
+  echo "ERROR: Invalid table specified" . $input_table;
 }
+
+if (empty($_POST["req"]) || $_POST["req"] === 'get') {
+  $sql = "select * from " . $table . $filter . $sort . $limit;
+
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while ($row = $result->fetch_assoc()) {
+      // Add each row to an array we'll send to the front end
+      $rows[] = $row;
+    }
+
+    echo json_encode($rows);
+  } else {
+    echo "0 results";
+  }
+} else if ($_POST["req"] === 'post_match') {
+  $stage = $_POST["stage"];
+  $fighters = $_POST["fighters"];
+  $pick_value = $_POST["pick_value"];
+  
+  $sql = "INSERT INTO " . $table . " " .
+    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete) " .
+    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0 )";
+
+  if ($conn->query($sql) === FALSE) {
+    echo 'Error: ' . $sql . '<br>' . $conn->error;
+  } else {
+    echo 'Data logged';
+  }
+}
+
 exit;
 
 // // Add record

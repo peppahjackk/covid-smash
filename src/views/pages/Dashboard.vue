@@ -9,7 +9,7 @@
         <div
           class="matchup-wrapper"
           v-for="(match) in $root.store.active_data.matches"
-          :key="match.id"
+          :key="match.match_id"
         >
           <Matchup :content="match" :fightNumber="match.match_id"></Matchup>
         </div>
@@ -23,43 +23,11 @@
 import Matchup from "@/views/components/Matchup";
 
 export default {
-  data: function() {
-    return {
-      activeData: {
-        fighters: []
-      }
-    };
-  },
-  computed: {
-    totalPicks: function() {
-      let total = 0;
-      this.activeData.fighters.forEach(fighter => (total += fighter.picks));
-      return total;
-    }
-  },
   methods: {
-    addBet: function() {
-      console.log("add bet");
-    },
     submitPicks: function() {
       console.log('submit all');
+      // this.setP
     },
-    calcPayout: function(picks) {
-      if (picks) {
-        return (
-          (this.activeData.current_pool - picks * this.activeData.pick_wager) /
-          picks
-        );
-      } else {
-        return 0;
-      }
-    }
-  },
-  created: function() {
-    // this.getActive().then((results)=>{
-    //   console.log(this.activeData);
-    //   this.activeData = results;
-    // });
   },
   components: {
     Matchup

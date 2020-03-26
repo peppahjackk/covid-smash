@@ -34,11 +34,11 @@
         <td class="fighter-pool">
           <div class="bar-wrapper">
             <div class="bar-label">
-              <p class="pick-num">{{ fighter.picks }}</p>
+              <p class="pick-num">{{ fighter.pickers.length }}</p>
             </div>
             <div
               class="bar-container"
-              :style="{ width: `${fighter.picks / totalPicks * 100}%`, backgroundColor: [fighter.picks ? $root.COLORS[i] : '#666'] }"
+              :style="{ width: `${fighter.pickers.length / totalPicks * 100}%`, backgroundColor: [fighter.pickers.length ? $root.COLORS[i] : '#666'] }"
             ></div>
             <p class="picker" v-if="admin">
               <span v-for="(picker) in fighter.pickers" :key="fighter.name + picker">{{ picker }},</span>
@@ -47,7 +47,7 @@
         </td>
         <td class="to-win">
           <div class="wins-container">
-            <p>+${{calcPayout(fighter.picks)}} each</p>
+            <p>+${{calcPayout(fighter.pickers.length)}} each</p>
           </div>
         </td>
       </tr>
@@ -96,9 +96,9 @@ export default {
   },
   computed: {
     status: function() {
-      if (this.content.in_progress) {
+      if (this.content.in_progress === 1) {
         return "IN_PROGRESS";
-      } else if (this.content.complete) {
+      } else if (this.content.complete === 1) {
         return "COMPLETE";
       } else {
         return "INACTIVE";
@@ -107,12 +107,15 @@ export default {
     totalPicks: function() {
       console.log(this.content);
       let total = 0;
-      this.content.fighters.forEach(fighter => (total += fighter.picks));
+      this.content.fighters.forEach(fighter => (total += fighter.pickers.length));
       return total;
     },
     totalValue: function() {
       return this.totalPicks * this.content.pick_value;
     }
+  },
+  mounted: function() {
+    console.log(this.content);
   }
 };
 </script>
