@@ -1,85 +1,68 @@
 <template>
-<div class="dashboard-container container">
-  <h1>Smash Bros Picks</h1>
-  <div class="pick-wrapper">
-    <div class="pick-header">
-      <h2>Choose your character!</h2>
-      <div class="badge">
-        <p>Total pool:</p>
-        <h2>${{ activeData.current_pool }}</h2>
+  <section class="dashboard container">
+    <h1>COVID Smash</h1>
+    <div class="pick-wrapper">
+      <div class="pick-header">
+        <h2>Bets are open: Choose your character!</h2>
       </div>
+      <div class="matchups">
+        <div
+          class="matchup-wrapper"
+          v-for="(match) in $root.store.active_data.matches"
+          :key="match.id"
+        >
+          <Matchup :content="match" :fightNumber="match.match_id"></Matchup>
+        </div>
+      </div>
+      <button @click="submitPicks()">Submit picks!</button>
     </div>
-    <!-- <div class="pick-body-container">
-      <table>
-        <thead>
-          <th>Pick</th>
-          <th>Fighter</th>
-          <th>Pool</th>
-          <th>To Win</th>
-        </thead>
-        <tr v-for="(fighter,i) in activeData.fighters" :key="fighter.name">
-          <td>
-            <button @click="addBet();">${{ activeData.pick_wager }}</button>
-          </td>
-          <td>
-            <h3>{{ fighter.name }}</h3>
-          </td>
-          <td class="fighter-pool">
-            <div class="bar-wrapper">
-              <div class="bar-label">
-                <p>{{ fighter.picks }}</p>
-              </div>
-              <div class="bar-container" :style="{ width: `${fighter.picks / totalPicks * 100}%`, backgroundColor: [fighter.picks ? $root.COLORS[i] : '#666'] }">
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="wins-container">
-              <p>+${{calcPayout(fighter.picks)}} each</p>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div> -->
-  </div>
-</div>
+  </section>
 </template>
 
 <script>
+import Matchup from "@/views/components/Matchup";
 
 export default {
   data: function() {
     return {
       activeData: {
         fighters: []
-      },
-    }
+      }
+    };
   },
   computed: {
     totalPicks: function() {
       let total = 0;
-      this.activeData.fighters.forEach(fighter => total += fighter.picks)
+      this.activeData.fighters.forEach(fighter => (total += fighter.picks));
       return total;
     }
   },
   methods: {
     addBet: function() {
-      console.log('add bet');
+      console.log("add bet");
+    },
+    submitPicks: function() {
+      console.log('submit all');
     },
     calcPayout: function(picks) {
       if (picks) {
-        return (this.activeData.current_pool - (picks * this.activeData.pick_wager)) / picks
+        return (
+          (this.activeData.current_pool - picks * this.activeData.pick_wager) /
+          picks
+        );
       } else {
-        return 0
+        return 0;
       }
     }
   },
   created: function() {
-    
     // this.getActive().then((results)=>{
     //   console.log(this.activeData);
     //   this.activeData = results;
     // });
+  },
+  components: {
+    Matchup
   }
-}
+};
 </script>

@@ -1,4 +1,15 @@
+@media screen and (min-width: 1200px) {
+  .matchup-wrapper {
+    max-width: 48%;
+    margin: 0 1%;
+    display: inline-block;
+  }
+
+}
+
 .matchup-wrapper {
+  border: 5px solid $baseAccent;
+  padding: 8px;
   margin-bottom: 48px;
 }
 
@@ -6,10 +17,10 @@
   display: flex;
   align-items: center;
   padding: 3px;
-  border: 5px solid $baseAccent;
 
   h3 {
     padding: 8px;
+    margin-bottom: 0;
   }
 }
 
@@ -34,6 +45,16 @@ tr {
 
     }
   }
+
+  &.winner {
+    .fighter, .to-win, .bar-container {
+      background: $green !important;
+    }
+  }
+}
+
+.fight-label {
+  background: $blue;
 }
 
 th {

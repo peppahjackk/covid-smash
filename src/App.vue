@@ -5,6 +5,7 @@
       </div>
     <Dashboard></Dashboard>
     <Admin></Admin>
+    <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
   </div>
 </template>
@@ -13,6 +14,7 @@
 import Admin from './views/pages/Admin.vue';
 import Dashboard from './views/pages/Dashboard.vue';
 import Login from './views/components/Login';
+import NewMatch from './views/components/NewMatch';
 import uuidv4 from 'uuid/v4';
 import crud from '@/mixins/crud';
 
@@ -21,6 +23,11 @@ import FAKE_MATCHES from './data/FAKE_matches.js';
 export default {
   name: 'App',
   mixins: [crud],
+  data: function() {
+    return{
+      activeModal: ''
+    }
+  },
   mounted: function() {
     let theUser = JSON.parse(localStorage.getItem('brosUser'));
 
@@ -38,6 +45,13 @@ export default {
       console.log(results);
       this.$root.store.active_data.matches = results;
     })
+
+    this.$root.eventHub.$on('activeModal', (modalName)=>{
+      console.log('active modal: ', modalName);
+      this.$root.store.activeModal = modalName;
+    this.activeModal = modalName;
+      console.log(this.$root.store);
+    })
   },
   methods: {
     // TODO move this to a mixin or something
@@ -53,7 +67,8 @@ export default {
   components: {
     Admin,  
     Dashboard,
-    Login
+    Login,
+    NewMatch
   }
 }
 </script>
