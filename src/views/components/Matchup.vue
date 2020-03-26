@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     addBet(fighterName) {
-      console.log("add bet");
       this.currentPick = fighterName;
 
       this.$emit('pickSelected', {

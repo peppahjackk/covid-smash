@@ -6,7 +6,6 @@ const crud = {
       let sqlData = data;
       sqlData.req = 'update';
       sqlData.table = 'matches';
-      console.log(sqlData);
       
       return axios.post('php/crud.php', sqlData)
       .then((results)=>{
@@ -19,7 +18,7 @@ const crud = {
     },
     postMatch(data) {
       let theFighters = JSON.stringify(data.fighters);
-      console.log('poist data', data, theFighters);
+
       return axios.post('php/crud.php', {
         req: 'insert',
         table: 'matches',
@@ -36,13 +35,12 @@ const crud = {
       })
     },
     postPick(data) {
-      console.log('Attempting post:', data);
       let sqlData = data;
       data.req = 'replace';
       data.table = 'picks';
       data.pick_id = data.match_id + '_' + data.user_id;
       data.filter = `pick_id=${data.pick_id}`;
-      
+
       return axios.post('php/crud.php', sqlData)
       .then((results)=>{
         console.log(results)
@@ -72,7 +70,6 @@ const crud = {
       })
     },
     getData_FAKE(mockData, time = 0) {
-      console.log(mockData);
       return new Promise((resolve)=> {
         setTimeout(()=> {
 

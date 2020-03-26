@@ -29,7 +29,6 @@ export default {
   computed: {
     betsOpen: function() {
       if (this.$root.store.active_data.matches.length > 0) {
-        console.log('There is matches');
         return this.$root.store.active_data.matches[this.$root.store.active_data.matches.length - 1].in_progress;
       } else {
         return 0

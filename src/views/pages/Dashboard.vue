@@ -33,13 +33,11 @@ export default {
   mixins: [crud],
   methods: {
     selectPicks: function(pick) {
-      console.log(pick);
       let matchName = 'match' + pick.match_id;
 
       this.pendingPicks[matchName] = pick;
     },
     submitPicks: function() {
-      console.log('submit all', this.pendingPicks);
       for (let key of Object.keys(this.pendingPicks)) {
         this.postPick(this.pendingPicks[key]);
       }

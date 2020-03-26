@@ -53,7 +53,6 @@ export default {
         fighters: theFighters,
         pick_value: this.betAmount
       }).then(results => {
-        console.log(results);
         this.$root.eventHub.$emit("activeModal", "");
         this.$root.eventHub.$emit("fetchMatches");
       });

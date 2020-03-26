@@ -45,10 +45,8 @@ export default {
     this.$root.store.User = theUser;
 
     this.$root.eventHub.$on("activeModal", modalName => {
-      console.log("active modal: ", modalName);
       this.$root.store.activeModal = modalName;
       this.activeModal = modalName;
-      console.log(this.$root.store);
     });
 
     this.fetchMatches();
