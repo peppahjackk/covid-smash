@@ -56,6 +56,8 @@ const crud = {
       })
       .then((results)=>{
         console.log(results.data)
+        if (typeof results.data === 'string') return [];
+        
         results.data.forEach((match)=>{
           match.fighters = JSON.parse(match.fighters);
           match.in_progress = parseInt(match.in_progress);

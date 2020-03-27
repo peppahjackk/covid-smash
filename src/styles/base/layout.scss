@@ -17,21 +17,40 @@ section {
   }
 }
 
+.sidebar {
+  background: $baseAccent2;
+  padding: 16px;
+
+  h5 {
+    background: $yellow;
+    color: $base;
+    padding: 2px;
+  }
+}
+
+.sidebar-picks-container {
+  border: 5px solid $base;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
 
 @media screen and (min-width: $breakpoint-md) {
   .dashboard {
     .pick-wrapper {
       width: calc(100% - 300px);
     }
-    // display: flex;
+  }
+
+  section.admin {
+    width: calc(100% - 300px);
   }
 
   .sidebar {
     position: fixed;
     right: 0;
     top: 0;
-    padding-top: 60px;
-    background: $baseAccent2;
+    padding: 60px 32px 32px;
     height: 100%;
     width: 300px;
   }

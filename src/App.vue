@@ -7,7 +7,7 @@
       </p>
     </div>
     <Dashboard></Dashboard>
-    <Admin></Admin>
+    <Admin v-if="$root.store.User.name === 'rustyM'"></Admin>
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
   </div>
@@ -59,25 +59,37 @@ export default {
   methods: {
     fetchMatches: function() {
       this.getMatches().then(results => {
-
         this.fetchPicks(results).then(pickResults => {
           let matchPicks = {};
+          let userPicks = [];
 
-          for (let i = 0; i < pickResults.length; i++) {
-            let pick = pickResults[i];
-            
-            if (!matchPicks['match-' + pick.match_id]) {
-              matchPicks['match-' + pick.match_id] = {};
-            }
-            
-            if (!matchPicks['match-' + pick.match_id][pick.fighter]) {
-              matchPicks['match-' + pick.match_id][pick.fighter] = [];
-            }
+          console.log(pickResults);
+          if (typeof pickResults != "string") {
+            for (let i = 0; i < pickResults.length; i++) {
+              let pick = pickResults[i];
 
-            matchPicks['match-' + pick.match_id][pick.fighter].push(pick.name);
+              let matchName = "match-" + pick.match_id;
+
+              if (!matchPicks[matchName]) {
+                matchPicks[matchName] = {};
+              }
+
+              if (!matchPicks[matchName][pick.fighter]) {
+                matchPicks[matchName][pick.fighter] = [];
+              }
+
+              matchPicks[matchName][pick.fighter].push(pick.name);
+
+              if (pick.user_id === this.$root.store.User.id) {
+                userPicks.push(pick);
+              }
+            }
           }
 
+          console.log(userPicks);
+
           this.$root.store.active_data.picks = matchPicks;
+          this.$root.store.User.picks = userPicks;
           this.$root.store.active_data.matches = results;
         });
       });
@@ -97,6 +109,7 @@ export default {
       this.$root.store.User.name = null;
       this.$root.store.User.venmo = null;
       this.$root.store.User.id = null;
+      this.$root.store.User.picks = {};
 
       // TODO move this
       localStorage.setItem("brosUser", JSON.stringify(this.$root.store.User));

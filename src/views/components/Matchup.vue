@@ -19,7 +19,7 @@
         <td v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
-            :class="[status === 'INACTIVE' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', !matchPicks[fighter.name] ? 'unpicked' : '']"
+            :class="[status === 'INACTIVE' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
           >${{ content.pick_value }}</button>
         </td>
         <td v-if="admin">
@@ -36,13 +36,13 @@
             <div class="bar-label">
               <p
                 class="pick-num"
-              >{{ matchPicks[fighter.name] ? matchPicks[fighter.name].length : 0 }}</p>
+              >{{ matchPicks && matchPicks[fighter.name] ? matchPicks[fighter.name].length : 0 }}</p>
             </div>
             <div
               class="bar-container"
-              :style="{ width: [matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
+              :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
             ></div>
-            <p class="picker" v-if="admin">
+            <p class="picker" v-if="admin && matchPicks">
               <span
                 v-for="(picker) in matchPicks[fighter.name]"
                 :key="fighter.name + picker"
@@ -52,7 +52,8 @@
         </td>
         <td class="to-win">
           <div class="wins-container">
-            <p>+${{calcPayout(matchPicks[fighter.name])}} each</p>
+            <p v-if="matchPicks">+${{calcPayout(matchPicks[fighter.name])}} each</p>
+            <p v-if="!matchPicks">-</p>
           </div>
         </td>
       </tr>
@@ -146,12 +147,15 @@ export default {
       }
     },
     matchPicks: function() {
+      console.log(this.$root.store.active_data.picks);
       if (this.$root.store.active_data.picks) {
+        console.log('picks hase length');
         return this.$root.store.active_data.picks[
           "match-" + this.content.match_id
         ];
       } else {
-        return [];
+        console.log('picks null');
+        return null;
       }
     },
     totalPicks: function() {
