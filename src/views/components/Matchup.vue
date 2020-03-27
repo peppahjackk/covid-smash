@@ -19,7 +19,7 @@
         <td v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
-            :class="[status === 'INACTIVE' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
+            :class="[status === 'Open for wagers' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
           >${{ content.pick_value }}</button>
         </td>
         <td v-if="admin">
@@ -143,7 +143,7 @@ export default {
       } else if (this.content.complete === 1) {
         return "COMPLETE";
       } else {
-        return "INACTIVE";
+        return "Open for wagers";
       }
     },
     matchPicks: function() {

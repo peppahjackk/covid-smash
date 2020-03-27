@@ -13,6 +13,21 @@
       </div>
       <button class="blue" @click="addMatch()">Add Match</button>
     </div>
+    <div class="user-list">
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Venmo</th>
+        </thead>
+        <tr 
+        v-for="(user) in $root.store.active_data.users"
+        :key="user.user_id" 
+        >
+          <td>{{user.name}}</td>
+          <td>{{user.venmo}}</td>
+        </tr>
+      </table>
+    </div>
   </section>
 </template>
 

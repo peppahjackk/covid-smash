@@ -62,6 +62,7 @@ export default {
         this.fetchPicks(results).then(pickResults => {
           let matchPicks = {};
           let userPicks = [];
+          let users = {};
 
           if (typeof pickResults != "string") {
             for (let i = 0; i < pickResults.length; i++) {
@@ -82,12 +83,23 @@ export default {
               if (pick.user_id === this.$root.store.User.id) {
                 userPicks.push(pick);
               }
+
+              if (!users['user-'+ pick.user_id]) {
+                users['user-'+pick.user_id] = {
+                  name: pick.name,
+                  venmo: pick.venmo,
+                  picks: []
+                }
+              }
+
+              users['user-'+pick.user_id].picks.push(pick);
             }
           }
 
           this.$root.store.active_data.picks = matchPicks;
           this.$root.store.User.picks = userPicks;
           this.$root.store.active_data.matches = results;
+          this.$root.store.active_data.users = users;
         });
       });
 

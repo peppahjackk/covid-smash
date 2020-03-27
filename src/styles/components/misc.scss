@@ -154,3 +154,10 @@ z-index: 2;
   background-color: $baseAccent;
   padding: 5px 0;
 }
+
+
+@media screen and (max-width: $breakpoint-md) {
+    .back-to-top {
+      display: none;      
+    }
+}
