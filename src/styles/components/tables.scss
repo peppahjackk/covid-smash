@@ -1,5 +1,5 @@
 @media screen and (min-width: 1200px) {
-  .matchup-wrapper {
+  .admin .matchup-wrapper {
     max-width: 48%;
     margin: 0 1%;
     display: inline-block;
@@ -11,6 +11,7 @@
   border: 5px solid $baseAccent;
   padding: 8px;
   margin-bottom: 48px;
+  margin: 0 16px 48px;
 }
 
 .table-header {
@@ -64,6 +65,19 @@ th {
 td {
   border-bottom: 1px solid $baseAccent;
 
+  &.pick {
+    padding: 0 6px 0 3px;
+  }
+}
+
+.sidebar {
+  table {
+    background-color: $base;
+    margin-bottom: 16px;
+  }
+  tr {
+    height: 30px;
+  }
 }
 
 .fighter-pool {

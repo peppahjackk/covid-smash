@@ -16,7 +16,7 @@
         :key="fighter.name"
         :class="[checkWinner(fighter.name)]"
       >
-        <td v-if="!admin">
+        <td v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
             :class="[status === 'INACTIVE' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', !matchPicks[fighter.name] ? 'unpicked' : '']"
