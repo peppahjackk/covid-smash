@@ -69,6 +69,26 @@ const crud = {
         console.error(error)
       })
     },
+    getPicks(idArray) {
+      let match_ids = idArray.map((value)=>{
+        return value.match_id;
+      })
+
+      match_ids = '(' + match_ids.toString() + ')';
+
+
+      return axios.post('php/crud.php', {
+        table: 'picks',
+        filter: `match_id in ${match_ids}`
+      })
+      .then((results)=>{
+        console.log(results.data)
+        return results.data;
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    },
     getData_FAKE(mockData, time = 0) {
       return new Promise((resolve)=> {
         setTimeout(()=> {

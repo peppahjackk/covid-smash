@@ -52,7 +52,7 @@ export default {
         stage: this.stage,
         fighters: theFighters,
         pick_value: this.betAmount
-      }).then(results => {
+      }).then(() => {
         this.$root.eventHub.$emit("activeModal", "");
         this.$root.eventHub.$emit("fetchMatches");
       });

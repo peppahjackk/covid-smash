@@ -18,7 +18,6 @@ import Admin from "./views/pages/Admin.vue";
 import Dashboard from "./views/pages/Dashboard.vue";
 import Login from "./views/components/Login";
 import NewMatch from "./views/components/NewMatch";
-import uuidv4 from "uuid/v4";
 import crud from "@/mixins/crud";
 
 // import FAKE_MATCHES from "./data/FAKE_matches.js";
@@ -36,7 +35,7 @@ export default {
 
     if (!theUser) {
       theUser = {
-        id: uuidv4(), // unique id given to the user for db identification
+        id: null,
         name: null,
         venmo: null
       };
@@ -51,8 +50,8 @@ export default {
 
     this.fetchMatches();
 
-    window.setTimeout(this.fetchMatches, 5000);
-    
+    window.setInterval(this.fetchMatches, 5000);
+
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
     });
@@ -60,14 +59,38 @@ export default {
   methods: {
     fetchMatches: function() {
       this.getMatches().then(results => {
-        console.log(results);
-        this.$root.store.active_data.matches = results;
+
+        this.fetchPicks(results).then(pickResults => {
+          let matchPicks = {};
+
+          for (let i = 0; i < pickResults.length; i++) {
+            let pick = pickResults[i];
+            
+            if (!matchPicks['match-' + pick.match_id]) {
+              matchPicks['match-' + pick.match_id] = {};
+            }
+            
+            if (!matchPicks['match-' + pick.match_id][pick.fighter]) {
+              matchPicks['match-' + pick.match_id][pick.fighter] = [];
+            }
+
+            matchPicks['match-' + pick.match_id][pick.fighter].push(pick.name);
+          }
+
+          this.$root.store.active_data.picks = matchPicks;
+          this.$root.store.active_data.matches = results;
+        });
       });
 
       // this.getData_FAKE(FAKE_MATCHES).then(results => {
       //   console.log(results);
       //   this.$root.store.active_data.matches = results;
       // })
+    },
+    fetchPicks: function(match_ids) {
+      return this.getPicks(match_ids).then(results => {
+        return results;
+      });
     },
     // TODO move this to a mixin or something
     resetUser: function() {
