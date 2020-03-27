@@ -7,7 +7,7 @@
       </p>
     </div>
     <Dashboard></Dashboard>
-    <Admin v-if="$root.store.User.name === 'rustyM'"></Admin>
+    <Admin v-if="$root.store.User.name === 'rustyM' || $root.store.User.name === 'Theo'"></Admin>
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
   </div>
@@ -63,7 +63,6 @@ export default {
           let matchPicks = {};
           let userPicks = [];
 
-          console.log(pickResults);
           if (typeof pickResults != "string") {
             for (let i = 0; i < pickResults.length; i++) {
               let pick = pickResults[i];
@@ -85,8 +84,6 @@ export default {
               }
             }
           }
-
-          console.log(userPicks);
 
           this.$root.store.active_data.picks = matchPicks;
           this.$root.store.User.picks = userPicks;

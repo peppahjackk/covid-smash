@@ -42,7 +42,7 @@
               class="bar-container"
               :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
             ></div>
-            <p class="picker" v-if="admin && matchPicks">
+            <p class="picker" v-if="matchPicks">
               <span
                 v-for="(picker) in matchPicks[fighter.name]"
                 :key="fighter.name + picker"
