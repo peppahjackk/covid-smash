@@ -3,11 +3,11 @@
   <div class="modal">
     <div class="modal-body">
       <h1>Welcome to COVID Smash</h1>
-      <p>Welcome to CPU Smash Brothers!  The COVID-19 quarantine has spawned the future of sports and sports betting - <a href="https://www.twitch.tv/dietwolfcola" target="_blank" rel="noreferrer">all CPU Super Smash Bros matches (stream found here</a>).  Join us, bet on your favorite characters, and stay healthy!  All bets are final once placed.</p>
-      <h3>Please enter your name and venmo username</h3>
+      <p>The COVID-19 quarantine has spawned the future of spectator sports - <a href="https://www.twitch.tv/dietwolfcola" target="_blank" rel="noreferrer">all CPU controlled Super Smash Bros matches (stream found here)</a>.  Join us, root for your favorite characters, and stay healthy!</p>
+      <h3>Please enter your name and favorite character (if you'd like)</h3>
       <div class="form">
-        <input type="text" placeholder="name" v-model="name">
-        <input type="text" placeholder="@venmo-name" v-model="venmo">
+        <input type="text" placeholder="Name" v-model="name">
+        <input type="text" placeholder="Waluigi" v-model="character">
         <button @click="submitUser" class="red">Fight!</button>
       </div>
     </div>
@@ -23,20 +23,27 @@ export default {
   data: function() {
     return {
       name: '',
-      venmo: ''
+      character: ''
     }
   },
   methods: {
     submitUser: function() {
-      if (!this.name || !this.venmo) return;
+      if (!this.name) return;
 
       this.$root.store.User.name = this.name;
-      this.$root.store.User.venmo = this.venmo;
+      this.$root.store.User.character = this.character;
       this.$root.store.User.id = uuidv4(), // unique id given to the user for db identification
 
       // TODO move this to a watcher or at least a mixin
       localStorage.setItem('brosUser', JSON.stringify(this.$root.store.User));
     },
+    anonymousUser: function() {
+      this.$root.store.User.name = 'anonymous';
+      this.$root.store.User.id = uuidv4(), // unique id given to the user for db identification
+
+      // TODO move this to a watcher or at least a mixin
+      localStorage.setItem('brosUser', JSON.stringify(this.$root.store.User));
+    }
   }
 }
 </script>

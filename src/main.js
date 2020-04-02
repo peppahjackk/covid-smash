@@ -15,7 +15,8 @@ new Vue({
       User: {
         id: null,
         name: null,
-        venmo: null,
+        picks: [],
+        matchType: null,
       },
       active_data: {
         matches: [],

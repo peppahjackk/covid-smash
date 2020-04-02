@@ -18,8 +18,8 @@ section {
 }
 
 .sidebar {
-  background: $baseAccent2;
   padding: 16px;
+  border-left: 5px solid $baseAccent2;
 
   h5 {
     background: $yellow;
@@ -57,6 +57,11 @@ section {
   display:inline-block;
   padding: 4px 15px 4px 40px;
   background: repeating-linear-gradient(120deg, $green, $green 15px, $yellow 15px, $yellow 25px, $blue 25px, $blue 35px, $red 35px, $red 880px);
+  margin-bottom: 0;
+}
+
+.title-container {
+  padding: 16px;
 }
 
 .text-lockup {
@@ -74,7 +79,7 @@ section {
   }
 }
 
-.flex-content {
+.content {
   text-align: left;
   padding: 16px;
 }
@@ -96,6 +101,17 @@ section {
   margin-bottom: .3em;
 }
 
+.match-rules {
+  margin-bottom: 16px;
+  ul {
+    padding-left: 15px;
+  }
+}
+
+.intro-text {
+  margin-top: 32px;
+}
+
 @media screen and (min-width: $breakpoint-md) {
   .dashboard {
     .pick-wrapper {
@@ -103,9 +119,12 @@ section {
     }
   }
 
+  .content {
+    padding: 32px;
+  }
+
   .flex-content {
     display: flex;
-    padding: 32px;
     align-items: center;
 
     & > * {
@@ -113,12 +132,16 @@ section {
     }
   }
 
+  .flex-top {
+    align-items: flex-start;
+  }  
+
   section.admin {
     width: calc(100% - 300px);
   }
 
   .sidebar {
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     padding: 60px 32px 32px;

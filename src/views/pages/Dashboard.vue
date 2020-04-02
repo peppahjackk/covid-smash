@@ -3,7 +3,36 @@
     <div class="dashboard-body-container">
       <div class="pick-wrapper">
         <div class="hero">
-          <h1 class="title">COVID Smash</h1>
+          <div class="title-container">
+            <h1 class="title">COVID Smash</h1>
+          </div>
+          <div class="intro-text content bg-baseAccent">
+            <h3>Ever since the COVID-19 isolation period began, the landscape of indoors future of spectator sports has changed forever. We bring you all the rage: CPU controlled Super Smash Bros. matches! Before the fights begin, pick who you think will come out on top of the bout.</h3>
+          </div>
+          
+          <div class="content flex-content flex-top">
+            <div class="content-left">
+              <h3>How to play:</h3>
+              <ul>
+                <li>Choose who you think will win one or all of the following Smash Bros. matches.</li>
+                <li>You can change your pick after submitting. Just select a new fighter in the match and submit again</li>
+                <li>You are not required to pick every match</li>
+              </ul>
+            </div>
+            <div class="match-rules content-left">
+              <h3>Match Rules:</h3>
+              <ul>
+                <li>A mix of both the N64 and Gamecube smash iterations</li>
+                <li>All characters are CPU controlled (max level*)</li>
+                <li>4 player free-for-all*</li>
+                <li>6 stock* (no time limit)</li>
+                <li>Items are OFF*</li>
+                <li>Stage selection listed in match description</li>
+                <li>Last man/woman/pokemon standing wins</li>
+              </ul>
+              <h5>*unless otherwise stated</h5>
+            </div>
+          </div>
           <div class="text-lockup">
             <svg class="icon icon-twitch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.69 512" >
               <title>Asset 1</title>
@@ -11,39 +40,10 @@
               <path d="M200.75,133.59h44.58V267.14H200.75Z" style="fill: #673ab7" />
               <path d="M323.37,133.59H368V267.14H323.37Z" style="fill: #673ab7" />
             </svg>
-
-            <h2>
-              The Twitch stream
-              <a href="https://www.twitch.tv/dietwolfcola" target="_blank" rel="noreferrer" >can be found here.</a>
-            </h2>
+            <h2>Watch the matches on <a href="https://www.twitch.tv/dietwolfcola" target="_blank" rel="noreferrer" >our Twitch stream.</a></h2>
           </div>
-          <div class="flex-content">
-            <div class="content-right">
-              <h4>Match Rules:</h4>
-              <ul>
-                <li>4 player free-for-all with max level CPU characters</li>
-                <li>6 stock (no time limit)</li>
-                <li>Items are OFF</li>
-                <li>Levels are pre-chosen</li>
-                <li>Last man/woman/pokemon standing wins</li>
-              </ul>
-            </div>
-            <div class="content-left">
-              <h4>Wagers:</h4>
-              <ul>
-                <li>All bets are $5.00 USD</li>
-                <li>All bettors of the winning character split the total pot for that match</li>
-                <li>Venmo me (@hustlerussell) before the matches; I will pay out the winners</li>
-                <li>All betting closes prior to 9pm (for all matches)</li>
-                <li>Bets currently cannot be deleted</li>
-                <li>You can change your bet after submitting. Just select a new fighter in the match and submit again</li>
-                <li>You are not required to bet on every match</li>
-              </ul>
-            </div>
-          </div>
-          <h4 class="disclaimer">Not paying up or trying to game the system will result in all of your bets being voided and being blacklisted from future events.</h4>
-          <h4>Any technical issues please let Rusty know.</h4>
         </div>
+        <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
           <h2 class="bg-baseAccent">Choose your character!</h2>
         </div>
@@ -59,49 +59,39 @@
         </div>
       </div>
       <div ref="sidebar" class="sidebar">
-        <h3>Your bets:</h3>
+        <h3>Your picks:</h3>
         <div class="sidebar-picks-container">
           <h4>PENDING</h4>
-          <table v-for="(pick) in pendingPicks" :key="pick.match_id" class="sidebar-pick-wrapper">
+          <table class="sidebar-pick-wrapper">
             <tr>
-              <td>Match</td>
-              <td>{{pick.match_id}}</td>
+              <th>Match</th>
+              <th>Fighter</th>
             </tr>
-            <tr>
-              <td>Fighter</td>
+            <tr v-for="(pick) in pendingPicks" :key="'pending-' + pick.match_id">
+              <td>{{pick.match_id}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
-            <tr>
-              <td>Amount</td>
-              <td>${{pick.pick_value}}</td>
-            </tr>
           </table>
-          <p>Pending bet amount: ${{ getTotalBet(pendingPicks) }}</p>
-          <h5>Please pay @hustlerussell prior to game start to be eligible for winnings.</h5>
+          <!-- <p>Total picks: {{ pendingPicks.length }}</p> -->
           <button @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
         </div>
         <div class="sidebar-picks-container">
           <h4>SUBMITTED</h4>
           <table
-            v-for="(pick) in $root.store.User.picks"
-            :key="pick.match_id + 'submitted'"
             class="sidebar-pick-wrapper"
           >
             <tr>
-              <td>Match</td>
-              <td>{{pick.match_id}}</td>
+              <th>Match</th>
+              <th>Fighter</th>
             </tr>
-            <tr>
-              <td>Fighter</td>
+            <tr 
+            v-for="(pick) in $root.store.User.picks"
+            :key="pick.match_id + 'submitted'">
+              <td>{{pick.match_id}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
-            <tr>
-              <td>Amount</td>
-              <td>${{pick.pick_value}}</td>
-            </tr>
           </table>
-          <h5>Please pay @hustlerussell prior to game start to be eligible for winnings.</h5>
-          <p>Submitted bet amount: ${{ getTotalBet($root.store.User.picks) }}</p>
+          <p>Total picks: {{ $root.store.User.picks.length }}</p>
         </div>
       </div>
     </div>
@@ -142,12 +132,14 @@ export default {
         return;
       }
 
-      let venmoName = this.$root.store.User.venmo;
-
       this.pendingPicks[matchName] = pick;
-      this.pendingPicks[matchName].venmo = venmoName;
+
+      this.$forceUpdate();
+      // let venmoName = this.$root.store.User.venmo;
+      // this.pendingPicks[matchName].venmo = venmoName;
     },
     submitPicks: function() {
+      console.log('Submit picks fired');
       for (let pick in this.pendingPicks) {
         let pickIdx = Object.keys(this.pendingPicks).indexOf(pick);
         let lastPick = false;
@@ -182,6 +174,11 @@ export default {
   },
   components: {
     Matchup
+  },
+  watch: {
+    pendingPicks() {
+      console.log('pending picks changed');
+    }
   }
 };
 </script>

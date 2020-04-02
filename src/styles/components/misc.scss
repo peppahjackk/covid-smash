@@ -151,8 +151,9 @@ z-index: 2;
 }
 
 .banner {
-  background-color: $baseAccent;
+  position: relative;
   padding: 5px 0;
+  z-index: 10;
 }
 
 

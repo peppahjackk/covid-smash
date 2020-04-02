@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-    <div v-if="$root.store.User.name" class="banner">
-      <p>
-        Welcome back {{ $root.store.User.name }}!
-        <span class="underline" @click="resetUser">Not you?</span>
-      </p>
+    <div v-if="$root.store.User.name" class="banner bg-blue">
+      <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
     </div>
     <Dashboard></Dashboard>
     <Admin v-if="$root.store.User.name === 'rustyM' || $root.store.User.name === 'Theo'"></Admin>
@@ -37,7 +34,8 @@ export default {
       theUser = {
         id: null,
         name: null,
-        venmo: null
+        character: null,
+        picks: []
       };
     }
 
@@ -50,7 +48,7 @@ export default {
 
     this.fetchMatches();
 
-    window.setInterval(this.fetchMatches, 5000);
+    window.setInterval(this.fetchMatches, 10000);
 
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
@@ -58,8 +56,10 @@ export default {
   },
   methods: {
     fetchMatches: function() {
-      this.getMatches().then(results => {
-        this.fetchPicks(results).then(pickResults => {
+      console.log('Fetching Data...');
+      // this.getData_FAKE(FAKE_MATCHES).then(results => {
+        this.getMatches().then(results => {
+          this.fetchPicks(results).then(pickResults => {
           let matchPicks = {};
           let userPicks = [];
           let users = {};
@@ -87,7 +87,6 @@ export default {
               if (!users['user-'+ pick.user_id]) {
                 users['user-'+pick.user_id] = {
                   name: pick.name,
-                  venmo: pick.venmo,
                   picks: []
                 }
               }
@@ -116,7 +115,7 @@ export default {
     // TODO move this to a mixin or something
     resetUser: function() {
       this.$root.store.User.name = null;
-      this.$root.store.User.venmo = null;
+      this.$root.store.User.character = null;
       this.$root.store.User.id = null;
       this.$root.store.User.picks = {};
 

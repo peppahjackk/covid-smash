@@ -55,9 +55,8 @@ const crud = {
         table: 'matches'
       })
       .then((results)=>{
-        console.log(results.data)
         if (typeof results.data === 'string') return [];
-        
+
         results.data.forEach((match)=>{
           match.fighters = JSON.parse(match.fighters);
           match.in_progress = parseInt(match.in_progress);
@@ -84,7 +83,6 @@ const crud = {
         filter: `match_id in ${match_ids}`
       })
       .then((results)=>{
-        console.log(results.data)
         return results.data;
       })
       .catch((error)=>{

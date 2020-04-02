@@ -70,3 +70,31 @@ ul {
 .bg-baseAccent2 {
   background: $baseAccent2;
 }
+
+.red {
+  color: $red;
+}
+.green {
+  color: $green;
+}
+.blue {
+  color: $blue;
+}
+.yellow {
+  color: $yellow;
+}
+.base {
+  color: $base;
+}
+.baseAccent {
+  color: $baseAccent;
+}
+.baseAccent2 {
+  color: $baseAccent2;
+}
+
+@media screen and (min-width: $breakpoint-sm) {
+  h1 {
+    font-size: 42px;
+  }
+}

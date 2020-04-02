@@ -2,14 +2,14 @@
   <div class="matchup-container" :class="[admin ? 'admin' : '', status]">
     <div class="table-header">
       <h3 class="fight-label">Fight #{{fightNumber}} @ {{ content.stage }}</h3>
-      <h3 class="status">Status: {{status}}</h3>
+      <h3 class="status">Match type: {{ content.match_type }}</h3>
     </div>
     <table>
       <thead>
-        <th>Pick</th>
+        <th>Action</th>
         <th>Fighter</th>
         <th>Picks</th>
-        <th>To Win</th>
+        <th>Public %</th>
       </thead>
       <tr
         v-for="(fighter,i) in content.fighters"
@@ -19,8 +19,8 @@
         <td v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
-            :class="[status === 'Open for wagers' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
-          >${{ content.pick_value }}</button>
+            :class="[status === 'Open for picks' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
+          >Pick</button>
         </td>
         <td v-if="admin">
           <button
@@ -42,26 +42,26 @@
               class="bar-container"
               :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
             ></div>
-            <p class="picker" v-if="matchPicks">
+            <p class="picker" v-if="matchPicks && matchPicks[fighter.name] && matchPicks[fighter.name].length < 10">
               <span
                 v-for="(picker) in matchPicks[fighter.name]"
                 :key="fighter.name + picker"
-              >{{ picker }},</span>
+              >{{ printFirstName(picker) }}, </span>
             </p>
           </div>
         </td>
         <td class="to-win">
           <div class="wins-container">
-            <p v-if="matchPicks">+${{calcPayout(matchPicks[fighter.name])}} each</p>
+            <p v-if="matchPicks">{{calcPercent(matchPicks[fighter.name])}}%</p>
             <p v-if="!matchPicks">-</p>
           </div>
         </td>
       </tr>
     </table>
+    <h3 class="status">Match status: {{status}}</h3>
     <div class="badge horizontal">
-      <p>Total Pot:</p>
-      <h2>${{ totalValue }}</h2>
-      <p>@ ${{ content.pick_value }} ea ({{totalPicks}} picks)</p>
+      <p>Total Picks:</p>
+      <h2>{{ totalPicks }}!</h2>
     </div>
   </div>
 </template>
@@ -84,6 +84,7 @@ export default {
   mixins: [crud],
   methods: {
     addBet(fighterName) {
+      console.log(this.content);
       if (this.currentPick === fighterName) {
         this.currentPick = "";
         this.$emit("pickSelected", {
@@ -116,6 +117,15 @@ export default {
         return 0;
       }
     },
+    calcPercent: function(picks) {
+      if (picks) {
+        return (picks.length / this.totalPicks * 100).toFixed(2)
+      }
+    },
+    printFirstName: function(name) {
+      var spaceIdx = name.indexOf(' ');
+      return name.substring(0, spaceIdx != -1 ? spaceIdx : name.length);
+    },
     checkWinner: function(name) {
       if (!this.content.winning_fighter) {
         return "";
@@ -143,13 +153,11 @@ export default {
       } else if (this.content.complete === 1) {
         return "COMPLETE";
       } else {
-        return "Open for wagers";
+        return "Open for picks";
       }
     },
     matchPicks: function() {
-      console.log(this.$root.store.active_data.picks);
       if (this.$root.store.active_data.picks) {
-        console.log('picks hase length');
         return this.$root.store.active_data.picks[
           "match-" + this.content.match_id
         ];
@@ -162,7 +170,9 @@ export default {
       let total = 0;
 
       for (let pickI in this.matchPicks) {
-        total += this.matchPicks[pickI].length;
+        if (this.matchPicks[pickI]) {
+          total += this.matchPicks[pickI].length;
+        }
       }
 
       return total;

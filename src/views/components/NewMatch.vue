@@ -13,8 +13,8 @@
             <input type="text" placeholder="fighter3" id="fighter3" v-model="fighters[2]" />
             <input type="text" placeholder="fighter4" id="fighter4" v-model="fighters[3]" />
           </div>
-          <label for="betAmount">Bet amount:</label>
-          <input type="text" placeholder="5" id="betAmount" v-model="betAmount" value="5" />
+          <label for="matchType">Match Type:</label>
+          <input type="text" placeholder="5" id="matchType" v-model="matchType" value="free for all" />
           <button @click="submitMatch" class="red">Create</button>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default {
     return {
       stage: "",
       fighters: [],
-      betAmount: 5
+      matchType: 'free for all'
     };
   },
   mixins: [crud],
@@ -45,13 +45,13 @@ export default {
       })
     },
     submitMatch: function() {
-      if (!this.stage || !this.betAmount || this.fighters.length < 2) return;
+      if (!this.stage || !this.matchType || this.fighters.length < 2) return;
 
       let theFighters = this.createFighterSchema(this.fighters);
       this.postMatch({
         stage: this.stage,
         fighters: theFighters,
-        pick_value: this.betAmount
+        match_type: this.matchType
       }).then(() => {
         this.$root.eventHub.$emit("activeModal", "");
         this.$root.eventHub.$emit("fetchMatches");
