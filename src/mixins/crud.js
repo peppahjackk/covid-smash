@@ -52,7 +52,8 @@ const crud = {
     },
     getMatches() {
       return axios.post('php/crud.php', {
-        table: 'matches'
+        table: 'matches',
+        filter: 'hidden=0'
       })
       .then((results)=>{
         if (typeof results.data === 'string') return [];
