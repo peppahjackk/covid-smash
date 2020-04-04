@@ -46,16 +46,17 @@
         <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
           <h2 class="bg-baseAccent">Choose your character!</h2>
+          <!-- <h2 class="bg-red">Friday April 3rd @ 9:00pm EST</h2> -->
         </div>
         <div class="matchups">
           <div
             class="matchup-wrapper"
-            v-for="(match) in $root.store.active_data.matches"
+            v-for="(match, i) in $root.store.active_data.matches"
             :key="match.match_id"
           >
-            <Matchup :content="match" :fightNumber="match.match_id" @pickSelected="selectPicks"></Matchup>
+            <Matchup :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
           </div>
-          <button class="blue back-to-top" @click="toTop">Back to betslip ^</button>
+          <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
       </div>
       <div ref="sidebar" class="sidebar">
@@ -91,7 +92,7 @@
               <td>{{pick.fighter}}</td>
             </tr>
           </table>
-          <p>Total picks: {{ $root.store.User.picks.length }}</p>
+          <p>Total picks: {{ userPicks.length }}</p>
         </div>
       </div>
     </div>
@@ -110,7 +111,11 @@ export default {
   },
   computed: {
     userPicks: function() {
-      return this.$root.store.User.picks;
+      if (this.$root.store.User && this.$root.store.User.picks) {
+        return this.$root.store.User.picks;
+      }
+
+      return [];
     },
     betsClosed: function() {
       if (this.$root.store.active_data.matches.length > 0) {

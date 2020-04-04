@@ -6,9 +6,9 @@
       <div class="matchups">
         <div 
         class="matchup-wrapper"
-        v-for="(match) in $root.store.active_data.matches"
+        v-for="(match, i) in $root.store.active_data.matches"
         :key="match.id">
-          <Matchup :content="match" :fightNumber="match.match_id" :betsOpen="betsOpen" admin></Matchup>
+          <Matchup :content="match" :fightNumber="i + 1" :betsOpen="betsOpen" admin></Matchup>
         </div>
       </div>
       <button class="blue" @click="addMatch()">Add Match</button>

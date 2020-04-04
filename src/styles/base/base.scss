@@ -43,6 +43,7 @@ div {
 
 ul {
   margin-top: 0;
+  padding-left: 15px;
 }
 
 .underline {
@@ -71,25 +72,25 @@ ul {
   background: $baseAccent2;
 }
 
-.red {
+.c-red {
   color: $red;
 }
-.green {
+.c-green {
   color: $green;
 }
-.blue {
+.c-blue {
   color: $blue;
 }
-.yellow {
+.c-yellow {
   color: $yellow;
 }
-.base {
+.c-base {
   color: $base;
 }
-.baseAccent {
+.c-baseAccent {
   color: $baseAccent;
 }
-.baseAccent2 {
+.c-baseAccent2 {
   color: $baseAccent2;
 }
 

@@ -1,5 +1,14 @@
 # bros-picks
 
+### TODO
+* Add basic admin function
+* rework current selections to highlight over match
+* eliminate pick then submit?
+* post pick right away then fetch. maybe add skipNextInterval when firing?
+* User auth
+* convert to websockets
+* stream & chat embed
+
 ## Project setup
 ```
 npm install

@@ -61,7 +61,7 @@
     <h3 class="status">Match status: {{status}}</h3>
     <div class="badge horizontal">
       <p>Total Picks:</p>
-      <h2>{{ totalPicks }}!</h2>
+      <h2>{{ totalPicks }}</h2>
     </div>
   </div>
 </template>
