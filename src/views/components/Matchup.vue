@@ -1,8 +1,9 @@
 <template>
   <div class="matchup-container" :class="[admin ? 'admin' : '', status]">
     <div class="table-header">
-      <h3 class="fight-label">Fight #{{fightNumber}} @ {{ content.stage }}</h3>
-      <h3 class="status">Match type: {{ content.match_type }}</h3>
+      <h3 class="fight-label">Fight #{{fightNumber}}</h3>
+      <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
+      <h3 v-if="content.stage || content.match_type" class="bg-yellow c-baseAccent">{{ content.match_type }} @ {{ content.stage }}</h3>
     </div>
     <table>
       <thead>

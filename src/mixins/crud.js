@@ -22,6 +22,8 @@ const crud = {
       return axios.post('php/crud.php', {
         req: 'insert',
         table: 'matches',
+        game: data.game,
+        system: data.system,
         stage: data.stage,
         fighters: theFighters,
         pick_value: data.pick_value

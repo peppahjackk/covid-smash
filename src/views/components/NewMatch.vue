@@ -4,6 +4,10 @@
       <div class="modal-body">
         <h1>New Match</h1>
         <div class="form">
+          <label for="stage">System:</label>
+          <input type="text" placeholder="stage" id="stage" v-model="system" />
+          <label for="stage">Game:</label>
+          <input type="text" placeholder="stage" id="stage" v-model="game" />
           <label for="stage">Stage:</label>
           <input type="text" placeholder="stage" id="stage" v-model="stage" />
           <label for="fighter1">Fighters:</label>
@@ -29,7 +33,9 @@ import crud from "@/mixins/crud";
 export default {
   data: function() {
     return {
+      game: "Super Smash Bros",
       stage: "",
+      system: "N64",
       fighters: [],
       matchType: 'free for all'
     };
@@ -49,7 +55,9 @@ export default {
 
       let theFighters = this.createFighterSchema(this.fighters);
       this.postMatch({
+        game: this.game,
         stage: this.stage,
+        system: this.system,
         fighters: theFighters,
         match_type: this.matchType
       }).then(() => {

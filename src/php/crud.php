@@ -77,13 +77,15 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
     echo 'Pick data logged';
   }
 } else if ($_POST["req"] === 'insert') {
+  $game = $_POST["game"];
   $stage = $_POST["stage"];
+  $system = $_POST["system"];
   $fighters = $_POST["fighters"];
   $pick_value = $_POST["pick_value"];
 
   $sql = "INSERT INTO " . $table . " " .
-    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden) " .
-    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0 )";
+    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden, game, system) " .
+    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0, '$game', '$system' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
