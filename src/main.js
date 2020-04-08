@@ -15,6 +15,8 @@ new Vue({
       User: {
         id: null,
         name: null,
+        referrer: null,
+        vnm: null,
         picks: [],
         matchType: null,
       },

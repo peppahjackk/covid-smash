@@ -50,6 +50,20 @@ const crud = {
         console.error(error)
       })
     },
+    putUser(data) {
+      let sqlData = data;
+      sqlData.table = 'users';
+      sqlData.req = 'put';
+      
+      return axios.post('php/crud.php', sqlData)
+      .then((results)=>{
+        console.log(results)
+        return results;
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    },
     getMatches() {
       return axios.post('php/crud.php', {
         table: 'matches',
@@ -102,7 +116,7 @@ const crud = {
           resolve(mockData.data)
         },time)
       })
-    }
+    },
   }
 }
 

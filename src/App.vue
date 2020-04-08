@@ -29,12 +29,15 @@ export default {
   },
   mounted: function() {
     let theUser = JSON.parse(localStorage.getItem("brosUser"));
+    let userLogged = JSON.parse(localStorage.getItem("brosUserLogged"));
 
     if (!theUser) {
       theUser = {
         id: null,
         name: null,
+        vnm: null,
         character: null,
+        referrer: null,
         picks: []
       };
     }
@@ -50,9 +53,17 @@ export default {
 
     window.setInterval(this.fetchMatches, 10000);
 
+    if (!userLogged) {
+      this.updateUser();
+    }
+
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
     });
+
+    this.$root.eventHub.$on("updateUser", () => {
+      this.updateUser();
+    })
   },
   methods: {
     fetchMatches: function() {
@@ -116,11 +127,32 @@ export default {
     resetUser: function() {
       this.$root.store.User.name = null;
       this.$root.store.User.character = null;
+      this.$root.store.User.referrer = null;
+      this.$root.store.User.vnm = null;
       this.$root.store.User.id = null;
       this.$root.store.User.picks = {};
+      localStorage.removeItem('brosUserLogged');
 
-      // TODO move this
-      localStorage.setItem("brosUser", JSON.stringify(this.$root.store.User));
+      this.$root.eventHub.$emit("updateUser");
+    },
+    updateUser: function() {
+      localStorage.setItem('brosUser', JSON.stringify(this.$root.store.User));
+
+      if (!this.$root.store.User.name) return;
+
+      let userLogged = JSON.parse(localStorage.getItem("brosUserLogged"));
+
+      this.putUser({
+        name: this.$root.store.User.name,
+        referrer: this.$root.store.User.referrer,
+        user_id: this.$root.store.User.id,
+        vnm: this.$root.store.User.vnm
+      }).then(results => {
+        if (!userLogged) {
+          localStorage.setItem("brosUserLogged", 'true')
+        }
+        console.log(results);
+      })
     }
   },
   components: {

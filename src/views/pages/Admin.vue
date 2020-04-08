@@ -17,14 +17,14 @@
       <table>
         <thead>
           <th>Name</th>
-          <th>Venmo</th>
+          <th>vnm</th>
         </thead>
         <tr 
         v-for="(user) in $root.store.active_data.users"
         :key="user.user_id" 
         >
           <td>{{user.name}}</td>
-          <td>{{user.venmo}}</td>
+          <td>{{user.vnm}}</td>
         </tr>
       </table>
     </div>

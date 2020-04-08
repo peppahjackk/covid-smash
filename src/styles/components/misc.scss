@@ -147,7 +147,17 @@ z-index: 2;
 
   button {
     width: 200px;
+    margin-bottom: 10px;
   }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: .2em;
 }
 
 .banner {

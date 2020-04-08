@@ -40,6 +40,8 @@ if ($table === 'matches') {
   $table = $tableMatches;
 } else if ($table === 'picks') {
   $table = $tablePicks;
+} else if ($table === 'users') {
+  $table = $tableUsers;
 } else {
   echo "ERROR: Invalid table specified" . $input_table;
 }
@@ -59,6 +61,20 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
     echo json_encode($rows);
   } else {
     echo "0 results";
+  }
+} else if ($table === $tableUsers) {
+  $name = $_POST["name"];
+  $user_id = $_POST["user_id"];
+  $referrer = $_POST["referrer"];
+
+  $sql = "REPLACE INTO " . $table . " " .
+    "(user_id, name, referrer ) " .
+    "VALUES ('$user_id', '$name', '$referrer' )";
+
+  if ($conn->query($sql) === FALSE) {
+    echo 'Error: ' . $sql . '<br>' . $conn->error;
+  } else {
+    echo 'Pick data logged';
   }
 } else if ($_POST["req"] === 'insert') {
   $stage = $_POST["stage"];
@@ -132,6 +148,7 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
 } else if ($_POST["req"] === 'replace') {
   $stage = $_POST["stage"];
   $fighter = $_POST["fighter"];
+  $referrer = $_POST["referrer"];
   $name = $_POST["name"];
   $pick_value = $_POST["pick_value"];
   $match_id = $_POST["match_id"];
@@ -139,8 +156,8 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $pick_id = $_POST["pick_id"];
 
   $sql = "REPLACE INTO " . $table . " " .
-    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter ) " .
-    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter' )";
+    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter, referrer ) " .
+    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter', '$referrer' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;

@@ -22,17 +22,18 @@
             <div class="match-rules content-left">
               <h3>Match Rules:</h3>
               <ul>
-                <li>A mix of both the N64 and Gamecube smash iterations</li>
+                <li>Game and system will be listed</li>
                 <li>All characters are CPU controlled (max level*)</li>
                 <li>4 player free-for-all*</li>
                 <li>6 stock* (no time limit)</li>
                 <li>Items are OFF*</li>
                 <li>Stage selection listed in match description</li>
-                <li>Last man/woman/pokemon standing wins</li>
+                <li>Last man/woman/pokemon standing wins*</li>
               </ul>
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 10th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg class="icon icon-twitch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.69 512" >
               <title>Asset 1</title>
@@ -46,7 +47,6 @@
         <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
           <h2 class="bg-baseAccent">Choose your character!</h2>
-          <!-- <h2 class="bg-red">Friday April 3rd @ 9:00pm EST</h2> -->
         </div>
         <div class="matchups">
           <div
@@ -140,8 +140,8 @@ export default {
       this.pendingPicks[matchName] = pick;
 
       this.$forceUpdate();
-      // let venmoName = this.$root.store.User.venmo;
-      // this.pendingPicks[matchName].venmo = venmoName;
+      // let vnmName = this.$root.store.User.vnm;
+      // this.pendingPicks[matchName].vnm = vnmName;
     },
     submitPicks: function() {
       console.log('Submit picks fired');
