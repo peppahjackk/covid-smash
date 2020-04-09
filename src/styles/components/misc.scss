@@ -48,7 +48,7 @@ button {
   margin-bottom: 3px;
 
   &.chosen, &.disabled {
-    background: $baseAccent;
+    background: $baseAccent !important;
 
     &::before {
       top: 0;
@@ -97,6 +97,10 @@ button {
   &.yellow {
     background: $yellow;
     color: $baseAccent;
+
+    &.disabled {
+      color: $white;
+    }
 
     &::before {
       background-color: $yellowDk;
