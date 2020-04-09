@@ -69,7 +69,7 @@
               <th>Fighter</th>
             </tr>
             <tr v-for="(pick) in pendingPicks" :key="'pending-' + pick.match_id">
-              <td>{{pick.match_id}}</td>
+              <td>{{pick.match_idx}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
           </table>
@@ -88,7 +88,7 @@
             <tr 
             v-for="(pick) in $root.store.User.picks"
             :key="pick.match_id + 'submitted'">
-              <td>{{pick.match_id}}</td>
+              <td>{{pick.match_idx}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
           </table>

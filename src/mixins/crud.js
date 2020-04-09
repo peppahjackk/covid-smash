@@ -26,7 +26,8 @@ const crud = {
         system: data.system,
         stage: data.stage,
         fighters: theFighters,
-        pick_value: data.pick_value
+        pick_value: data.pick_value,
+        match_idx: data.match_idx
       })
       .then((results)=>{
         console.log(results)

@@ -53,13 +53,16 @@ export default {
     submitMatch: function() {
       if (!this.stage || !this.matchType || this.fighters.length < 2) return;
 
+      let nextMatchIdx = this.$root.store.active_data.matches.length + 1;
+
       let theFighters = this.createFighterSchema(this.fighters);
       this.postMatch({
         game: this.game,
         stage: this.stage,
         system: this.system,
         fighters: theFighters,
-        match_type: this.matchType
+        match_type: this.matchType,
+        match_idx: nextMatchIdx
       }).then(() => {
         this.$root.eventHub.$emit("activeModal", "");
         this.$root.eventHub.$emit("fetchMatches");

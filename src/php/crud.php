@@ -82,10 +82,11 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $system = $_POST["system"];
   $fighters = $_POST["fighters"];
   $pick_value = $_POST["pick_value"];
+  $match_idx = $_POST["match_idx"];
 
   $sql = "INSERT INTO " . $table . " " .
-    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden, game, system) " .
-    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0, '$game', '$system' )";
+    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden, game, system, match_idx) " .
+    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0, '$game', '$system', '$match_idx' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
@@ -154,12 +155,13 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $name = $_POST["name"];
   $pick_value = $_POST["pick_value"];
   $match_id = $_POST["match_id"];
+  $match_idx = $_POST["match_idx"];
   $user_id = $_POST["user_id"];
   $pick_id = $_POST["pick_id"];
 
   $sql = "REPLACE INTO " . $table . " " .
-    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter, referrer ) " .
-    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter', '$referrer' )";
+    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter, referrer, match_idx ) " .
+    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter', '$referrer', '$match_idx' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;

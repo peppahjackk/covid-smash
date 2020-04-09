@@ -101,6 +101,7 @@ export default {
       this.$emit("pickSelected", {
         user_id: this.$root.store.User.id,
         match_id: this.content.match_id,
+        match_idx: this.fightNumber,
         name: this.$root.store.User.name,
         pick_value: this.content.pick_value,
         net_value: 0,

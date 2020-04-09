@@ -106,6 +106,10 @@ export default {
             }
           }
 
+          userPicks = userPicks.sort((a,b) => {
+            return a.match_id - b.match_id;
+          })
+
           this.$root.store.active_data.picks = matchPicks;
           this.$root.store.User.picks = userPicks;
           this.$root.store.active_data.matches = results;
