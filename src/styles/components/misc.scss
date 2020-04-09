@@ -93,6 +93,15 @@ button {
       background-color: $redDk;
     }
   }
+
+  &.yellow {
+    background: $yellow;
+    color: $baseAccent;
+
+    &::before {
+      background-color: $yellowDk;
+    }
+  }
 }
 
 .modal {

@@ -3,7 +3,7 @@
     <div class="table-header">
       <h3 class="fight-label">Fight #{{fightNumber}}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
-      <h3 v-if="content.stage || content.match_type" class="bg-yellow c-baseAccent">{{ content.match_type }} @ {{ content.stage }}</h3>
+      <h3 v-if="content.stage || content.match_type" class="bg-baseAccent2">{{ content.match_type }} @ {{ content.stage }}</h3>
     </div>
     <table>
       <thead>
@@ -20,7 +20,10 @@
         <td v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
-            :class="[status === 'Open for picks' ? '' : 'disabled', currentPick === fighter.name ? 'chosen' : '', matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '']"
+            :class="[status === 'Open for picks' ? '' : 'disabled',
+            currentPick === fighter.name ? 'chosen' : '',
+            matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
+            $root.COLORS_NAME[i]]"
           >Pick</button>
         </td>
         <td v-if="admin">

@@ -11,6 +11,7 @@ new Vue({
   data: {
     eventHub: eventHub,
     COLORS: ['#ce1000', '#0b418d', '#ffca00', '#2a844a'],
+    COLORS_NAME: ['red', 'blue', 'yellow', 'green'],
     store: {
       activeView: 'pick',
       User: {
