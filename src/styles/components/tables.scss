@@ -23,6 +23,20 @@ table {
   h1,h2,h3,h4,h5,p,li,div {
     margin: 0;
   }
+
+  &.condensed {
+    tr {
+      height: 30px;
+    }
+  }
+
+  &.results {
+    tr {
+      &:nth-child(even) {
+        background-color: rgb(20,20,20);
+      }
+    }
+  }
 }
 
 tr {

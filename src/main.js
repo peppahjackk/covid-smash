@@ -12,6 +12,7 @@ new Vue({
     eventHub: eventHub,
     COLORS: ['#ce1000', '#0b418d', '#ffca00', '#2a844a'],
     store: {
+      activeView: 'pick',
       User: {
         id: null,
         name: null,
@@ -22,6 +23,9 @@ new Vue({
       },
       active_data: {
         matches: [],
+      },
+      archive_data: {
+        matches: []
       }
     },
   },

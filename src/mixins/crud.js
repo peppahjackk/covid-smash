@@ -67,12 +67,20 @@ const crud = {
         console.error(error)
       })
     },
-    getMatches() {
-      return axios.post('php/crud.php', {
+    getMatches(archive = false) {
+      let sqlConfig = {
         table: 'matches',
-        filter: 'hidden=0',
-        sort: 'match_id ASC'
-      })
+        sort: 'match_id ASC',
+        filter: 'hidden=0'
+      }
+
+      if (archive) {
+        sqlConfig.filter = 'hidden=1';
+      }
+
+      console.log(sqlConfig);
+
+      return axios.post('php/crud.php', sqlConfig)
       .then((results)=>{
         if (typeof results.data === 'string') return [];
 

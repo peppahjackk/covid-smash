@@ -9,7 +9,7 @@
           <div class="intro-text content bg-baseAccent">
             <h3>Ever since the COVID-19 isolation period began, the landscape of indoors future of spectator sports has changed forever. We bring you all the rage: CPU controlled Super Smash Bros. matches! Before the fights begin, pick who you think will come out on top of the bout.</h3>
           </div>
-          
+
           <div class="content flex-content flex-top">
             <div class="content-left">
               <h3>How to play:</h3>
@@ -35,20 +35,41 @@
           </div>
           <h2 class="bg-yellow c-baseAccent">Matches are Friday April 10th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
-            <svg class="icon icon-twitch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.69 512" >
+            <svg
+              class="icon icon-twitch"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 490.69 512"
+            >
               <title>Asset 1</title>
-              <path d="M0,89.07V445.21H122.65V512h67l66.86-66.82H356.84l133.85-133.5V0H33.43ZM78,44.48h368V289.37L368,367.27H245.31L178.45,434V367.27H78Z" style="fill: #673ab7" />
+              <path
+                d="M0,89.07V445.21H122.65V512h67l66.86-66.82H356.84l133.85-133.5V0H33.43ZM78,44.48h368V289.37L368,367.27H245.31L178.45,434V367.27H78Z"
+                style="fill: #673ab7"
+              />
               <path d="M200.75,133.59h44.58V267.14H200.75Z" style="fill: #673ab7" />
               <path d="M323.37,133.59H368V267.14H323.37Z" style="fill: #673ab7" />
             </svg>
-            <h2>Watch the matches on <a href="https://www.twitch.tv/dietwolfcola" target="_blank" rel="noreferrer" >our Twitch stream.</a></h2>
+            <h2>
+              Watch the matches on
+              <a
+                href="https://www.twitch.tv/dietwolfcola"
+                target="_blank"
+                rel="noreferrer"
+              >our Twitch stream.</a>
+            </h2>
           </div>
         </div>
         <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
-          <h2 class="bg-baseAccent">Choose your character!</h2>
+          <h2
+            @click="$root.store.activeView = 'pick'"
+            :class="[$root.store.activeView === 'pick' ? 'bg-baseAccent' : '']"
+          >Pick some Winners</h2>
+          <h2
+            @click="$root.store.activeView = 'archive'"
+            :class="[$root.store.activeView === 'archive' ? 'bg-baseAccent' : '']"
+          >Past Results</h2>
         </div>
-        <div class="matchups">
+        <div class="matchups" v-show="$root.store.activeView === 'pick'">
           <div
             class="matchup-wrapper"
             v-for="(match, i) in $root.store.active_data.matches"
@@ -58,6 +79,36 @@
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
+        <div class="archive" v-show="$root.store.activeView === 'archive'">
+          <div class="matchup-wrapper">
+            <table class="results condensed">
+              <thead>
+                <th>Winner</th>
+                <th>Match Type</th>
+                <th>Stage</th>
+                <th>Fighters</th>
+              </thead>
+              <tr
+                class="result-wrapper"
+                v-for="(match) in $root.store.archive_data.matches"
+                :key="'match-archive-' + match.match_id"
+              >
+                <td>{{ match.winning_fighter }}</td>
+                <td>{{ match.match_type }}</td>
+                <td>{{ match.stage }}</td>
+                <td>
+                  <span
+                    v-for="(fighter) in match.fighters"
+                    :key="'archive-' + match.match_id + fighter.name"
+                  >{{ fighter.name }}  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!-- <div class="standings" v-show="$root.store.activeView === 'standings'">
+          
+        </div> -->
       </div>
       <div ref="sidebar" class="sidebar">
         <h3>Your picks:</h3>
@@ -78,16 +129,12 @@
         </div>
         <div class="sidebar-picks-container">
           <h4>SUBMITTED</h4>
-          <table
-            class="sidebar-pick-wrapper"
-          >
+          <table class="sidebar-pick-wrapper">
             <tr>
               <th>Match</th>
               <th>Fighter</th>
             </tr>
-            <tr 
-            v-for="(pick) in $root.store.User.picks"
-            :key="pick.match_id + 'submitted'">
+            <tr v-for="(pick) in $root.store.User.picks" :key="pick.match_id + 'submitted'">
               <td>{{pick.match_idx}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
@@ -144,7 +191,7 @@ export default {
       // this.pendingPicks[matchName].vnm = vnmName;
     },
     submitPicks: function() {
-      console.log('Submit picks fired');
+      console.log("Submit picks fired");
       for (let pick in this.pendingPicks) {
         let pickIdx = Object.keys(this.pendingPicks).indexOf(pick);
         let lastPick = false;
@@ -173,7 +220,7 @@ export default {
 
       window.scrollTo({
         top: sidebarBox.top,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
   },
@@ -182,7 +229,7 @@ export default {
   },
   watch: {
     pendingPicks() {
-      console.log('pending picks changed');
+      console.log("pending picks changed");
     }
   }
 };

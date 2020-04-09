@@ -50,6 +50,7 @@ export default {
     });
 
     this.fetchMatches();
+    this.fetchArchive();
 
     window.setInterval(this.fetchMatches, 10000);
 
@@ -126,6 +127,11 @@ export default {
       return this.getPicks(match_ids).then(results => {
         return results;
       });
+    },
+    fetchArchive: function() {
+      this.getMatches(true).then(results => {
+        this.$root.store.archive_data.matches = results;
+      })
     },
     // TODO move this to a mixin or something
     resetUser: function() {
