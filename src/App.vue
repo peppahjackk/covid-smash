@@ -3,7 +3,7 @@
     <div v-if="$root.store.User.name" class="banner bg-blue">
       <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
     </div>
-    <Dashboard></Dashboard>
+    <Dashboard v-if="!$root.store.User.name === 'rustyM' || !$root.store.User.name === 'Theo'"></Dashboard>
     <Admin v-if="$root.store.User.name === 'rustyM' || $root.store.User.name === 'Theo'"></Admin>
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
@@ -109,6 +109,13 @@ export default {
 
           userPicks = userPicks.sort((a,b) => {
             return a.match_id - b.match_id;
+          })
+
+          results = results.map((element) => {
+            if (isNaN(+element)) {
+              return element
+            }
+            return +element
           })
 
           this.$root.store.active_data.picks = matchPicks;

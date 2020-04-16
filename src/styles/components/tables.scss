@@ -60,6 +60,33 @@ tr {
   }
 }
 
+.match-admin-row {
+  td {
+    border-bottom-color: $yellow;
+  }
+  &.disabled {
+    td {
+      border-bottom-color: $baseAccent;
+    }
+
+    &.icon-save {
+      path {
+        fill: $baseAccent2;
+      }
+    }
+
+    input[type="text"] {
+      border-color: $base;
+    }
+  }
+  
+  input[type="text"] {
+    border-color: $white;
+    padding: 4px;
+    font-size: 14px;
+  }
+}
+
 .fight-label {
   background: $blue;
 }
@@ -68,6 +95,7 @@ th {
   background: $baseAccent;
   border-bottom: 1px solid $baseAccent;
 }
+
 td {
   border-bottom: 1px solid $baseAccent;
 
@@ -75,6 +103,8 @@ td {
     padding: 0 6px 0 3px;
   }
 }
+
+
 
 .sidebar {
   table {

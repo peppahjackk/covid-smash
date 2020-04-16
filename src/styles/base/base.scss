@@ -31,6 +31,12 @@ span {
   color: inherit;
 }
 
+input {
+  background-color: $base;
+  color: $white;
+  border: 1px solid $baseAccent;
+}
+
 h1 {
   margin-bottom: .35em;
   line-height: 1.1;

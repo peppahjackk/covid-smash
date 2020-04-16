@@ -4,6 +4,7 @@ import App from './App.vue'
 import styles from './styles/main.scss'; // eslint-disable-line no-unused-vars
 
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 var eventHub = new Vue();
 
