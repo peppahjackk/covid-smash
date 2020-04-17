@@ -108,10 +108,19 @@ const crud = {
         filter: `match_id in ${match_ids}`
       })
       .then((results)=>{
-        return results.data;
+        return results.data
       })
       .catch((error)=>{
         console.error(error)
+      })
+    },
+    deleteRow(data) {
+      return axios.post('php/crud.php', data)
+      .then((results) => {
+        return results.data;
+      })
+      .catch((error)=>{
+        console.error(error);
       })
     },
     getData_FAKE(mockData, time = 0) {

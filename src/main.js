@@ -21,15 +21,15 @@ new Vue({
         referrer: null,
         vnm: null,
         picks: [],
-        matchType: null,
+        matchType: null
       },
       active_data: {
-        matches: [],
+        matches: []
       },
       archive_data: {
         matches: []
       }
     },
   },
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')

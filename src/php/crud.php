@@ -198,6 +198,16 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   } else {
     echo 'Pick data logged';
   }
+} else if ($_POST["req"] === 'delete') {
+  
+  $sql = "DELETE FROM " . $table . $filter;
+
+  if ($conn->query($sql) === FALSE) {
+    echo 'Error: ' . $sql . '<br>' . $conn->error;
+  } else {
+    echo 'Row Deleted';
+  }
+  exit;
 }
 
 exit;
