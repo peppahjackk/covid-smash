@@ -81,12 +81,11 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $stage = $_POST["stage"];
   $system = $_POST["system"];
   $fighters = $_POST["fighters"];
-  $pick_value = $_POST["pick_value"];
   $match_idx = $_POST["match_idx"];
 
   $sql = "INSERT INTO " . $table . " " .
-    "(stage, fighters, in_progress, winning_fighter, winning_picker, pick_value, complete, hidden, game, system, match_idx) " .
-    "VALUES ( '$stage', '$fighters', null, null, null, '$pick_value', 0, 0, '$game', '$system', '$match_idx' )";
+    "(stage, fighters, in_progress, winning_fighter, complete, hidden, game, system, match_idx) " .
+    "VALUES ( '$stage', '$fighters', null, null, 0, 0, '$game', '$system', '$match_idx' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
@@ -96,20 +95,52 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
 } else if ($_POST["req"] === 'update') {
   $updateString = '';
 
+  if (isset($_POST["match_idx"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'match_idx = ' . json_encode($_POST["match_idx"]);
+  }
+
+  if (isset($_POST["system"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'system = ' . json_encode($_POST["system"]);
+  }
+
+  if (isset($_POST["game"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'game = ' . json_encode($_POST["game"]);
+  }
+
+  if (isset($_POST["stage"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'stage = ' . json_encode($_POST["stage"]);
+  }
+
+  if (isset($_POST["match_type"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'match_type = ' . json_encode($_POST["match_type"]);
+  }
+
   if (isset($_POST["in_progress"])) {
     if (strlen($updateString) > 0) {
       $updateString .= ', ';
     }
 
     $updateString .= 'in_progress = "' . json_encode($_POST["in_progress"]) . '"';
-  }
-
-  if (isset($_POST["complete"])) {
-    if (strlen($updateString) > 0) {
-      $updateString .= ', ';
-    }
-
-    $updateString .= 'complete = ' . json_encode($_POST["complete"]);
   }
 
   if (isset($_POST["hidden"])) {
@@ -120,22 +151,22 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
     $updateString .= 'hidden = ' . json_encode($_POST["hidden"]);
   }
 
-  if (isset($_POST["winning_fighter"])) {
+  if (isset($_POST["complete"])) {
     if (strlen($updateString) > 0) {
       $updateString .= ', ';
     }
 
-    $updateString .= 'winning_fighter = ' . json_encode($_POST["winning_fighter"]);
+    $updateString .= 'complete = ' . json_encode($_POST["complete"]);
   }
 
-  if (isset($_POST["winning_picker"])) {
+
+  if (isset($_POST["show_in_standings"])) {
     if (strlen($updateString) > 0) {
       $updateString .= ', ';
     }
 
-    $updateString .= 'winning_picker = ' . json_encode($_POST["winning_picker"]);
+    $updateString .= 'show_in_standings = ' . json_encode($_POST["show_in_standings"]);
   }
-
 
   if ($errorMSG == "") {
     $sqlSet = "UPDATE " . $table . " SET " . $updateString . $filter . $sort . $limit;
@@ -153,15 +184,14 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $fighter = $_POST["fighter"];
   $referrer = $_POST["referrer"];
   $name = $_POST["name"];
-  $pick_value = $_POST["pick_value"];
   $match_id = $_POST["match_id"];
   $match_idx = $_POST["match_idx"];
   $user_id = $_POST["user_id"];
   $pick_id = $_POST["pick_id"];
 
   $sql = "REPLACE INTO " . $table . " " .
-    "(pick_id, match_id, user_id, name, pick_value, net_value, fighter, referrer, match_idx ) " .
-    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$pick_value', '$net_value', '$fighter', '$referrer', '$match_idx' )";
+    "(pick_id, match_id, user_id, name, net_value, fighter, referrer, match_idx ) " .
+    "VALUES ( '$pick_id', '$match_id', '$user_id', '$name', '$net_value', '$fighter', '$referrer', '$match_idx' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;

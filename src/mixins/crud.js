@@ -6,7 +6,7 @@ const crud = {
       let sqlData = data;
       sqlData.req = 'update';
       sqlData.table = 'matches';
-      
+
       return axios.post('php/crud.php', sqlData)
       .then((results)=>{
         console.log(results)
@@ -26,7 +26,6 @@ const crud = {
         system: data.system,
         stage: data.stage,
         fighters: theFighters,
-        pick_value: data.pick_value,
         match_idx: data.match_idx
       })
       .then((results)=>{
@@ -87,8 +86,7 @@ const crud = {
         results.data.forEach((match)=>{
           match.fighters = JSON.parse(match.fighters);
           match.in_progress = parseInt(match.in_progress);
-          match.completed = parseInt(match.completed);
-          match.pick_value = parseInt(match.pick_value);
+          match.complete = parseInt(match.complete);
         })
         
         return results.data;

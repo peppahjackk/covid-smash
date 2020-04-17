@@ -106,22 +106,21 @@ export default {
         match_id: this.content.match_id,
         match_idx: this.fightNumber,
         name: this.$root.store.User.name,
-        pick_value: this.content.pick_value,
         net_value: 0,
         fighter: fighterName
       });
     },
-    calcPayout: function(picks) {
-      if (picks) {
-        return (
-          (this.content.pick_value * this.totalPicks -
-            picks.length * this.content.pick_value) /
-          picks.length
-        ).toFixed(2);
-      } else {
-        return 0;
-      }
-    },
+    // calcPayout: function(picks) {
+    //   if (picks) {
+    //     return (
+    //       (this.content.pick_value * this.totalPicks -
+    //         picks.length * this.content.pick_value) /
+    //       picks.length
+    //     ).toFixed(2);
+    //   } else {
+    //     return 0;
+    //   }
+    // },
     calcPercent: function(picks) {
       if (picks) {
         return (picks.length / this.totalPicks * 100).toFixed(2)
@@ -162,8 +161,8 @@ export default {
       }
     },
     matchPicks: function() {
-      if (this.$root.store.active_data.picks) {
-        return this.$root.store.active_data.picks[
+      if (this.$root.store.active_data.pickNames) {
+        return this.$root.store.active_data.pickNames[
           "match-" + this.content.match_id
         ];
       } else {

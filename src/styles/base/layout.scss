@@ -53,6 +53,22 @@ section {
   &:last-child {
     margin-bottom: 0;
   }
+
+  th {
+    font-size: 14px;
+
+    &.digit {
+      width: 30px;
+    }
+
+    &.short {
+      width: 40px;
+    }
+
+    &.medium {
+      width: 80px;
+    }
+  }
 }
 
 .title {
@@ -143,10 +159,6 @@ section {
   .flex-top {
     align-items: flex-start;
   }  
-
-  section.admin {
-    width: calc(100% - 300px);
-  }
 
   .sidebar {
     position: fixed;

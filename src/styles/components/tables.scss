@@ -62,14 +62,32 @@ tr {
 
 .match-admin-row {
   td {
-    border-bottom-color: $yellow;
+    &.short {
+      max-width: 40px;
+      input {
+        width: 40px;
+      }
+    }
+
+    &.digit {
+      max-width: 30px;
+      input {
+        width: 30px;
+      }
+    }
   }
+
+  td {
+    border-bottom-color: $yellow;
+    max-width: 80px;
+  }
+
   &.disabled {
     td {
       border-bottom-color: $baseAccent;
     }
 
-    &.icon-save {
+    .icon-save {
       path {
         fill: $baseAccent2;
       }
@@ -84,6 +102,13 @@ tr {
     border-color: $white;
     padding: 4px;
     font-size: 14px;
+    width: 130px;
+  }
+
+  td.medium {
+    input[type="text"] {
+      width: 80px;
+    }
   }
 }
 

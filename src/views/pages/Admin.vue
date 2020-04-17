@@ -9,16 +9,17 @@
       <div class="matchups">
         <table>
           <thead>
-            <th>Fight #</th>
-            <th>System</th>
+            <th class="short">Id</th>
+            <th class="digit">#</th>
+            <th class="medium">System</th>
             <th>Game</th>
             <th>Stage</th>
             <th>Rules</th>
             <th>Fighters</th>
-            <th>In Progress</th>
-            <th>Complete</th>
-            <th>Hidden</th>
-            <th>Hide from Standings</th>
+            <th class="short">Bets</th>
+            <th class="short">Complete</th>
+            <th class="short">Standings</th>
+            <th class="short">Archive</th> 
             <th>Actions</th>
           </thead>
           <MatchAdmin
@@ -28,19 +29,24 @@
             :fightNumber="i + 1"
             :key="match.id"
           ></MatchAdmin>
+          <tr>
+            <td colspan="11">
+              <button @click="addMatch">+Add Match</button></td>
+          </tr>
         </table>
       </div>
-      <button class="blue" @click="addMatch()">Add Match</button>
     </div>
     <div class="user-list">
       <table>
         <thead>
+          <th>Match Id</th>
           <th>Name</th>
-          <th>vnm</th>
+          <th>Fighter</th>
         </thead>
-        <tr v-for="(user) in $root.store.active_data.users" :key="user.user_id">
-          <td>{{user.name}}</td>
-          <td>{{user.vnm}}</td>
+        <tr v-for="(pick) in $root.store.active_data.picks" :key="pick.pick_id">
+          <td>{{pick.match_id}}</td>
+          <td>{{pick.name}}</td>
+          <td>{{pick.fighter}}</td>
         </tr>
       </table>
     </div>
@@ -95,6 +101,9 @@ export default {
         this.updating = false;
 
         this.$root.eventHub.$emit("fetchMatches");
+        this.$root.eventHub.$on('fetchMatches_COMPLETE', () => {
+          this.$forceUpdate();
+        })
       });
     }
   },

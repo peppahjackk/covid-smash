@@ -1,24 +1,39 @@
 <template>
   <tr class="match-admin-row" :class="{ disabled: !isEditing }">
-    <td><input type="text" v-model="matchData.match_idx" :disabled="!isEditing" /></td>
-    <td>
-			<input type="text" v-model="matchData.stage" :disabled="!isEditing" />
+    <td class="short">
+      {{ matchData.match_id }}
+    </td>
+    <td class="digit">
+      <input type="text" v-model="matchData.match_idx" :disabled="!isEditing" />
+    </td>
+    <td class="medium">
+			<input type="text" v-model="matchData.system" :disabled="!isEditing" />
 		</td>
-    <td>{{ content.game }}</td>
-    <td>{{ content.stage }}</td>
-    <td>{{ content.match_type }}</td>
+    <td>
+      <input type="text" v-model="matchData.game" :disabled="!isEditing" />
+    </td>
+    <td>
+      <input type="text" v-model="matchData.stage" :disabled="!isEditing" />
+    </td>
+    <td>
+      <input type="text" v-model="matchData.match_type" :disabled="!isEditing" />
+    </td>
     <td>
       <!-- <input type="text" v-model="fighters" :disabled="isEditing" /> -->
       fighters
     </td>
-    <td class="bool">
-      <input type="checkbox" v-model="matchData.in_progress" :disabled="!isEditing" />
+   <td class="short">
+      {{ matchData.in_progress ? 'X' : 'O' }}
     </td>
-    <td>
+    <td class="short">
 			<input type="checkbox" v-model="matchData.complete" :disabled="!isEditing" />
 		</td>
-    <td></td>
-    <td></td>
+    <td class="short">
+			<input type="checkbox" v-model="matchData.show_in_standings" :disabled="!isEditing" />
+    </td>
+    <td class="short">
+			<input type="checkbox" v-model="matchData.hidden" :disabled="!isEditing" />
+    </td>
     <td>
       <div class="action-container">
         <div
@@ -32,7 +47,7 @@
             <path d="M309.51,55a18.74,18.74,0,0,0-18.73,18.74V112a18.74,18.74,0,1,0,37.47,0V73.75A18.74,18.74,0,0,0,309.51,55Z" />
           </svg>
         </div>
-        <div @click="ON_DELETE">
+        <!-- <div @click="ON_DELETE">
 					<svg class="icon icon-default icon-trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 418.17 512">
 						<title>icon-trash</title>
 						<path d="M416.88,114.44,405.57,80.55A31.52,31.52,0,0,0,375.63,59h-95V28a28.06,28.06,0,0,0-28-28h-87a28.06,28.06,0,0,0-28,28V59h-95A31.54,31.54,0,0,0,12.6,80.55L1.3,114.44a25.37,25.37,0,0,0,24.06,33.4H37.18l26,321.6A46.54,46.54,0,0,0,109.29,512H314.16a46.52,46.52,0,0,0,46.1-42.56l26-321.6h6.54a25.38,25.38,0,0,0,24.07-33.4ZM167.56,30h83.06V59H167.56Zm162.8,437a16.36,16.36,0,0,1-16.2,15H109.29a16.36,16.36,0,0,1-16.2-15L67.27,147.84h288.9ZM31.79,117.84l9.27-27.79A1.56,1.56,0,0,1,42.55,89H375.63a1.55,1.55,0,0,1,1.48,1.07l9.27,27.79Z"/>
@@ -40,17 +55,20 @@
 						<path d="M120.57,451.79a15,15,0,0,0,15,14.19c.28,0,.56,0,.83,0a15,15,0,0,0,14.16-15.79l-14.75-270.4a15,15,0,1,0-30,1.63Z"/>
 						<path d="M209.25,466a15,15,0,0,0,15-15V180.58a15,15,0,0,0-30,0V451A15,15,0,0,0,209.25,466Z"/>
 					</svg>
-        </div>
+        </div> -->
       </div>
     </td>
   </tr>
 </template>
 
 <script>
+import crud from '../../mixins/crud';
+
 export default {
   props: {
     content: Object
   },
+  mixins: [crud],
   data: function() {
     return {
       isEditing: false,
@@ -63,25 +81,44 @@ export default {
     ON_SAVE: function(e) {
       console.log("save: ", e);
       this.hasEdited = false;
-			console.log(this.matchData);
-			this.isEditing = !this.isEditing;
+      this.isEditing = !this.isEditing;
+
+
+      let updatedMatchData = {
+        filter: `match_id=${this.content.match_id}`
+      };
+
+
+      let matchDataKeys = Object.keys(this.matchData);
+
+      for (const key of matchDataKeys) {
+        if (this.matchData[key] != this.content[key]) {
+          updatedMatchData[key] = this.matchData[key]
+        }
+      }
+
+
+      this.updateMatches(updatedMatchData).then(() => {
+        if (updatedMatchData.hidden && updatedMatchData.hidden == 1) {
+          location.reload();
+        }
+        this.$root.eventHub.$emit("fetchMatches");
+      });
     },
     ON_EDIT: function() {
-			console.log(this.isEditing);
 			if (this.isEditing) {
 				this.matchData = this.content;
 			}
       this.isEditing = !this.isEditing;
-      console.log(this.isEditing);
     },
     ON_DELETE: function(e) {
       console.log("delete: ", e);
     }
   },
   mounted: function() {
-    console.log(this.isEditing);
-		console.log(this.$root.store.active_data.matches);
-		this.matchData = this.content;
+    let tempObj = {};
+    
+    this.matchData = Object.assign(tempObj, this.content);
   }
 };
 </script>

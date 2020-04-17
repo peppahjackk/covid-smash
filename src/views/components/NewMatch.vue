@@ -17,8 +17,8 @@
             <input type="text" placeholder="fighter3" id="fighter3" v-model="fighters[2]" />
             <input type="text" placeholder="fighter4" id="fighter4" v-model="fighters[3]" />
           </div>
-          <label for="matchType">Match Type:</label>
-          <input type="text" placeholder="5" id="matchType" v-model="matchType" value="free for all" />
+          <label for="matchType">Special Rules:</label>
+          <input type="text" placeholder="" id="matchType" v-model="matchType" value="" />
           <button @click="submitMatch" class="red">Create</button>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default {
       stage: "",
       system: "N64",
       fighters: [],
-      matchType: 'free for all'
+      matchType: ''
     };
   },
   mixins: [crud],
@@ -51,7 +51,7 @@ export default {
       })
     },
     submitMatch: function() {
-      if (!this.stage || !this.matchType || this.fighters.length < 2) return;
+      if (!this.stage || this.fighters.length < 2) return;
 
       let nextMatchIdx = this.$root.store.active_data.matches.length + 1;
 

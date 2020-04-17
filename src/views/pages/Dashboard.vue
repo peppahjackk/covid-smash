@@ -208,13 +208,6 @@ export default {
         });
       }
     },
-    getTotalBet: function(picks) {
-      let total = 0;
-      for (let i in picks) {
-        total += parseInt(picks[i].pick_value);
-      }
-      return total;
-    },
     toTop: function() {
       let sidebarBox = this.$refs.sidebar.getBoundingClientRect();
 

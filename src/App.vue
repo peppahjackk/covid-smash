@@ -111,17 +111,26 @@ export default {
             return a.match_id - b.match_id;
           })
 
-          results = results.map((element) => {
-            if (isNaN(+element)) {
-              return element
+          // Numerical values come back as strings from the DB, lets coerce them into numbers
+          results = results.map((match) => {
+            let matchKeys = Object.keys(match);
+
+            for (let key of matchKeys) {
+              if (!isNaN(+match[key]) && match[key] != null && match[key] != '') {
+                match[key] = +match[key]
+              }
             }
-            return +element
+
+            return match
           })
 
-          this.$root.store.active_data.picks = matchPicks;
+          this.$root.store.active_data.pickNames = matchPicks;
+          this.$root.store.active_data.picks = pickResults;
           this.$root.store.User.picks = userPicks;
           this.$root.store.active_data.matches = results;
           this.$root.store.active_data.users = users;
+
+          this.$root.eventHub.$emit('fetchMatches_COMPLETE');
         });
       });
 
