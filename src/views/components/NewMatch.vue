@@ -46,7 +46,7 @@ export default {
       return fighterList.map((fighter)=>{
         return {
           name: fighter,
-          place: null
+          placement: null
         }
       })
     },

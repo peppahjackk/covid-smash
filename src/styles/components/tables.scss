@@ -103,6 +103,10 @@ tr {
     padding: 4px;
     font-size: 14px;
     width: 130px;
+
+    &.digit {
+      width: 20px;
+    }
   }
 
   td.medium {
@@ -126,6 +130,13 @@ td {
 
   &.pick {
     padding: 0 6px 0 3px;
+  }
+
+  &.fighters {
+    input {
+      width: 90px;
+      margin-bottom: 2px;
+    }
   }
 }
 

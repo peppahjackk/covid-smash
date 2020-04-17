@@ -135,6 +135,14 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
     $updateString .= 'match_type = ' . json_encode($_POST["match_type"]);
   }
 
+  if (isset($_POST["fighters"])) {
+    if (strlen($updateString) > 0) {
+      $updateString .= ', ';
+    }
+
+    $updateString .= 'fighters = ' . json_encode($_POST["fighters"]);
+  }
+
   if (isset($_POST["in_progress"])) {
     if (strlen($updateString) > 0) {
       $updateString .= ', ';

@@ -18,9 +18,13 @@
     <td>
       <input type="text" v-model="matchData.match_type" :disabled="!isEditing" />
     </td>
-    <td>
-      <!-- <input type="text" v-model="fighters" :disabled="isEditing" /> -->
-      fighters
+    <td class="fighters">
+      <div class="fighters-wrapper">
+        <div v-for="(fighter) in matchData.fighters" :key="matchData.match_id + fighter.name">
+          <input type="text" v-model="fighter.name" :disabled="!isEditing" />
+          <input class="digit" type="text" size="2" v-model="fighter.placement" :disabled="!isEditing" />
+        </div>
+      </div>
     </td>
    <td class="short">
       {{ matchData.in_progress ? 'X' : 'O' }}
@@ -92,11 +96,14 @@ export default {
       let matchDataKeys = Object.keys(this.matchData);
 
       for (const key of matchDataKeys) {
-        if (this.matchData[key] != this.content[key]) {
+        if (typeof this.matchData[key] === 'object') {
+          if (JSON.stringify(this.matchData[key]) != JSON.stringify(this.content[key])) {
+            updatedMatchData[key] = JSON.stringify(this.matchData[key]);
+          }
+        } else if (this.matchData[key] != this.content[key]) {
           updatedMatchData[key] = this.matchData[key]
         }
       }
-
 
       this.updateMatches(updatedMatchData).then(() => {
         if (updatedMatchData.hidden && updatedMatchData.hidden == 1) {
@@ -117,8 +124,11 @@ export default {
   },
   mounted: function() {
     let tempObj = {};
-    
+    let tempFighters = {};
+
+    // The matchData objects cannot be references to content, so lets make them unique
     this.matchData = Object.assign(tempObj, this.content);
+    this.matchData.fighters = Object.assign(tempFighters, this.content.fighters)
   }
 };
 </script>
