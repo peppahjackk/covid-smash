@@ -33,7 +33,7 @@
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 10th @ 9:00pm&nbsp;EST</h2>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 17th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"

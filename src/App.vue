@@ -3,7 +3,7 @@
     <div v-if="$root.store.User.name" class="banner bg-blue">
       <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
     </div>
-    <Dashboard v-if="!$root.store.User.name === 'rustyM' || !$root.store.User.name === 'Theo'"></Dashboard>
+    <Dashboard v-if="$root.store.User.name != 'rustyM' && $root.store.User.name != 'Theo'"></Dashboard>
     <Admin v-if="$root.store.User.name === 'rustyM' || $root.store.User.name === 'Theo'"></Admin>
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
