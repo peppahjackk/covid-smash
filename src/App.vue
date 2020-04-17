@@ -27,6 +27,16 @@ export default {
       activeModal: ""
     };
   },
+  // computed: {
+  //   isAdmin: function() {
+  //     return true;
+  //     if (this.$root.store.User.name != 'rustyM' || this.$root.store.User.name != 'Theo') {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  // },
   mounted: function() {
     let theUser = JSON.parse(localStorage.getItem("brosUser"));
     let userLogged = JSON.parse(localStorage.getItem("brosUserLogged"));
@@ -52,7 +62,15 @@ export default {
     this.fetchMatches();
     this.fetchArchive();
 
-    window.setInterval(this.fetchMatches, 10000);
+    // if (this.isAdmin) {
+    //   window.setInterval(()=>{
+    //     this.fetchMatches();
+    //     this.fetchArchive();
+    //   }, 10000);
+
+    // } else {
+      window.setInterval(this.fetchMatches, 10000);
+    // }
 
     if (!userLogged) {
       this.updateUser();
@@ -71,7 +89,9 @@ export default {
       console.log('Fetching Data...');
       // this.getData_FAKE(FAKE_MATCHES).then(results => {
         this.getMatches().then(results => {
+          console.log('Getmatches: ', results);
           this.fetchPicks(results).then(pickResults => {
+          console.log('FetchPicks: ', pickResults);
           let matchPicks = {};
           let userPicks = [];
           let users = {};

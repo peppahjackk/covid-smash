@@ -196,6 +196,7 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $match_idx = $_POST["match_idx"];
   $user_id = $_POST["user_id"];
   $pick_id = $_POST["pick_id"];
+  $net_value = 0;
 
   $sql = "REPLACE INTO " . $table . " " .
     "(pick_id, match_id, user_id, name, net_value, fighter, referrer, match_idx ) " .
