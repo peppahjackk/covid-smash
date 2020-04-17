@@ -114,6 +114,12 @@ section {
       fill: $white;
     }
   }
+
+  &.icon-trash {
+    path {
+      fill: $baseAccent2;
+    }
+  }
 }
 
 .disclaimer {

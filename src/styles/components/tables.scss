@@ -93,6 +93,12 @@ tr {
       }
     }
 
+    .icon-trash {
+      path {
+        fill: $white;
+      }
+    }
+
     input[type="text"] {
       border-color: $base;
     }
