@@ -87,6 +87,7 @@ const crud = {
           match.fighters = JSON.parse(match.fighters);
           match.in_progress = parseInt(match.in_progress);
           match.complete = parseInt(match.complete);
+          match.show_in_standings = parseInt(match.show_in_standings);
         })
         
         return results.data;

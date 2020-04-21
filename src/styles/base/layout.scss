@@ -142,6 +142,10 @@ section {
   margin-top: 32px;
 }
 
+.standings-wrapper {
+  margin-top: -3px;
+}
+
 @media screen and (min-width: $breakpoint-md) {
   .dashboard {
     .pick-wrapper {

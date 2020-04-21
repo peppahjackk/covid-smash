@@ -65,9 +65,9 @@
             :class="[$root.store.activeView === 'pick' ? 'bg-baseAccent' : '']"
           >Pick some Winners</h2>
           <h2
-            @click="$root.store.activeView = 'archive'"
-            :class="[$root.store.activeView === 'archive' ? 'bg-baseAccent' : '']"
-          >Past Results</h2>
+            @click="$root.store.activeView = 'standings'"
+            :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
+          >Standings</h2>
         </div>
         <div class="matchups" v-show="$root.store.activeView === 'pick'">
           <div
@@ -79,36 +79,28 @@
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
-        <div class="archive" v-show="$root.store.activeView === 'archive'">
+        <div class="standings" v-show="$root.store.activeView === 'standings'">
           <div class="matchup-wrapper">
-            <table class="results condensed">
-              <thead>
-                <th>Winner</th>
-                <th>Match Type</th>
-                <th>Stage</th>
-                <th>Fighters</th>
-              </thead>
-              <tr
-                class="result-wrapper"
-                v-for="(match) in $root.store.archive_data.matches"
-                :key="'match-archive-' + match.match_id"
-              >
-                <td>{{ match.winning_fighter }}</td>
-                <td>{{ match.match_type }}</td>
-                <td>{{ match.stage }}</td>
-                <td>
-                  <span
-                    v-for="(fighter) in match.fighters"
-                    :key="'archive-' + match.match_id + fighter.name"
-                  >{{ fighter.name }}  </span>
-                </td>
-              </tr>
-            </table>
+            <div class="inner-tab-wrapper pick-header">
+              <h2
+                @click="$root.store.activeTab = 'n64'"
+                :class="[$root.store.activeTab === 'n64' ? 'bg-baseAccent' : '']"
+                class="underline inner-tab-selection"
+              >N64</h2>
+              <h2
+                @click="$root.store.activeTab = 'gamecube'"
+                :class="[$root.store.activeTab === 'gamecube' ? 'bg-baseAccent' : '']"
+                class="underline inner-tab-selection"
+              >Gamecube</h2>
+            </div>
+            <Standings v-show="$root.store.activeTab === 'n64'" system="n64" game="super smash"></Standings>
+            <Standings
+              v-show="$root.store.activeTab === 'gamecube'"
+              system="gamecube"
+              game="super smash"
+            ></Standings>
           </div>
         </div>
-        <!-- <div class="standings" v-show="$root.store.activeView === 'standings'">
-          
-        </div> -->
       </div>
       <div ref="sidebar" class="sidebar">
         <h3>Your picks:</h3>
@@ -148,6 +140,7 @@
 
 <script>
 import Matchup from "@/views/components/Matchup";
+import Standings from "@/views/components/Standings";
 import crud from "@/mixins/crud";
 
 export default {
@@ -218,7 +211,8 @@ export default {
     }
   },
   components: {
-    Matchup
+    Matchup,
+    Standings
   },
   watch: {
     pendingPicks() {

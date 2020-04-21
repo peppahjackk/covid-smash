@@ -30,7 +30,7 @@ table {
     }
   }
 
-  &.results {
+  &.alternating {
     tr {
       &:nth-child(even) {
         background-color: rgb(20,20,20);
@@ -56,6 +56,27 @@ tr {
   &.winner {
     .fighter, .to-win, .bar-container {
       background: $green !important;
+    }
+  }
+}
+
+th {
+  background: $baseAccent;
+  border-bottom: 1px solid $baseAccent;
+  padding: 4px;
+}
+
+td {
+  border-bottom: 1px solid $baseAccent;
+
+  &.pick {
+    padding: 0 6px 0 3px;
+  }
+
+  &.fighters {
+    input {
+      width: 90px;
+      margin-bottom: 2px;
     }
   }
 }
@@ -125,27 +146,6 @@ tr {
 .fight-label {
   background: $blue;
 }
-
-th {
-  background: $baseAccent;
-  border-bottom: 1px solid $baseAccent;
-}
-
-td {
-  border-bottom: 1px solid $baseAccent;
-
-  &.pick {
-    padding: 0 6px 0 3px;
-  }
-
-  &.fighters {
-    input {
-      width: 90px;
-      margin-bottom: 2px;
-    }
-  }
-}
-
 
 
 .sidebar {
