@@ -15,7 +15,7 @@ new Vue({
     COLORS_NAME: ['red', 'blue', 'yellow', 'green'],
     store: {
       activeTab: 'n64',
-      activeView: 'pick',
+      activeView: 'home',
       User: {
         id: null,
         name: null,

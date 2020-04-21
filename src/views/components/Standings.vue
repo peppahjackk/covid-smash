@@ -2,6 +2,7 @@
   <div class="standings-wrapper">
     <table class="standings condensed alternating">
       <thead>
+        <th>Rank</th>
         <th>Fighter</th>
         <th>
           Placement
@@ -11,9 +12,10 @@
         <th>Avg Place</th>
       </thead>
       <tr
-        v-for="(fighter) in processStandings($root.store.archive_data.matches)"
+        v-for="(fighter, index) in processStandings($root.store.archive_data.matches)"
         :key="system + '-fighter-' + fighter.name"
       >
+        <td>{{ index + 1 }}</td>
         <td>{{ fighter.name }}</td>
         <td>{{ fighter.record[0] }} / {{ fighter.record[1] }} / {{ fighter.record[2] }} / {{ fighter.record[3] }}</td>
         <td> {{ fighter.record.reduce(reducer) }}

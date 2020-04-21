@@ -4,6 +4,9 @@ const crud = {
   methods: {
     updateMatches(data) {
       let sqlData = data;
+
+      if (sqlData.fighters) sqlData.fighters = JSON.stringify(sqlData.fighters);
+
       sqlData.req = 'update';
       sqlData.table = 'matches';
 
@@ -26,7 +29,8 @@ const crud = {
         system: data.system,
         stage: data.stage,
         fighters: theFighters,
-        match_idx: data.match_idx
+        match_idx: data.match_idx,
+        match_type: data.match_type
       })
       .then((results)=>{
         console.log(results)
@@ -76,8 +80,6 @@ const crud = {
       if (archive) {
         sqlConfig.filter = 'hidden=1';
       }
-
-      console.log(sqlConfig);
 
       return axios.post('php/crud.php', sqlConfig)
       .then((results)=>{

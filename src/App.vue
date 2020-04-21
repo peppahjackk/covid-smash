@@ -3,8 +3,8 @@
     <div v-if="$root.store.User.name" class="banner bg-blue">
       <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
     </div>
-    <Dashboard v-if="$root.store.User.name != 'rustyM' && $root.store.User.name != 'Theo'"></Dashboard>
-    <Admin v-if="$root.store.User.name === 'rustyM' || $root.store.User.name === 'Theo'"></Admin>
+    <Dashboard v-if="!isAdmin"></Dashboard>
+    <Admin v-if="isAdmin"></Admin>
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <Login v-if="!$root.store.User.name"></Login>
   </div>
@@ -24,19 +24,19 @@ export default {
   mixins: [crud],
   data: function() {
     return {
-      activeModal: ""
+      activeModal: "",
+      initialLoad: true
     };
   },
-  // computed: {
-  //   isAdmin: function() {
-  //     return true;
-  //     if (this.$root.store.User.name != 'rustyM' || this.$root.store.User.name != 'Theo') {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   }
-  // },
+  computed: {
+    isAdmin: function() {
+      if (this.$root.store.User.name === 'rustyM' || this.$root.store.User.name === 'Theo') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   mounted: function() {
     let theUser = JSON.parse(localStorage.getItem("brosUser"));
     let userLogged = JSON.parse(localStorage.getItem("brosUserLogged"));
@@ -151,6 +151,12 @@ export default {
           this.$root.store.active_data.users = users;
 
           this.$root.eventHub.$emit('fetchMatches_COMPLETE');
+
+          if (this.$root.store.active_data.matches.length <= 0 && !this.isAdmin && this.initialLoad) {
+            this.$root.store.activeView = 'standings';
+          }
+
+          this.initialLoad = false;
         });
       });
 

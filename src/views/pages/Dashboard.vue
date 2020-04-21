@@ -33,7 +33,7 @@
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 17th @ 9:00pm&nbsp;EST</h2>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 24th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"
@@ -61,15 +61,15 @@
         <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
           <h2
-            @click="$root.store.activeView = 'pick'"
-            :class="[$root.store.activeView === 'pick' ? 'bg-baseAccent' : '']"
+            @click="$root.store.activeView = 'home'"
+            :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
           >Pick some Winners</h2>
           <h2
             @click="$root.store.activeView = 'standings'"
             :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
           >Standings</h2>
         </div>
-        <div class="matchups" v-show="$root.store.activeView === 'pick'">
+        <div class="matchups" v-show="$root.store.activeView === 'home'">
           <div
             class="matchup-wrapper"
             v-for="(match, i) in $root.store.active_data.matches"

@@ -56,6 +56,7 @@ export default {
       let nextMatchIdx = this.$root.store.active_data.matches.length + 1;
 
       let theFighters = this.createFighterSchema(this.fighters);
+      
       this.postMatch({
         game: this.game,
         stage: this.stage,

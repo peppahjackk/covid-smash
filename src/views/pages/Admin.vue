@@ -7,8 +7,8 @@
     >{{ betsOpen ? 'Open': 'Close'}} bets</button>
     <div class="pick-header">
       <h2
-        @click="$root.store.activeView = 'pick'"
-        :class="[$root.store.activeView === 'pick' ? 'bg-baseAccent' : '']"
+        @click="$root.store.activeView = 'home'"
+        :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
       >Active Matches</h2>
       <h2
         @click="$root.store.activeView = 'archive'"
@@ -33,7 +33,7 @@
             <th>Actions</th>
           </thead>
           <MatchAdmin
-            v-show="$root.store.activeView === 'pick'"
+            v-show="$root.store.activeView === 'home'"
             class="matchup-wrapper"
             v-for="(match, i) in $root.store.active_data.matches"
             :content="match"
@@ -48,7 +48,7 @@
             :fightNumber="i + 1"
             :key="match.id"
           ></MatchAdmin>
-          <tr v-show="$root.store.activeView === 'pick'">
+          <tr v-show="$root.store.activeView === 'home'">
             <td colspan="11">
               <button @click="addMatch">+Add Match</button>
             </td>

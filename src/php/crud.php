@@ -82,10 +82,11 @@ if (empty($_POST["req"]) || $_POST["req"] === 'get') {
   $system = $_POST["system"];
   $fighters = $_POST["fighters"];
   $match_idx = $_POST["match_idx"];
+  $match_type = $_POST["match_type"];
 
   $sql = "INSERT INTO " . $table . " " .
-    "(stage, fighters, in_progress, winning_fighter, complete, hidden, game, system, match_idx) " .
-    "VALUES ( '$stage', '$fighters', null, null, 0, 0, '$game', '$system', '$match_idx' )";
+    "(stage, fighters, in_progress, winning_fighter, complete, hidden, game, system, match_idx, match_type) " .
+    "VALUES ( '$stage', '$fighters', null, null, 0, 0, '$game', '$system', '$match_idx', '$match_type' )";
 
   if ($conn->query($sql) === FALSE) {
     echo 'Error: ' . $sql . '<br>' . $conn->error;
