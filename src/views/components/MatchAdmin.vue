@@ -98,7 +98,7 @@ export default {
       for (const key of matchDataKeys) {
         if (typeof this.matchData[key] === 'object') {
           if (JSON.stringify(this.matchData[key]) != JSON.stringify(this.content[key])) {
-            updatedMatchData[key] = JSON.stringify(this.matchData[key]);
+            updatedMatchData[key] = this.matchData[key];
           }
         } else if (this.matchData[key] != this.content[key]) {
           updatedMatchData[key] = this.matchData[key]
@@ -138,11 +138,16 @@ export default {
   },
   mounted: function() {
     let tempObj = {};
-    let tempFighters = {};
 
     // The matchData objects cannot be references to content, so lets make them unique
     this.matchData = Object.assign(tempObj, this.content);
-    this.matchData.fighters = Object.assign(tempFighters, this.content.fighters)
+    this.matchData.fighters = [];
+
+    for (let fighter of this.content.fighters) {
+      
+      let newFighter = {};
+      this.matchData.fighters.push(Object.assign(newFighter, fighter));
+    }
   }
 };
 </script>
