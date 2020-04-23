@@ -79,6 +79,7 @@ const crud = {
 
       if (archive) {
         sqlConfig.filter = 'hidden=1';
+        sqlConfig.sort = 'match_id DESC';
       }
 
       return axios.post('php/crud.php', sqlConfig)

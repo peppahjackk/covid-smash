@@ -220,6 +220,37 @@ td {
   margin-right: 8px;
 }
 
+.user-list {
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid $baseAccent;
+}
+
+.user-header {
+  display: flex;
+}
+
+.user-info-header, .user-info-picks {
+  display: flex;
+  
+  & > div {
+    width: 25%;
+  }
+
+  border-bottom: 1px solid $baseAccent;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.user-info-header {
+  background: $baseAccent2;
+}
+
+
+
+
 @media screen and (min-width: $breakpoint-md) {
   .picker {
     display: block;

@@ -145,18 +145,23 @@ export default {
           })
 
           this.$root.store.active_data.pickNames = matchPicks;
-          this.$root.store.active_data.picks = pickResults;
-          this.$root.store.User.picks = userPicks;
           this.$root.store.active_data.matches = results;
+          this.$root.store.active_data.matchResults = this.filterMatchResults(results);
           this.$root.store.active_data.users = users;
+          this.$root.store.User.picks = userPicks;
+          this.$root.store.active_data.picks = this.filterPicks(pickResults);
 
           this.$root.eventHub.$emit('fetchMatches_COMPLETE');
 
-          if (this.$root.store.active_data.matches.length <= 0 && !this.isAdmin && this.initialLoad) {
-            this.$root.store.activeView = 'standings';
+
+          if (this.initialLoad) {
+            this.initialLoad = false;
+
+            if (!this.isAdmin && this.$root.store.active_data.matches.length <= 0) {
+              this.$root.store.activeView = 'standings';
+            }
           }
 
-          this.initialLoad = false;
         });
       });
 
@@ -172,7 +177,11 @@ export default {
     },
     fetchArchive: function() {
       this.getMatches(true).then(results => {
-        this.$root.store.archive_data.matches = results;
+        this.fetchPicks(results).then(pickResults => {
+          this.$root.store.archive_data.matches = results;
+          // this.$root.store.archive_data.matchResults = this.filterMatchResults(results);
+          this.$root.store.archive_data.picks = this.filterPicks(pickResults);
+        });
       })
     },
     // TODO move this to a mixin or something
@@ -205,6 +214,53 @@ export default {
         }
         console.log(results);
       })
+    },
+    filterPicks: function(picks) {
+      let pickerList = {};
+
+      for (let pick of picks) {
+        if (!pickerList[pick.name]) {
+          pickerList[pick.name] = [];
+        }
+
+        pickerList[pick.name].push(pick);
+      }
+
+      return pickerList;
+    },
+    filterMatchResults: function(matches) {
+      let matchResults = {};
+
+      for (let match of matches) {
+        if (match.complete == 0) continue;
+        if (match.complete) {
+          let newResults = {};
+          newResults = {
+            totalPicks: 0
+          };
+          for (let fighter of match.fighters) {
+            if (!this.$root.store.active_data.pickNames['match-' + match.match_id]) continue;
+            if (!this.$root.store.active_data.pickNames['match-' + match.match_id][fighter.name]) this.$root.store.active_data.pickNames['match-' + match.match_id][fighter.name] = [];
+            
+            let fighterPicks = this.$root.store.active_data.pickNames['match-' + match.match_id][fighter.name].length || 0;
+            newResults[fighter.name] = {
+              placement: parseInt(fighter.placement),
+              picks: fighterPicks,
+              toWin: 0
+            };
+
+            newResults.totalPicks += fighterPicks;
+          }
+
+          for (let fighter of match.fighters) {
+             newResults[fighter.name].toWin = (newResults.totalPicks - newResults[fighter.name].picks) * 5 / newResults[fighter.name].picks;
+          }
+
+          matchResults['match-' + match.match_id] = newResults;
+        }
+      }
+
+      return matchResults;
     }
   },
   components: {

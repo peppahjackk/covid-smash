@@ -25,10 +25,12 @@ new Vue({
         matchType: null
       },
       active_data: {
-        matches: []
+        matches: [],
+        matchResults: {}
       },
       archive_data: {
-        matches: []
+        matches: [],
+        matchResults: {}
       }
     },
   },
