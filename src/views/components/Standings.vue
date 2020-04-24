@@ -9,7 +9,10 @@
           <br />(1st / 2nd / 3rd / 4th)
         </th>
         <th>Total Matches</th>
-        <th>Avg Place</th>
+        <th>Points<br>
+        (1st / 2nd / 3rd / 4th)<br>
+        4 / 3 / 2 / 1
+        </th>
       </thead>
       <tr
         v-for="(fighter, index) in processStandings($root.store.archive_data.matches)"
@@ -19,7 +22,7 @@
         <td>{{ fighter.name }}</td>
         <td>{{ fighter.record[0] }} / {{ fighter.record[1] }} / {{ fighter.record[2] }} / {{ fighter.record[3] }}</td>
         <td> {{ fighter.record.reduce(reducer) }}
-        <td>{{ fighter.averagePlacement }}</td>
+        <td>{{ fighter.totalPoints }}</td>
       </tr>
     </table>
   </div>
@@ -71,20 +74,15 @@ export default {
         }
       });
 
-      console.log('fighterList :', fighterList);
-
       Object.keys(fighterList).forEach((fighter) => {
-          console.log(fighterList[fighter]);
         fighterList[fighter].averagePlacement = this.calculateAvgPlacement(fighterList[fighter]);
+        fighterList[fighter].totalPoints = this.calculatePoints(fighterList[fighter]);
         standings.push(fighterList[fighter]);
       });
 
-      console.log('standingsUnsorted :', standings);
-
       standings = standings.sort((a, b) => {
-          return a.averagePlacement - b.averagePlacement;
+          return b.totalPoints - a.totalPoints;
       });
-      console.log('standings :', standings);
 
       return standings;
     },
@@ -98,10 +96,16 @@ export default {
       );
 
       return Math.round((cumulativeFinish / totalFights) * 1e2) / 1e2;
+    },
+    calculatePoints: function(fighter) {
+      let newPoints = 0;
+
+      for (let i = 0; i < fighter.record.length; i++) {
+        newPoints += fighter.record[i] * ((i - 4) * -1);
+      }
+
+      return newPoints;
     }
-  },
-  mounted: function() {
-    console.log("mounted Standings");
   }
 };
 </script>

@@ -56,6 +56,10 @@ ul {
   text-decoration: underline;
 }
 
+.inline-b {
+  display: inline-block;
+}
+
 .bg-red {
   background: $red;
 }
@@ -98,6 +102,22 @@ ul {
 }
 .c-baseAccent2 {
   color: $baseAccent2;
+}
+
+.p-xs {
+  padding: $spacing-xs;
+}
+
+.p-sm {
+  padding: $spacing-sm;
+}
+
+.p-md {
+  padding: $spacing-md;
+}
+
+.p-lg {
+  padding: $spacing-lg;
 }
 
 @media screen and (min-width: $breakpoint-sm) {

@@ -20,7 +20,7 @@ class="user-list-row"
     <div>W</div>
     <div>Dollars</div>
     <div class="action-container">
-      <div @click="ON_PICK_DELETE(pick)">
+      <div @click="$emit('delete', pick)">
         <svg
           class="icon icon-default icon-trash"
           xmlns="http://www.w3.org/2000/svg"

@@ -21,12 +21,11 @@
           <thead>
             <th class="short">Id</th>
             <th class="digit">#</th>
-            <th class="medium">System</th>
-            <th>Game</th>
-            <th>Stage</th>
-            <th>Fighter / Place</th>
-            <th>Rules</th>
-            <th class="short">Bets</th>
+            <th>System<br>Game</th>
+            <th>Stage<br>Rules</th>
+            <th>Total Picks</th>
+            <th>Picks / Fighter / Placement</th>
+            <th class="medium">Picks<br>O: Open<br>X: Closed</th>
             <th class="short">Complete</th>
             <th class="short">Standings</th>
             <th class="short">Archive</th>
@@ -37,6 +36,7 @@
             class="matchup-wrapper"
             v-for="(match, i) in $root.store.active_data.matches"
             :content="match"
+            :pickNames="$root.store.active_data.pickNames"
             :fightNumber="i + 1"
             :key="match.id"
           ></MatchAdmin>
@@ -56,12 +56,13 @@
         </table>
       </div>
     </div>
-    <div class="user-list" v-if="$root.store.active_data.picks">
+    <div class="user-list" v-if="$root.store.active_data.picks && !$root.store.active_data.picks['undefined']">
         <UserPicks
           v-for="(picker) in Object.keys($root.store.active_data.picks)" 
           :key="'active-' + picker"
           :content="$root.store.active_data.picks[picker]"
-          :picker="picker"></UserPicks>
+          :picker="picker"
+          @delete="ON_PICK_DELETE"></UserPicks>
     </div>
   </section>
 </template>
@@ -87,6 +88,9 @@ export default {
         return 0;
       }
     }
+  },
+  mounted: function() {
+    console.log(this.$root.store.active_data.picks);
   },
   mixins: [crud],
   methods: {

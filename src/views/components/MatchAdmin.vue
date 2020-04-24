@@ -6,25 +6,25 @@
     <td class="digit">
       <input type="text" v-model="matchData.match_idx" :disabled="!isEditing" />
     </td>
-    <td class="medium">
-			<input type="text" v-model="matchData.system" :disabled="!isEditing" />
-		</td>
     <td>
+			<input type="text" v-model="matchData.system" :disabled="!isEditing" />
       <input type="text" v-model="matchData.game" :disabled="!isEditing" />
     </td>
     <td>
       <input type="text" v-model="matchData.stage" :disabled="!isEditing" />
+      <input type="text" v-model="matchData.match_type" :disabled="!isEditing" placeholder="default" />
+    </td>
+    <td>
+      <div v-if="pickNames && pickNames['match-' + matchData.match_id]">{{ picksReduce(pickNames['match-' + matchData.match_id]) }}</div>
     </td>
     <td class="fighters">
       <div class="fighters-wrapper">
         <div v-for="(fighter) in matchData.fighters" :key="matchData.match_id + fighter.name">
+          <h4 class="p-xs inline-b bg-blue" v-if="pickNames && pickNames['match-' + matchData.match_id] && pickNames['match-' + matchData.match_id][fighter.name]">{{  pickNames['match-' + matchData.match_id][fighter.name].length }}</h4>
           <input type="text" v-model="fighter.name" :disabled="!isEditing" />
           <input class="digit" type="text" size="2" v-model="fighter.placement" :disabled="!isEditing" />
         </div>
       </div>
-    </td>
-    <td>
-      <input type="text" v-model="matchData.match_type" :disabled="!isEditing" />
     </td>
    <td class="short">
       {{ matchData.in_progress ? 'X' : 'O' }}
@@ -67,12 +67,14 @@
 
 <script>
 import crud from '../../mixins/crud';
+import utils from '../../mixins/utils';
 
 export default {
   props: {
-    content: Object
+    content: Object,
+    pickNames: Object
   },
-  mixins: [crud],
+  mixins: [crud, utils],
   data: function() {
     return {
       isEditing: false,
@@ -134,6 +136,16 @@ export default {
         console.log(results);
         location.reload();
       })
+    },
+    picksReduce: function(picks) {
+      let totalPicks = 0;
+      if (typeof picks != 'object') return 'N/A';
+
+      for (let fighter of Object.keys(picks)) {
+        totalPicks += picks[fighter].length;
+      }
+
+      return totalPicks;
     }
   },
   mounted: function() {
