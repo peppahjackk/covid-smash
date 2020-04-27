@@ -248,6 +248,17 @@ td {
   background: $baseAccent2;
 }
 
+.fighter-wrapper {
+
+  & > div {
+  display: flex;
+  justify-content: flex-start;
+  }
+
+  .fighter-toWin {
+    min-width: 50px;
+  }
+}
 
 
 

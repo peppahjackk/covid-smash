@@ -5,7 +5,7 @@ class="user-list-row"
   <div class="user-header table-header">
     <h3 class="bg-blue">{{ picker }}</h3>
     <h3>Active picks: {{ content.length }}</h3>
-    <h3>Net gains: {{netGain}}</h3>
+    <h3>Net gains: {{(netGain).toFixed(2)}}</h3>
   </div>
   <div class="user-info-header">
     <div>Match Id</div>
@@ -17,8 +17,16 @@ class="user-list-row"
   <div class="user-info-picks" v-for="(pick, i) in content" :key="'active-' + picker + '-' + i">
     <div>{{pick.match_id}}</div>
     <div>{{pick.fighter}}</div>
-    <div>W</div>
-    <div>Dollars</div>
+    <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id] && $root.store.active_data.matchResults['match-' + pick.match_id].winner">
+      <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id].winner === pick.fighter" class="bg-green">W</div>
+      <div v-else class="bg-red">L</div>
+    </div>
+    <div v-else>n/a</div>
+    <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id] && $root.store.active_data.matchResults['match-' + pick.match_id].winner">
+      <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id].winner === pick.fighter" class="bg-green">{{ ($root.store.active_data.matchResults['match-' + pick.match_id][pick.fighter].toWin).toFixed(2) }}</div>
+      <div v-else class="bg-red">-5</div>
+    </div>
+    <div v-else>n/a</div>
     <div class="action-container">
       <div @click="$emit('delete', pick)">
         <svg
@@ -53,6 +61,7 @@ export default {
       picker: String
     },
     computed: {
+    
       netGain: function() {
         let gain = 0;
 

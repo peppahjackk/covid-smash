@@ -24,7 +24,7 @@
             <th>System<br>Game</th>
             <th>Stage<br>Rules</th>
             <th>Total Picks</th>
-            <th>Picks / Fighter / Placement</th>
+            <th>Picks / Fighter / To Win / Placement</th>
             <th class="medium">Picks<br>O: Open<br>X: Closed</th>
             <th class="short">Complete</th>
             <th class="short">Standings</th>

@@ -249,11 +249,21 @@ export default {
               toWin: 0
             };
 
+            if (parseInt(fighter.placement) === 1) {
+              newResults.winner = fighter.name;
+            }
+
             newResults.totalPicks += fighterPicks;
           }
 
+          if (!newResults.winner) newResults.winner = false;
+
           for (let fighter of match.fighters) {
+            if (newResults[fighter.name].picks) {
              newResults[fighter.name].toWin = (newResults.totalPicks - newResults[fighter.name].picks) * 5 / newResults[fighter.name].picks;
+            } else {
+              newResults[fighter.name].toWin = 0;
+            }
           }
 
           matchResults['match-' + match.match_id] = newResults;
