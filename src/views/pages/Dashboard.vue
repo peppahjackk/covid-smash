@@ -33,7 +33,7 @@
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday April 24th @ 9:00pm&nbsp;EST</h2>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 1st @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"
@@ -65,6 +65,10 @@
             :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
           >Pick some Winners</h2>
           <h2
+            @click="$root.store.activeView = 'previews'"
+            :class="[$root.store.activeView === 'previews' ? 'bg-baseAccent' : '']"
+          >Match Previews</h2>
+          <h2
             @click="$root.store.activeView = 'standings'"
             :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
           >Standings</h2>
@@ -78,6 +82,11 @@
             <Matchup :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
+        </div>
+        <div class="previews" v-show="$root.store.activeView === 'previews'">
+          <div class="matchup-wrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/fR7_5_0KRLI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
         </div>
         <div class="standings" v-show="$root.store.activeView === 'standings'">
           <div class="matchup-wrapper">
