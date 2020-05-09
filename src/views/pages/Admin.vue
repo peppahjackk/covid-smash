@@ -61,7 +61,7 @@
           v-for="(picker) in Object.keys($root.store.active_data.picks)" 
           :key="'active-' + picker"
           :content="$root.store.active_data.picks[picker]"
-          :picker="picker"
+          :picker="$root.store.active_data.picks[picker].name"
           @delete="ON_PICK_DELETE"></UserPicks>
     </div>
   </section>

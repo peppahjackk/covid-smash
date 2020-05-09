@@ -33,7 +33,7 @@
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 1st @ 9:00pm&nbsp;EST</h2>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 8th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"
@@ -85,7 +85,7 @@
         </div>
         <div class="previews" v-show="$root.store.activeView === 'previews'">
           <div class="matchup-wrapper">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/fR7_5_0KRLI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://youtu.be/l96n3yukrQg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
         <div class="standings" v-show="$root.store.activeView === 'standings'">

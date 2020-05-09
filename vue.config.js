@@ -1,4 +1,4 @@
 module.exports = {
-  // publicPath: 'http://www.tedmoke.com/bros/',
+  // publicPath: 'http://storage.tedmoke.com/bros/',
   publicPath: '/'
 }

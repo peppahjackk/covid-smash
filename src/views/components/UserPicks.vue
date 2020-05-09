@@ -3,15 +3,15 @@
 class="user-list-row" 
 >
   <div class="user-header table-header">
-    <h3 class="bg-blue">{{ picker }}</h3>
+    <h3 class="bg-blue">{{ content[0].name }}</h3>
     <h3>Active picks: {{ content.length }}</h3>
-    <h3>Net gains: {{(netGain).toFixed(2)}}</h3>
+    <h3>Winnings: {{(netGain).toFixed(2)}}</h3>
   </div>
   <div class="user-info-header">
     <div>Match Id</div>
     <div>Fighter</div>
     <div>Result</div>
-    <div>Net gain</div>
+    <div>Winnigs</div>
     <div>Actions</div>
   </div>
   <div class="user-info-picks" v-for="(pick, i) in content" :key="'active-' + picker + '-' + i">
@@ -24,7 +24,7 @@ class="user-list-row"
     <div v-else>n/a</div>
     <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id] && $root.store.active_data.matchResults['match-' + pick.match_id].winner">
       <div v-if="$root.store.active_data.matchResults['match-' + pick.match_id].winner === pick.fighter" class="bg-green">{{ ($root.store.active_data.matchResults['match-' + pick.match_id][pick.fighter].toWin).toFixed(2) }}</div>
-      <div v-else class="bg-red">-5</div>
+      <div v-else class="bg-red">0</div>
     </div>
     <div v-else>n/a</div>
     <div class="action-container">
@@ -75,7 +75,7 @@ export default {
               console.log('winner', gain);
 
             } else {
-              gain -= 5;
+              // gain -= 5;
             }
           }
         }

@@ -219,11 +219,11 @@ export default {
       let pickerList = {};
 
       for (let pick of picks) {
-        if (!pickerList[pick.name]) {
-          pickerList[pick.name] = [];
+        if (!pickerList['picker-' + pick.user_id]) {
+          pickerList['picker-' + pick.user_id] = [];
         }
 
-        pickerList[pick.name].push(pick);
+        pickerList['picker-' + pick.user_id].push(pick);
       }
 
       return pickerList;
@@ -260,7 +260,7 @@ export default {
 
           for (let fighter of match.fighters) {
             if (newResults[fighter.name].picks) {
-             newResults[fighter.name].toWin = (newResults.totalPicks - newResults[fighter.name].picks) * 5 / newResults[fighter.name].picks;
+             newResults[fighter.name].toWin = newResults.totalPicks * 5 / newResults[fighter.name].picks;
             } else {
               newResults[fighter.name].toWin = 0;
             }
