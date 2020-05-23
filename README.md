@@ -1,12 +1,11 @@
 # bros-picks
 
 ### TODO
-* Add basic admin function
-* rework current selections to highlight over match
-* eliminate pick then submit?
+* rework submitted/pending selections to highlight over match
+* shrink sidebar, add as mobile modal? or overlay icon to jump down
 * post pick right away then fetch. maybe add skipNextInterval when firing?
 * User auth
-* convert to websockets
+* figure out way to show winnings
 * stream & chat embed
 
 ## Project setup

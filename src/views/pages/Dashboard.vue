@@ -33,7 +33,7 @@
               <h5>*unless otherwise stated</h5>
             </div>
           </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 8th @ 9:00pm&nbsp;EST</h2>
+          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 29th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"
@@ -65,6 +65,7 @@
             :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
           >Pick some Winners</h2>
           <h2
+            v-if="false"
             @click="$root.store.activeView = 'previews'"
             :class="[$root.store.activeView === 'previews' ? 'bg-baseAccent' : '']"
           >Match Previews</h2>
