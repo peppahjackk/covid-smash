@@ -52,6 +52,10 @@ ul {
   padding-left: 15px;
 }
 
+a {
+  cursor: pointer;
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -102,6 +106,34 @@ ul {
 }
 .c-baseAccent2 {
   color: $baseAccent2;
+}
+
+.b-red {
+  @include border($red);
+}
+
+.b-blue {
+  @include border($blue);
+}
+
+.b-green {
+  @include border($green);
+}
+
+.b-yellow {
+  @include border($yellow);
+}
+
+.b-base {
+  @include border($base);
+}
+
+.b-baseAccent {
+  @include border($baseAccent);
+}
+
+.b-baseAccent2 {
+  @include border($baseAccent2);
 }
 
 .p-xs {

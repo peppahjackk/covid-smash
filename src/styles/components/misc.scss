@@ -121,7 +121,7 @@ z-index: 2;
 }
 
 .login-wrapper {
-  position: fixed;
+  // position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
@@ -131,6 +131,11 @@ z-index: 2;
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .modal-overlay {
@@ -159,7 +164,7 @@ z-index: 2;
 
   button {
     width: 200px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
   }
 }
 
@@ -195,6 +200,14 @@ label {
   z-index: 10;
 }
 
+nav {
+  position: fixed;
+  padding: 5px 0;
+  z-index: 10;
+  background: $baseAccent2;
+  width: 100%;
+}
+
 .action-container {
   display: flex;
   align-items: center;
@@ -211,6 +224,11 @@ label {
   .delete {
     font-size: 30px;
   }
+}
+
+.register-intro {
+  margin-bottom: $spacing-md;
+  text-align: left;
 }
 
 

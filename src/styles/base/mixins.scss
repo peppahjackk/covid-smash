@@ -10,3 +10,7 @@
   top: 0;
   left: 0;
 }
+
+@mixin border($color: $baseAccent) {
+  border: 5px solid $color;
+}

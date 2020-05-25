@@ -1,5 +1,6 @@
 <template>
   <section class="admin">
+    <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <h1>ADMIN</h1>
     <button
       @click="toggleBets"
@@ -68,11 +69,17 @@
 </template>
 
 <script>
+import NewMatch from "@/views/components/NewMatch";
 import MatchAdmin from "@/views/components/MatchAdmin";
 import UserPicks from "@/views/components/UserPicks";
 import crud from "@/mixins/crud.js";
 
 export default {
+  components: {
+    MatchAdmin,
+    NewMatch,
+    UserPicks
+  },
   data: function() {
     return {
       activeModal: null
@@ -141,9 +148,5 @@ export default {
       });
     }
   },
-  components: {
-    MatchAdmin,
-    UserPicks
-  }
 };
 </script>

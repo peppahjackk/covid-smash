@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-    <div v-if="$root.store.User.name" class="banner bg-blue">
-      <p>Welcome back {{ $root.store.User.name }}! <span class="underline" @click="resetUser">Not you?</span></p>
-    </div>
-    <Dashboard v-if="!isAdmin"></Dashboard>
-    <Admin v-if="isAdmin"></Admin>
-    <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
-    <Login v-if="!$root.store.User.name"></Login>
+    <Navbar v-if="$root.store.User.loggedIn"></Navbar>
+    <router-view></router-view>
+    <div v-if="activeModal" class="modal-overlay"></div>
   </div>
 </template>
 
 <script>
-import Admin from "./views/pages/Admin.vue";
-import Dashboard from "./views/pages/Dashboard.vue";
-import Login from "./views/components/Login";
-import NewMatch from "./views/components/NewMatch";
+import Navbar from "./views/components/Navbar";
 import crud from "@/mixins/crud";
 
 // import FAKE_MATCHES from "./data/FAKE_matches.js";
@@ -22,45 +15,27 @@ import crud from "@/mixins/crud";
 export default {
   name: "App",
   mixins: [crud],
+  components: {
+    Navbar,
+  },
   data: function() {
     return {
       activeModal: "",
       initialLoad: true
     };
   },
-  computed: {
-    isAdmin: function() {
-      if (this.$root.store.User.name === 'rustyM' || this.$root.store.User.name === 'Theo') {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },
   mounted: function() {
-    let theUser = JSON.parse(localStorage.getItem("brosUser"));
-    let userLogged = JSON.parse(localStorage.getItem("brosUserLogged"));
-
-    if (!theUser) {
-      theUser = {
-        id: null,
-        name: null,
-        vnm: null,
-        character: null,
-        referrer: null,
-        picks: []
-      };
+    if (!this.$root.store.User.loggedIn) {
+      this.$router.replace('login');
     }
-
-    this.$root.store.User = theUser;
 
     this.$root.eventHub.$on("activeModal", modalName => {
       this.$root.store.activeModal = modalName;
       this.activeModal = modalName;
     });
 
-    this.fetchMatches();
-    this.fetchArchive();
+    // this.fetchMatches();
+    // this.fetchArchive();
 
     // if (this.isAdmin) {
     //   window.setInterval(()=>{
@@ -69,12 +44,8 @@ export default {
     //   }, 10000);
 
     // } else {
-      window.setInterval(this.fetchMatches, 10000);
+      // window.setInterval(this.fetchMatches, 10000);
     // }
-
-    if (!userLogged) {
-      this.updateUser();
-    }
 
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
@@ -157,9 +128,9 @@ export default {
           if (this.initialLoad) {
             this.initialLoad = false;
 
-            if (!this.isAdmin && this.$root.store.active_data.matches.length <= 0) {
-              this.$root.store.activeView = 'standings';
-            }
+            // if (!this.isAdmin && this.$root.store.active_data.matches.length <= 0) {
+            //   this.$root.store.activeView = 'standings';
+            // }
           }
 
         });
@@ -186,6 +157,7 @@ export default {
     },
     // TODO move this to a mixin or something
     resetUser: function() {
+
       this.$root.store.User.name = null;
       this.$root.store.User.character = null;
       this.$root.store.User.referrer = null;
@@ -273,12 +245,6 @@ export default {
       return matchResults;
     }
   },
-  components: {
-    Admin,
-    Dashboard,
-    Login,
-    NewMatch
-  }
 };
 </script>
 

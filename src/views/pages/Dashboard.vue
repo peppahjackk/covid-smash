@@ -84,11 +84,6 @@
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
-        <div class="previews" v-show="$root.store.activeView === 'previews'">
-          <div class="matchup-wrapper">
-            <iframe width="560" height="315" src="https://youtu.be/l96n3yukrQg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
         <div class="standings" v-show="$root.store.activeView === 'standings'">
           <div class="matchup-wrapper">
             <div class="inner-tab-wrapper pick-header">
