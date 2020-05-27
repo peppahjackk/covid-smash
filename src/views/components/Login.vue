@@ -40,6 +40,7 @@ export default {
       .signInWithEmailAndPassword(this.form.email, this.form.password)
       .then(() => {
         console.log('Logged in!');
+        localStorage.setItem('hasLoggedFb', true)
       })
       .catch(err => {
         this.error = err.message;

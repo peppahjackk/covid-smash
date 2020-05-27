@@ -1,6 +1,6 @@
 <template>
   <div class="register-wrapper">
-    <div v-if="oldUserData.name">
+    <div v-if="oldUserData && oldUserData.name">
       <h1><span class="title">COVID Smash</span></h1>
       <h3 class="b-yellow p-sm">Welcome back, {{ oldUserData.name }}! We're changing how you login to provide more consistent results and future enhancements. Please fill out your details below!</h3>
     </div>
@@ -79,8 +79,8 @@ export default {
               referrer: this.form.referrer
             })
             .then(() => {
+              localStorage.setItem('hasLoggedFb', true)
               localStorage.removeItem('brosUser');
-              // this.$router.replace({ name: "Home" });
             });
         })
         .catch(err => {

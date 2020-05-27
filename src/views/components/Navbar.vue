@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div class="nav-content">
-      <p>Welcome back {{ $root.store.User.data.name }}! Not you?
+      <p>Welcome back<span v-show="$root.store.User.data.name"> {{ $root.store.User.data.name }}</span>  ! Not you?
         <a class="underline" @click="signOut">Logout</a></p>
     </div>
   </nav>

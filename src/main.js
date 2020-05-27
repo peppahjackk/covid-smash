@@ -27,18 +27,21 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(user =>  {
-  console.log('Auth changed: ', user);
   theApp.store.User.loggedIn = user !== null;
   if (user) {
     // User is signed in.
     theApp.store.User.data = { name: user.displayName, email: user.email, user_id: user.uid };
-    theApp.$router.replace({ name: "Home" });
+    if (theApp.$route.path != '/') {
+      theApp.$router.replace({ path: "/" });
+    }
 
     localStorage.setItem('auth', true);
   } else {
     // No user is signed in.
     theApp.store.User.data = null;
-    theApp.$router.replace({ name: "Login" });
+    if (theApp.$route.path != '/login') {
+      theApp.$router.replace({ path: "/login" });
+    }
 
     localStorage.setItem('auth', false);
   }

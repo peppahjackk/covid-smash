@@ -228,7 +228,9 @@ nav {
 
 .register-intro {
   margin-bottom: $spacing-md;
-  text-align: left;
+  p {
+    text-align: left;
+  }
 }
 
 

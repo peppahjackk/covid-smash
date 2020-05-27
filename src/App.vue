@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar v-if="$root.store.User.loggedIn"></Navbar>
+    <Navbar v-if="$root.store.User.loggedIn && $root.store.User.data"></Navbar>
     <router-view></router-view>
     <div v-if="activeModal" class="modal-overlay"></div>
   </div>
@@ -25,8 +25,9 @@ export default {
     };
   },
   mounted: function() {
-    if (!this.$root.store.User.loggedIn) {
-      this.$router.replace('login');
+
+    if (!this.$root.store.User.loggedIn && this.$route.path != '/login') {
+      this.$router.replace({path: '/login'});
     }
 
     this.$root.eventHub.$on("activeModal", modalName => {
