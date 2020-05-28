@@ -30,6 +30,12 @@ table {
     }
   }
 
+  &.minimal {
+    tr {
+      height: auto;
+    }
+  }
+
   &.alternating {
     tr {
       &:nth-child(even) {
@@ -248,19 +254,29 @@ td {
   background: $baseAccent2;
 }
 
-.fighter-wrapper {
+.fighters-wrapper {
 
   & > div {
   display: flex;
   justify-content: flex-start;
   }
 
-  .fighter-toWin {
+  .fighter-toWin, .fighter-picks {
     min-width: 50px;
   }
 }
 
+.admin-fighters-cell {
+  border-bottom: solid 1px $base;
 
+  & > div {
+    flex-basis: 50%;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
 
 @media screen and (min-width: $breakpoint-md) {
   .picker {

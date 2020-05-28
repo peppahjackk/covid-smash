@@ -19,9 +19,10 @@
     </td>
     <td class="fighters">
       <div class="fighters-wrapper">
-        <div v-for="(fighter) in matchData.fighters" :key="matchData.match_id + fighter.name">
-          <h4 class="p-xs inline-b bg-blue" v-if="pickNames && pickNames['match-' + matchData.match_id] && pickNames['match-' + matchData.match_id][fighter.name]">{{  pickNames['match-' + matchData.match_id][fighter.name].length }}</h4>
-          <input type="text" v-model="fighter.name" :disabled="!isEditing" />
+        <div v-for="(fighter) in matchData.fighters" :key="matchData.match_id + fighter.name" class="admin-fighters-cell">
+          <h4 class="p-xs inline-b bg-blue fighter-picks" v-if="pickNames && pickNames['match-' + matchData.match_id] && pickNames['match-' + matchData.match_id][fighter.name]">{{  pickNames['match-' + matchData.match_id][fighter.name].length }}</h4>
+          <h4 class="p-xs inline-b bg-blue fighter-picks" v-else>0</h4>
+          <input class="fighter-picks" type="text" v-model="fighter.name" :disabled="!isEditing" />
           <h4 class="p-xs inline-b bg-green fighter-toWin" v-if="$root.store.active_data.matchResults['match-' + matchData.match_id] && $root.store.active_data.matchResults['match-' + matchData.match_id][fighter.name]">{{ ($root.store.active_data.matchResults['match-' + matchData.match_id][fighter.name].toWin).toFixed(2) }}</h4>
           <h4 class="p-xs inline-b bg-green fighter-toWin" v-else>0</h4>
           <input class="digit" type="text" size="2" v-model="fighter.placement" :disabled="!isEditing" />

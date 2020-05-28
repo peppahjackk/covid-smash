@@ -152,6 +152,10 @@ a {
   padding: $spacing-lg;
 }
 
+.m-0 {
+  margin: 0;
+}
+
 @media screen and (min-width: $breakpoint-sm) {
   h1 {
     font-size: 42px;

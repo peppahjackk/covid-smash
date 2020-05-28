@@ -6,12 +6,26 @@ class="user-list-row"
     <h3 class="bg-blue">{{ content[0].name }}</h3>
     <h3>Active picks: {{ content.length }}</h3>
     <h3>Winnings: {{(netGain).toFixed(2)}}</h3>
+    <table class="minimal">
+      <thead>
+        <th>Paid up</th>
+        <th>Settled debts</th>
+      </thead>
+      <tr>
+        <td>
+          <input class="m-0" type="checkbox" />
+        </td>
+        <td>
+          <input class=m-0 type="checkbox" />
+        </td>
+      </tr>
+    </table>
   </div>
   <div class="user-info-header">
     <div>Match Id</div>
     <div>Fighter</div>
     <div>Result</div>
-    <div>Winnigs</div>
+    <div>Winnings</div>
     <div>Actions</div>
   </div>
   <div class="user-info-picks" v-for="(pick, i) in content" :key="'active-' + picker + '-' + i">
