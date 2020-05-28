@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar v-if="$root.store.User.loggedIn && $root.store.User.data"></Navbar>
+    <Navbar v-if="$root.store.User && $root.store.User.loggedIn"></Navbar>
     <router-view></router-view>
     <div v-if="activeModal" class="modal-overlay"></div>
   </div>

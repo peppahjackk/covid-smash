@@ -1,8 +1,14 @@
 <template>
   <nav>
     <div class="nav-content">
-      <p>Welcome back<span v-show="$root.store.User.data.name"> {{ $root.store.User.data.name }}</span>  ! Not you?
-        <a class="underline" @click="signOut">Logout</a></p>
+      <div class="nav-left">
+        <a><p @click="$router.push('/')">Home</p></a>
+        <a v-if="$root.store.User.isAdmin"><p @click="$router.push('/admin')">Admin</p></a>
+      </div>
+      <div class="nav-right">
+        <p>Welcome back<span v-show="$root.store.User.name"> {{ $root.store.User.name }}</span>  ! Not you?
+          <a class="underline" @click="signOut">Logout</a></p>
+      </div>
     </div>
   </nav>
 </template>

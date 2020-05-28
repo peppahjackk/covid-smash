@@ -69,15 +69,21 @@ export default {
   },
   methods: {
     ON_SUBMIT() {
+      let profileData = { displayName: this.form.name, referrer: this.form.referrer };
+
+      if (this.form.referrer === process.env.VUE_APP_ADMIN_CODE) {
+        profileData.isAdmin = true;
+      } else {
+        profileData.isAdmin = false;
+        // return;
+      }
+
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
         .then(data => {
           data.user
-            .updateProfile({
-              displayName: this.form.name,
-              referrer: this.form.referrer
-            })
+            .updateProfile(profileData)
             .then(() => {
               localStorage.setItem('hasLoggedFb', true)
               localStorage.removeItem('brosUser');

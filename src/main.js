@@ -30,7 +30,12 @@ firebase.auth().onAuthStateChanged(user =>  {
   theApp.store.User.loggedIn = user !== null;
   if (user) {
     // User is signed in.
-    theApp.store.User.data = { name: user.displayName, email: user.email, user_id: user.uid };
+    theApp.store.User.name = user.displayName;
+    theApp.store.User.email = user.email;
+    theApp.store.User.id = user.uid;
+    theApp.store.User.referrer = user.referrer;
+    theApp.store.User.isAdmin = (process.env.VUE_APP_ADMIN.indexOf(user.email) >= 0);
+    
     if (theApp.$route.path != '/') {
       theApp.$router.replace({ path: "/" });
     }
@@ -38,7 +43,17 @@ firebase.auth().onAuthStateChanged(user =>  {
     localStorage.setItem('auth', true);
   } else {
     // No user is signed in.
-    theApp.store.User.data = null;
+    theApp.store.User = {
+      id: null,
+        name: null,
+        referrer: null,
+        vnm: null,
+        picks: [],
+        matchType: null,
+        loggedIn: false,
+        isAdmin: false,
+    };
+    
     if (theApp.$route.path != '/login') {
       theApp.$router.replace({ path: "/login" });
     }
@@ -63,7 +78,8 @@ var theApp = new Vue({
         picks: [],
         matchType: null,
         loggedIn: localStorage.getItem('auth') == 'true',
-        data: null
+        isAdmin: false,
+        // data: null
       },
       active_data: {
         matches: [],

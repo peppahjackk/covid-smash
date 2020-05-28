@@ -1,5 +1,5 @@
 <template>
-  <section class="admin">
+  <section class="admin" v-if="$root.store.User.isAdmin">
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
     <h1>ADMIN</h1>
     <button
