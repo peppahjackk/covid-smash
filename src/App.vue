@@ -21,7 +21,8 @@ export default {
   data: function() {
     return {
       activeModal: "",
-      initialLoad: true
+      initialLoad: true,
+      fetching: false
     };
   },
   mounted: function() {
@@ -35,18 +36,18 @@ export default {
       this.activeModal = modalName;
     });
 
-    // this.fetchMatches();
-    // this.fetchArchive();
+    this.fetchMatches();
+    this.fetchArchive();
 
-    // if (this.isAdmin) {
-    //   window.setInterval(()=>{
-    //     this.fetchMatches();
-    //     this.fetchArchive();
-    //   }, 10000);
+    if (this.isAdmin) {
+      window.setInterval(()=>{
+        this.fetchMatches();
+        this.fetchArchive();
+      }, 10000);
 
-    // } else {
-      // window.setInterval(this.fetchMatches, 10000);
-    // }
+    } else {
+      window.setInterval(this.fetchMatches, 10000);
+    }
 
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
@@ -58,6 +59,8 @@ export default {
   },
   methods: {
     fetchMatches: function() {
+      if (this.fetching) return;
+      this.fetching = true;
       console.log('Fetching Data...');
       // this.getData_FAKE(FAKE_MATCHES).then(results => {
         this.getMatches().then(results => {
@@ -134,6 +137,7 @@ export default {
             // }
           }
 
+          this.fetching = false;
         });
       });
 

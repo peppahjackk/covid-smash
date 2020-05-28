@@ -12,10 +12,8 @@
           <input type="text" placeholder="stage" id="stage" v-model="stage" />
           <label for="fighter1">Fighters:</label>
           <div class="fighter-group">
-            <input type="text" placeholder="fighter1" id="fighter1" v-model="fighters[0]" />
-            <input type="text" placeholder="fighter2" id="fighter2" v-model="fighters[1]" />
-            <input type="text" placeholder="fighter3" id="fighter3" v-model="fighters[2]" />
-            <input type="text" placeholder="fighter4" id="fighter4" v-model="fighters[3]" />
+            <input type="text" v-for="(fighter, i) in fighters" :key="'input-fighter-' + (i + 1)" :placeholder="'fighter' + (i + 1)" :id="'fighter' + i" v-model="fighters[i]" />
+            <button @click="fighters.push('')" class="button-small">+ Add fighter</button>
           </div>
           <label for="matchType">Special Rules:</label>
           <input type="text" placeholder="" id="matchType" v-model="matchType" value="" />
@@ -36,7 +34,7 @@ export default {
       game: "Super Smash Bros",
       stage: "",
       system: "N64",
-      fighters: [],
+      fighters: ['',''],
       matchType: ''
     };
   },
@@ -52,6 +50,10 @@ export default {
     },
     submitMatch: function() {
       if (!this.stage || this.fighters.length < 2) return;
+
+      this.fighters = this.fighters.filter(fighter => {
+        return fighter.length > 0;
+      })
 
       let nextMatchIdx = this.$root.store.active_data.matches.length + 1;
 

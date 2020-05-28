@@ -69,6 +69,11 @@ button {
     z-index: -1;
   }
 
+  &.button-small {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
   &:active, &.chosen {
     transform: translate(3px, 3px);
 
@@ -165,6 +170,11 @@ z-index: 2;
   button {
     width: 200px;
     margin: 0 auto 10px;
+
+    &.button-small {
+      width: auto;
+      display: block;
+    }
   }
 }
 

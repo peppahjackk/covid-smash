@@ -194,7 +194,7 @@ export default {
         let pickIdx = Object.keys(this.pendingPicks).indexOf(pick);
         let lastPick = false;
 
-        if (pickIdx === this.pendingPicks.length - 1) {
+        if (pickIdx === Object.keys(this.pendingPicks).length - 1) {
           lastPick = true;
         }
 
