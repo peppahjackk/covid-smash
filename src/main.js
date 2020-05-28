@@ -36,7 +36,7 @@ firebase.auth().onAuthStateChanged(user =>  {
     theApp.store.User.referrer = user.referrer;
     theApp.store.User.isAdmin = (process.env.VUE_APP_ADMIN.indexOf(user.email) >= 0);
     
-    if (theApp.$route.path != '/') {
+    if (theApp.$route.path === '/login') {
       theApp.$router.replace({ path: "/" });
     }
 
@@ -53,7 +53,7 @@ firebase.auth().onAuthStateChanged(user =>  {
         loggedIn: false,
         isAdmin: false,
     };
-    
+
     if (theApp.$route.path != '/login') {
       theApp.$router.replace({ path: "/login" });
     }

@@ -80,10 +80,10 @@ export default {
     NewMatch,
     UserPicks
   },
-  data: function() {
+  data() {
     return {
       activeModal: null
-    };
+    }
   },
   computed: {
     betsOpen: function() {
@@ -98,6 +98,9 @@ export default {
   },
   mounted: function() {
     console.log(this.$root.store.active_data.picks);
+    this.$root.eventHub.$on("activeModal", modalName => {
+      this.activeModal = modalName;
+    });
   },
   mixins: [crud],
   methods: {

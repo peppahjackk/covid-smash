@@ -2,7 +2,7 @@
   <div id="app">
     <Navbar v-if="$root.store.User && $root.store.User.loggedIn"></Navbar>
     <router-view></router-view>
-    <div v-if="activeModal" class="modal-overlay"></div>
+    <div v-if="activeModal" @click="$root.eventHub.$emit('activeModal', null)" class="modal-overlay"></div>
   </div>
 </template>
 
