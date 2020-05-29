@@ -27,6 +27,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(user =>  {
+  if (theApp.store.newUser) {
+    // User details aren't updated until the create function returns in register component
+    // setting of the user will happen there
+    return;
+  }
+
   theApp.store.User.loggedIn = user !== null;
   if (user) {
     // User is signed in.
@@ -70,6 +76,7 @@ var theApp = new Vue({
     store: {
       activeTab: 'n64',
       activeView: 'home',
+      newUser: false,
       User: {
         id: null,
         name: null,

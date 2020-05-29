@@ -1,7 +1,9 @@
 <template>
   <section class="admin" v-if="$root.store.User.isAdmin">
     <NewMatch v-if="activeModal === 'newMatch'"></NewMatch>
-    <h1>ADMIN</h1>
+    <div class="title-container">
+      <h1>ADMIN</h1>
+    </div>
     <button
       @click="toggleBets"
       :class="[betsOpen ? '' : 'red']"

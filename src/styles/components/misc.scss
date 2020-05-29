@@ -210,24 +210,6 @@ label {
   z-index: 10;
 }
 
-nav {
-  position: fixed;
-  padding: 5px 0;
-  z-index: 10;
-  background: $baseAccent2;
-  width: 100%;
-
-  a {
-    text-decoration: underline;
-    display: inline-block;
-    padding: $spacing-xs $spacing-sm;
-    margin-bottom: 0;
-  }
-}
-
-.nav-content {
-  display: flex;
-}
 
 .action-container {
   display: flex;
@@ -251,6 +233,31 @@ nav {
   margin-bottom: $spacing-md;
   p {
     text-align: left;
+  }
+}
+
+.profile-content {
+  max-width: 600px;
+  margin: auto;
+  font-size: 16px;
+  
+  .content-container {
+    background: $baseAccent2;
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  input {
+    font-size: 16px;;
+  }
+
+  label {
+    display: inline-block;
+    min-width: 60px;
   }
 }
 

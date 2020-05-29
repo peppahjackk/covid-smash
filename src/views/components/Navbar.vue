@@ -1,13 +1,15 @@
 <template>
   <nav>
-    <div class="nav-content">
-      <div class="nav-left">
-        <a><p @click="$router.push('/')">Home</p></a>
-        <a v-if="$root.store.User.isAdmin"><p @click="$router.push('/admin')">Admin</p></a>
+    <div class="nav-wrapper">
+      <a @click="$router.push('/')" class="title nav-title"><p>COVID Smash</p></a>
+      <div class="nav-left nav-container">
+        <a @click="$router.push('/')" :class="[$route.name === 'Home' ? 'active' : '']"><p>Home</p></a>
+        <a @click="$router.push('/rules')" :class="[$route.name === 'Rules' ? 'active' : '']"><p>Rules</p></a>
+        <a @click="$router.push('/admin')" :class="[$route.name === 'Admin' ? 'active' : '']" v-if="$root.store.User.isAdmin"><p>Admin</p></a>
       </div>
-      <div class="nav-right">
-        <p>Welcome back<span v-show="$root.store.User.name"> {{ $root.store.User.name }}</span>  ! Not you?
-          <a class="underline" @click="signOut">Logout</a></p>
+      <div class="nav-right nav-container">
+        <a @click="$router.push('/profile')" :class="[$route.name === 'Profile' ? 'active' : '']"><p>My Profile</p></a>
+        <a class="underline" @click="signOut"><p>Logout</p></a>
       </div>
     </div>
   </nav>

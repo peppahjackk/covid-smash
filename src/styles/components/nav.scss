@@ -1,0 +1,45 @@
+nav {
+    position: fixed;
+    z-index: 10;
+    background: $baseAccent2;
+    width: 100%;
+    font-size: 16px;
+
+    a {
+        text-decoration: underline;
+        display: inline-block;
+        padding: $spacing-sm 12px;
+        min-height: 100%;
+        margin-bottom: 0;
+
+        &:hover {
+            background: $baseAccent;
+        }
+        
+        &.active {
+            background: $blue;
+            text-decoration: none;
+        }
+
+    }
+}
+
+.nav-wrapper {
+    display: flex;
+}
+
+.nav-right {
+    margin-left: auto;
+    font-size:14px;
+}
+
+.nav-title {
+    display: flex;
+    align-items: center;
+
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+    text-decoration: none;
+    margin-right: $spacing-md;
+}

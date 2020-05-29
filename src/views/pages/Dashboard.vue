@@ -4,36 +4,12 @@
       <div class="pick-wrapper">
         <div class="hero">
           <div class="title-container">
-            <h1 class="title">COVID Smash</h1>
+            <h1>Friday Night Fights</h1>
           </div>
-          <div class="intro-text content bg-baseAccent">
-            <h3>Ever since the COVID-19 isolation period began, the landscape of indoors future of spectator sports has changed forever. We bring you all the rage: CPU controlled Super Smash Bros. matches! Before the fights begin, pick who you think will come out on top of the bout.</h3>
+          <div class="content content-center b-yellow p-md d-inB">
+            <h2>CPU vs CPU Super Smash Bros Matches and more!</h2>
+            <h3>Starting Fridays @ 9:00pm&nbsp;EST (usually about 1 hour)</h3>
           </div>
-
-          <div class="content flex-content flex-top">
-            <div class="content-left">
-              <h3>How to play:</h3>
-              <ul>
-                <li>Choose who you think will win one or all of the following Smash Bros. matches.</li>
-                <li>You can change your pick after submitting. Just select a new fighter in the match and submit again</li>
-                <li>You are not required to pick every match</li>
-              </ul>
-            </div>
-            <div class="match-rules content-left">
-              <h3>Match Rules:</h3>
-              <ul>
-                <li>Game and system will be listed</li>
-                <li>All characters are CPU controlled (max level*)</li>
-                <li>4 player free-for-all*</li>
-                <li>6 stock* (no time limit)</li>
-                <li>Items are OFF*</li>
-                <li>Stage selection listed in match description</li>
-                <li>Last man/woman/pokemon standing wins*</li>
-              </ul>
-              <h5>*unless otherwise stated</h5>
-            </div>
-          </div>
-          <h2 class="bg-yellow c-baseAccent">Matches are Friday May 29th @ 9:00pm&nbsp;EST</h2>
           <div class="text-lockup">
             <svg
               class="icon icon-twitch"
@@ -49,7 +25,7 @@
               <path d="M323.37,133.59H368V267.14H323.37Z" style="fill: #673ab7" />
             </svg>
             <h2>
-              Watch the matches on
+              Watch on
               <a
                 href="https://www.twitch.tv/dietwolfcola"
                 target="_blank"
@@ -58,7 +34,6 @@
             </h2>
           </div>
         </div>
-        <h4>Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4>
         <div class="pick-header">
           <h2
             @click="$root.store.activeView = 'home'"
@@ -123,6 +98,7 @@
           </table>
           <!-- <p>Total picks: {{ pendingPicks.length }}</p> -->
           <button @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
+          <h4 class="p-sm">Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4> 
         </div>
         <div class="sidebar-picks-container">
           <h4>SUBMITTED</h4>
