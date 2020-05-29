@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 import 'firebase/auth'
 
 import styles from './styles/main.scss'; // eslint-disable-line no-unused-vars
@@ -26,7 +27,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.auth().onAuthStateChanged(user =>  {
+firebase.auth().onAuthStateChanged(user => {
   if (theApp.store.newUser) {
     // User details aren't updated until the create function returns in register component
     // setting of the user will happen there
@@ -41,9 +42,28 @@ firebase.auth().onAuthStateChanged(user =>  {
     theApp.store.User.id = user.uid;
     theApp.store.User.referrer = user.referrer;
     theApp.store.User.isAdmin = (process.env.VUE_APP_ADMIN.indexOf(user.email) >= 0);
-    
+
     if (theApp.$route.path === '/login') {
-      theApp.$router.replace({ path: "/" });
+      theApp.$router.replace({
+        path: "/"
+      });
+    }
+
+    // TODO Abstract this to fire mixins
+    if (theApp.store.user_meta.ids.indexOf(user.uid) < 0) {
+      let userMeta = {
+        'id': user.uid,
+        'name': user.displayName
+      };
+      userMeta.referrer = user.referrer || '';
+
+      firebase.firestore().collection('user_meta').add(userMeta)
+        .then(result => {
+          console.log(result);
+        })
+        .catch(err => {
+          console.error(err);
+        })
     }
 
     localStorage.setItem('auth', true);
@@ -51,17 +71,19 @@ firebase.auth().onAuthStateChanged(user =>  {
     // No user is signed in.
     theApp.store.User = {
       id: null,
-        name: null,
-        referrer: null,
-        vnm: null,
-        picks: [],
-        matchType: null,
-        loggedIn: false,
-        isAdmin: false,
+      name: null,
+      referrer: null,
+      vnm: null,
+      picks: [],
+      matchType: null,
+      loggedIn: false,
+      isAdmin: false,
     };
 
     if (theApp.$route.path != '/login') {
-      theApp.$router.replace({ path: "/login" });
+      theApp.$router.replace({
+        path: "/login"
+      });
     }
 
     localStorage.setItem('auth', false);
@@ -95,9 +117,38 @@ var theApp = new Vue({
       archive_data: {
         matches: [],
         matchResults: {}
+      },
+      user_meta: {
+        data: null,
+        names: []
       }
     },
   },
   router,
   render: h => h(App)
 }).$mount('#app')
+
+
+const getMeta = async () => {
+  firebase.firestore().collection('user_meta').get()
+    .then(data => {
+      theApp.store.user_meta.data = data.docs;
+
+      theApp.store.user_meta.names = data.docs.map(doc => {
+        if (doc.exists) {
+          return doc.data().name
+        }
+      })
+
+      theApp.store.user_meta.ids = data.docs.map(doc => {
+        if (doc.exists) {
+          return doc.data().id
+        }
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+getMeta();

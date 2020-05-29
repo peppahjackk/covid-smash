@@ -51,6 +51,7 @@
 <script>
 import firebase from "firebase/app";
 import { v4 as uuidv4 } from "uuid";
+import fire from '../../mixins/firestore';
 
 export default {
   data() {
@@ -66,6 +67,7 @@ export default {
       error: null
     };
   },
+  mixins: [fire],
   mounted() {
     this.oldUserData = JSON.parse(localStorage.getItem("brosUser"));
 
@@ -77,6 +79,10 @@ export default {
   },
   methods: {
     ON_SUBMIT() {
+      if (this.$root.store.user_meta.names.indexOf(this.form.name) >= 0) {
+        this.error = 'Username already taken';
+        return
+      }
       let profileData = {
         displayName: this.form.name,
         referrer: this.form.referrer
@@ -103,17 +109,20 @@ export default {
             this.$root.store.User.name = user.displayName;
             this.$root.store.User.email = user.email;
             this.$root.store.User.id = user.uid;
-            this.$root.store.User.referrer = user.referrer;
+            this.$root.store.User.referrer = this.form.referrer;
             this.$root.store.User.isAdmin = process.env.VUE_APP_ADMIN.indexOf(user.email) >= 0;
 
             if (this.$root.$route.path === "/login") {
               this.$root.$router.replace({ path: "/rules" });
             }
 
-            this.store.newUser = false;
+            this.$root.store.newUser = false;
             localStorage.setItem("auth", true);
             localStorage.setItem("hasLoggedFb", true);
             localStorage.removeItem("brosUser");
+
+            let userMeta = { 'id': user.uid, 'name': user.displayName, 'referrer': this.form.referrer };
+            this.addMeta(userMeta);
           });
         })
         .catch(err => {
