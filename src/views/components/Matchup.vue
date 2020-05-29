@@ -107,6 +107,7 @@ export default {
         match_id: this.content.match_id,
         match_idx: this.fightNumber,
         name: this.$root.store.User.name,
+        referrer: this.$root.store.User.referrer,
         net_value: 0,
         fighter: fighterName
       });

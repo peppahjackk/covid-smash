@@ -6,7 +6,7 @@
           <div class="title-container">
             <h1>Friday Night Fights</h1>
           </div>
-          <div class="content content-center b-yellow p-md d-inB">
+          <div class="description b-yellow">
             <h2>CPU vs CPU Super Smash Bros Matches and more!</h2>
             <h3>Starting Fridays @ 9:00pm&nbsp;EST (usually about 1 hour)</h3>
           </div>
@@ -98,7 +98,7 @@
           </table>
           <!-- <p>Total picks: {{ pendingPicks.length }}</p> -->
           <button @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
-          <h4 class="p-sm">Text Rusty if you have any technical issues, or if you just want to talk about soup.</h4> 
+          <h4 class="p-sm">Text Rusty with technical issues, or about his favorite soup.</h4> 
         </div>
         <div class="sidebar-picks-container">
           <h4>SUBMITTED</h4>
@@ -165,7 +165,6 @@ export default {
       // this.pendingPicks[matchName].vnm = vnmName;
     },
     submitPicks: function() {
-      console.log("Submit picks fired");
       for (let pick in this.pendingPicks) {
         let pickIdx = Object.keys(this.pendingPicks).indexOf(pick);
         let lastPick = false;
