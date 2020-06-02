@@ -20,7 +20,14 @@
 table {
   width: 100%;
 
-  h1,h2,h3,h4,h5,p,li,div {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p,
+  li,
+  div {
     margin: 0;
   }
 
@@ -39,7 +46,7 @@ table {
   &.alternating {
     tr {
       &:nth-child(even) {
-        background-color: rgb(20,20,20);
+        background-color: rgb(20, 20, 20);
       }
     }
   }
@@ -55,12 +62,13 @@ tr {
   &:last-child {
     td {
       border-bottom: none;
-
     }
   }
 
   &.winner {
-    .fighter, .to-win, .bar-container {
+    .fighter,
+    .to-win,
+    .bar-container {
       background: $green !important;
     }
   }
@@ -130,7 +138,7 @@ td {
       border-color: $base;
     }
   }
-  
+
   input[type="text"] {
     border-color: $white;
     padding: 4px;
@@ -153,7 +161,6 @@ td {
   background: $blue;
 }
 
-
 .sidebar {
   table {
     background-color: $base;
@@ -166,7 +173,6 @@ td {
   td {
     width: 50%;
   }
-
 }
 
 .status {
@@ -184,9 +190,10 @@ td {
   display: flex;
 }
 
-.user-info-header, .user-info-picks {
+.user-info-header,
+.user-info-picks {
   display: flex;
-  
+
   & > div {
     width: 25%;
   }
@@ -203,13 +210,13 @@ td {
 }
 
 .fighters-wrapper {
-
   & > div {
-  display: flex;
-  justify-content: flex-start;
+    display: flex;
+    justify-content: flex-start;
   }
 
-  .fighter-toWin, .fighter-picks {
+  .fighter-toWin,
+  .fighter-picks {
     min-width: 50px;
   }
 }
@@ -226,7 +233,6 @@ td {
   }
 }
 
-
 .matchup-head {
   display: flex;
 }
@@ -235,13 +241,29 @@ td {
   --fighter-color: var(--red);
   --fighter-color-dk: var(--redDk);
   height: 72px;
-  padding: $spacing-sm 0;
+  padding: $spacing-xs 0;
   display: grid;
   grid-template-columns: 85px 3fr 50px;
   grid-template-rows: auto;
 
+  &:nth-child(3) {
+    --fighter-color: var(--blue);
+    --fighter-color-dk: var(--blueDk);
+  }
+
+  &:nth-child(4) {
+    --fighter-color: var(--yellow);
+    --fighter-color-dk: var(--yellowDk);
+  }
+
+  &:nth-child(5) {
+    --fighter-color: var(--green);
+    --fighter-color-dk: var(greenDk);
+  }
+
   & > * {
     padding: $spacing-sm;
+    z-index: inherit;
 
     &:first-child {
       padding-left: 0;
@@ -249,26 +271,47 @@ td {
   }
 
   &.pending {
-      .to-win,
-      .fighter,
-      .bar-container {
-        background: repeating-linear-gradient(
-          120deg,
-          var(--fighter-color) 0px,
-          var(--fighter-color) 10px,
-          var(--fighter-color-dk) 10px,
-          var(--fighter-color-dk) 20px,
-        );
+    position: relative;
+    z-index: 1;
 
-        background-size: 200% 200%;
-        background-position: 0 0;
-        animation: backgroundMove linear 20s infinite reverse;
-      }
+    background: repeating-linear-gradient(
+      120deg,
+      var(--fighter-color) 0px,
+      var(--fighter-color) 10px,
+      var(--fighter-color-dk) 10px,
+      var(--fighter-color-dk) 20px
+    );
+
+    .bar-container {
+      background: repeating-linear-gradient(
+        120deg,
+        var(--fighter-color) 0px,
+        var(--fighter-color) 10px,
+        var(--fighter-color-dk) 10px,
+        var(--fighter-color-dk) 20px
+      );
+      background-size: 200% 200%;
+      background-position: 0 0;
+      animation: backgroundMove linear 20s infinite reverse;
     }
 
+    background-size: 200% 200%;
+    background-position: 0 0;
+    animation: backgroundMove linear 20s infinite reverse;
+
+    &:before {
+      @include psuedo;
+      background: $base;
+      width: calc(100% - #{$spacing-sm});
+      height: calc(100% - #{$spacing-sm});
+      left: calc(#{$spacing-sm} / 2);
+      top: calc(#{$spacing-sm} / 2);
+    }
+  }
 }
 
-.fighter, .to-win {
+.fighter,
+.to-win {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,7 +323,7 @@ td {
 }
 
 // .to-win {
-//   flex-basis: 40px; 
+//   flex-basis: 40px;
 // }
 
 .fighter-pool {
@@ -303,7 +346,7 @@ td {
   margin: 0;
   height: 45px;
   background: $yellow;
-  transition: width .25s ease;
+  transition: width 0.25s ease;
 
   .loser & {
     background-color: $baseAccent2 !important;
@@ -316,22 +359,21 @@ td {
   height: 100%;
   display: flex;
   align-items: center;
-  
+
   p {
     margin: 0;
     padding-left: 8px;
   }
-  
+
   .pick-num {
     padding: 8px;
   }
-  
 }
 
 .picker {
   position: absolute;
   right: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
   color: $white;
 
   display: none;

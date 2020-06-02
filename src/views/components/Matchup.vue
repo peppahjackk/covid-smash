@@ -77,7 +77,6 @@
 
 <script>
 import crud from "@/mixins/crud.js";
-import gsap from 'gsap';
 
 export default {
   props: {
@@ -117,14 +116,6 @@ export default {
         fighter: fighterName
       });
 
-      let fighterList = this.content.fighters.map((fighterObj)=>{
-        return fighterObj.name
-      })
-      let fighterNumber = fighterList.indexOf(fighterName);
-      let fighterColors = this.$root.COLORS;
-      let fighterColorsDk = this.$root.COLORS_DK; // es-lint disable no-unused-vars
-
-      gsap.set('.fighter-row', {'--fighter-color': fighterColors[fighterNumber], '--fighter-color-dk': fighterColorsDk[fighterNumber]})
     },
     // calcPayout: function(picks) {
     //   if (picks) {
