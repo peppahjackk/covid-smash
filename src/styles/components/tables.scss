@@ -169,58 +169,6 @@ td {
 
 }
 
-.fighter-pool {
-  width: 60%;
-  background: $baseAccent;
-  padding: 3px 0;
-}
-
-.bar-wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.bar-container {
-  padding: 0 5px;
-  margin: 0;
-  height: 45px;
-  background: $yellow;
-  transition: width .25s ease;
-
-  .loser & {
-    background-color: $baseAccent2 !important;
-  }
-}
-
-.bar-label {
-  text-align: left;
-  margin: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  
-  p {
-    margin: 0;
-    padding-left: 8px;
-  }
-  
-  .pick-num {
-    padding: 8px;
-  }
-  
-}
-
-.picker {
-  position: absolute;
-  right: 0;
-  background: rgba(0,0,0,.5);
-  color: $white;
-
-  display: none;
-}
-
 .status {
   background: $baseAccent;
   margin-right: 8px;
@@ -278,7 +226,122 @@ td {
   }
 }
 
+
+.matchup-head {
+  display: flex;
+}
+
+.fighter-row {
+  --fighter-color: var(--red);
+  --fighter-color-dk: var(--redDk);
+  height: 72px;
+  padding: $spacing-sm 0;
+  display: grid;
+  grid-template-columns: 85px 3fr 50px;
+  grid-template-rows: auto;
+
+  & > * {
+    padding: $spacing-sm;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  &.pending {
+      .to-win,
+      .fighter,
+      .bar-container {
+        background: repeating-linear-gradient(
+          120deg,
+          var(--fighter-color) 0px,
+          var(--fighter-color) 10px,
+          var(--fighter-color-dk) 10px,
+          var(--fighter-color-dk) 20px,
+        );
+
+        background-size: 200% 200%;
+        background-position: 0 0;
+        animation: backgroundMove linear 20s infinite reverse;
+      }
+    }
+
+}
+
+.fighter, .to-win {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > * {
+    background: $base;
+    padding: $spacing-xs;
+  }
+}
+
+// .to-win {
+//   flex-basis: 40px; 
+// }
+
+.fighter-pool {
+  // flex-grow: 1;
+  background: $baseAccent;
+  padding: 3px 0;
+  display: flex;
+}
+
+.bar-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.bar-container {
+  padding: 0 5px;
+  margin: 0;
+  height: 45px;
+  background: $yellow;
+  transition: width .25s ease;
+
+  .loser & {
+    background-color: $baseAccent2 !important;
+  }
+}
+
+.bar-label {
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  
+  p {
+    margin: 0;
+    padding-left: 8px;
+  }
+  
+  .pick-num {
+    padding: 8px;
+  }
+  
+}
+
+.picker {
+  position: absolute;
+  right: 0;
+  background: rgba(0,0,0,.5);
+  color: $white;
+
+  display: none;
+}
+
 @media screen and (min-width: $breakpoint-md) {
+  .fighter-row {
+    grid-template-columns: 85px 10vmin 3fr 50px;
+  }
+
   .picker {
     display: block;
   }

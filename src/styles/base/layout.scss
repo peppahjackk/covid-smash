@@ -7,11 +7,11 @@ section {
   justify-content: flex-start;
   margin: auto;
   padding: 0px 16px;
-  
+
   .badge {
     width: 200px;
   }
-  
+
   h2 {
     padding: 8px 32px;
     margin: 0;
@@ -72,9 +72,19 @@ section {
 }
 
 .title {
-  display:inline-block;
+  display: inline-block;
   padding: 4px 15px 4px 40px;
-  background: repeating-linear-gradient(120deg, $green, $green 15px, $yellow 15px, $yellow 25px, $blue 25px, $blue 35px, $red 35px, $red 880px);
+  background: repeating-linear-gradient(
+    120deg,
+    $green,
+    $green 15px,
+    $yellow 15px,
+    $yellow 25px,
+    $blue 25px,
+    $blue 35px,
+    $red 35px,
+    $red 880px
+  );
   margin-bottom: $spacing-sm;
 
   &:last-child {
@@ -144,7 +154,7 @@ section {
 }
 
 .list-header {
-  margin-bottom: .3em;
+  margin-bottom: 0.3em;
 }
 
 .match-rules {
@@ -191,7 +201,7 @@ section {
 
   .flex-top {
     align-items: flex-start;
-  }  
+  }
 
   .sidebar {
     position: fixed;
@@ -201,5 +211,4 @@ section {
     min-height: 100%;
     width: 300px;
   }
-  
 }

@@ -6,6 +6,7 @@ class="user-list-row"
     <h3 class="bg-blue">{{ content[0].name }}</h3>
     <h3>Active picks: {{ content.length }}</h3>
     <h3>Winnings: {{(netGain).toFixed(2)}}</h3>
+
     <table class="minimal">
       <thead>
         <th>Paid up</th>
@@ -21,6 +22,7 @@ class="user-list-row"
       </tr>
     </table>
   </div>
+  <p class="left">{{ content[0].user_id }}</p>
   <div class="user-info-header">
     <div>Match Id</div>
     <div>Fighter</div>

@@ -4,39 +4,40 @@
       <h3 class="fight-label">Fight #{{fightNumber}}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
       <h3 v-if="content.match_type" class="bg-yellow c-base">{{ content.match_type }}</h3>
-      <h3 v-if="content.stage" class="bg-baseAccent2"> @ {{ content.stage }}</h3>
+      <h3 v-if="content.stage" class="bg-baseAccent2">@ {{ content.stage }}</h3>
     </div>
-    <table>
-      <thead>
-        <th>Action</th>
-        <th>Fighter</th>
-        <th>Picks</th>
-        <th>Public %</th>
-      </thead>
-      <tr
+    <div class="matchup-grid">
+      <div class="matchup-head">
+        <h4>Action</h4>
+        <h4>Fighter</h4>
+        <h4>Picks</h4>
+        <h4>Public %</h4>
+      </div>
+      <div
         v-for="(fighter,i) in content.fighters"
         :key="fighter.name"
-        :class="[checkWinner(fighter.name)]"
+        class="fighter-row"
+        :class="[checkWinner(fighter.name), currentPick === fighter.name ? 'pending' : '']"
       >
-        <td v-if="!admin" class="pick">
+        <div v-if="!admin" class="pick">
           <button
             @click="addBet(fighter.name);"
             :class="[status === 'Open for picks' ? '' : 'disabled',
             currentPick === fighter.name ? 'chosen' : '',
             matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
             $root.COLORS_NAME[i]]"
-          >Pick</button>
-        </td>
-        <td v-if="admin">
+          >{{ $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
+        </div>
+        <div v-if="admin">
           <button
             @click="selectWinner(fighter.name);"
             :class="[status === 'COMPLETE' || betsOpen === 0 ? 'disabled' : '']"
           >Winner</button>
-        </td>
-        <td class="fighter">
+        </div>
+        <div v-if="$root.store.clientInfo.isDesktop" class="fighter">
           <h3>{{ fighter.name }}</h3>
-        </td>
-        <td class="fighter-pool">
+        </div>
+        <div class="fighter-pool">
           <div class="bar-wrapper">
             <div class="bar-label">
               <p
@@ -47,22 +48,25 @@
               class="bar-container"
               :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
             ></div>
-            <p class="picker" v-if="matchPicks && matchPicks[fighter.name] && matchPicks[fighter.name].length < 10">
+            <p
+              class="picker"
+              v-if="matchPicks && matchPicks[fighter.name] && matchPicks[fighter.name].length < 10"
+            >
               <span
                 v-for="(picker) in matchPicks[fighter.name]"
                 :key="fighter.name + picker"
-              >{{ printFirstName(picker) }}, </span>
+              >{{ printFirstName(picker) }},</span>
             </p>
           </div>
-        </td>
-        <td class="to-win">
+        </div>
+        <div class="to-win">
           <div class="wins-container">
             <p v-if="matchPicks">{{calcPercent(matchPicks[fighter.name])}}%</p>
             <p v-if="!matchPicks">-</p>
           </div>
-        </td>
-      </tr>
-    </table>
+        </div>
+      </div>
+    </div>
     <h3 class="status">Match status: {{status}}</h3>
     <div class="badge horizontal">
       <p>Total Picks:</p>
@@ -73,6 +77,7 @@
 
 <script>
 import crud from "@/mixins/crud.js";
+import gsap from 'gsap';
 
 export default {
   props: {
@@ -111,6 +116,15 @@ export default {
         net_value: 0,
         fighter: fighterName
       });
+
+      let fighterList = this.content.fighters.map((fighterObj)=>{
+        return fighterObj.name
+      })
+      let fighterNumber = fighterList.indexOf(fighterName);
+      let fighterColors = this.$root.COLORS;
+      let fighterColorsDk = this.$root.COLORS_DK; // es-lint disable no-unused-vars
+
+      gsap.set('.fighter-row', {'--fighter-color': fighterColors[fighterNumber], '--fighter-color-dk': fighterColorsDk[fighterNumber]})
     },
     // calcPayout: function(picks) {
     //   if (picks) {
@@ -125,11 +139,11 @@ export default {
     // },
     calcPercent: function(picks) {
       if (picks) {
-        return (picks.length / this.totalPicks * 100).toFixed(2)
+        return ((picks.length / this.totalPicks) * 100).toFixed(0);
       }
     },
     printFirstName: function(name) {
-      var spaceIdx = name.indexOf(' ');
+      var spaceIdx = name.indexOf(" ");
       return name.substring(0, spaceIdx != -1 ? spaceIdx : name.length);
     },
     checkWinner: function(name) {
@@ -168,7 +182,7 @@ export default {
           "match-" + this.content.match_id
         ];
       } else {
-        console.log('picks null');
+        console.log("picks null");
         return null;
       }
     },

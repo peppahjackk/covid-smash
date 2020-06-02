@@ -130,11 +130,6 @@ const crud = {
     getData_FAKE(mockData, time = 0) {
       return new Promise((resolve)=> {
         setTimeout(()=> {
-
-          mockData.data.forEach((match)=>{
-            match.fighters = JSON.parse(match.fighters)
-          })
-          
           resolve(mockData.data)
         },time)
       })

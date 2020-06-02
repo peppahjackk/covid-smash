@@ -91,7 +91,7 @@
               <th>Match</th>
               <th>Fighter</th>
             </tr>
-            <tr v-for="(pick) in pendingPicks" :key="'pending-' + pick.match_id">
+            <tr v-for="(pick) in $root.store.pendingPicks" :key="'pending-' + pick.match_id">
               <td>{{pick.match_idx}}</td>
               <td>{{pick.fighter}}</td>
             </tr>
@@ -125,11 +125,6 @@ import Standings from "@/views/components/Standings";
 import crud from "@/mixins/crud";
 
 export default {
-  data: function() {
-    return {
-      pendingPicks: {}
-    };
-  },
   computed: {
     userPicks: function() {
       if (this.$root.store.User && this.$root.store.User.picks) {
@@ -154,28 +149,28 @@ export default {
       let matchName = "match" + pick.match_id;
 
       if (pick.delete) {
-        delete this.pendingPicks[matchName];
+        delete this.$root.store.pendingPicks[matchName];
         return;
       }
 
-      this.pendingPicks[matchName] = pick;
+      this.$root.store.pendingPicks[matchName] = pick;
 
       this.$forceUpdate();
       // let vnmName = this.$root.store.User.vnm;
-      // this.pendingPicks[matchName].vnm = vnmName;
+      // this.$root.store.pendingPicks[matchName].vnm = vnmName;
     },
     submitPicks: function() {
-      for (let pick in this.pendingPicks) {
-        let pickIdx = Object.keys(this.pendingPicks).indexOf(pick);
+      for (let pick in this.$root.store.pendingPicks) {
+        let pickIdx = Object.keys(this.$root.store.pendingPicks).indexOf(pick);
         let lastPick = false;
 
-        if (pickIdx === Object.keys(this.pendingPicks).length - 1) {
+        if (pickIdx === Object.keys(this.$root.store.pendingPicks).length - 1) {
           lastPick = true;
         }
 
-        this.postPick(this.pendingPicks[pick]).then(result => {
+        this.postPick(this.$root.store.pendingPicks[pick]).then(result => {
           console.log(result);
-          delete this.pendingPicks[pick];
+          delete this.$root.store.pendingPicks[pick];
 
           if (lastPick) this.$root.eventHub.$emit("fetchMatches");
         });

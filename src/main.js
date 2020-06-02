@@ -6,6 +6,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 import styles from './styles/main.scss'; // eslint-disable-line no-unused-vars
+import utils from './mixins/utils';
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
@@ -90,10 +91,23 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
+
+Vue.directive('resize', {
+  inserted: function (el, binding) {
+    let f = function (evt) {
+      if (binding.value(evt, el)) {
+        window.removeEventListener('resize', f);
+      }
+    };
+    window.addEventListener('resize', utils.throttle(f, 16, { trailing: false, leading: true }));
+  },
+});
+
 var theApp = new Vue({
   data: {
     eventHub: eventHub,
     COLORS: ['#ce1000', '#0b418d', '#ffca00', '#2a844a'],
+    COLORS_DK: ['#8a0b00', '#082e65', '#d1a700', '#1d5e34'],
     COLORS_NAME: ['red', 'blue', 'yellow', 'green'],
     store: {
       activeTab: 'n64',
@@ -118,9 +132,14 @@ var theApp = new Vue({
         matches: [],
         matchResults: {}
       },
+      pendingPicks: {},
       user_meta: {
         data: null,
         names: []
+      },
+      clientInfo: {
+        isDesktop: null,
+        short: null
       }
     },
   },

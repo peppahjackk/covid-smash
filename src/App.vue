@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app" v-resize="ON_RESIZE">
     <Navbar v-if="$root.store.User && $root.store.User.loggedIn"></Navbar>
     <router-view></router-view>
     <div v-if="activeModal" @click="$root.eventHub.$emit('activeModal', null)" class="modal-overlay"></div>
@@ -10,7 +10,7 @@
 import Navbar from "./views/components/Navbar";
 import crud from "@/mixins/crud";
 
-// import FAKE_MATCHES from "./data/FAKE_matches.js";
+import FAKE_DATA from "./data/FAKE_data.js";
 
 export default {
   name: "App",
@@ -26,6 +26,7 @@ export default {
     };
   },
   mounted: function() {
+    this.checkClientInfo();
 
     if (!this.$root.store.User.loggedIn && this.$route.path != '/login') {
       this.$router.replace({path: '/login'});
@@ -62,10 +63,11 @@ export default {
       if (this.fetching) return;
       this.fetching = true;
       console.log('Fetching Data...');
-      // this.getData_FAKE(FAKE_MATCHES).then(results => {
-        this.getMatches().then(results => {
+      this.getData_FAKE(FAKE_DATA.matches).then(results => {
+        // this.getMatches().then(results => {
           console.log('Getmatches: ', results);
-          this.fetchPicks(results).then(pickResults => {
+          this.getData_FAKE(FAKE_DATA.picks).then(pickResults => {
+          // this.fetchPicks(results).then(pickResults => {
           console.log('FetchPicks: ', pickResults);
           let matchPicks = {};
           let userPicks = [];
@@ -248,7 +250,30 @@ export default {
       }
 
       return matchResults;
-    }
+    },
+    ON_RESIZE() {
+      console.log('resizing');
+      this.checkClientInfo();
+    },
+    checkClientInfo() {
+      console.log('checkClient: ', this.$root.store.clientInfo.isDesktop);
+      let box = this.$refs.app.getBoundingClientRect();
+      
+      if (box.width > 992 && this.$root.store.clientInfo.isDesktop != true) {
+        this.$root.store.clientInfo.isDesktop = true;
+        this.$root.eventHub.$emit("client-change");
+      } else if (box.width <= 992 && this.$root.store.clientInfo.isDesktop != false) {
+        this.$root.store.clientInfo.isDesktop = false;
+        this.$root.eventHub.$emit("client-change");
+      }
+
+      if (window.innerHeight < 799 && this.$root.store.clientInfo.short != true) {
+        this.$root.store.clientInfo.short = true;
+      } else if (window.innerHeight > 799 && this.$root.store.clientInfo.short != false) {
+        this.$root.store.clientInfo.short = false;
+      }
+
+    },
   },
 };
 </script>
