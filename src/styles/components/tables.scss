@@ -177,7 +177,6 @@ td {
 
 .status {
   background: $baseAccent;
-  margin-right: 8px;
 }
 
 .user-list {
@@ -264,19 +263,23 @@ td {
   height: 72px;
   padding: $spacing-xs 0;
 
-  &:nth-child(3) {
+  &:nth-child(3), &:nth-child(7) {
     --fighter-color: var(--blue);
     --fighter-color-dk: var(--blueDk);
   }
 
-  &:nth-child(4) {
+  &:nth-child(4), &:nth-child(8) {
     --fighter-color: var(--yellow);
     --fighter-color-dk: var(--yellowDk);
   }
 
-  &:nth-child(5) {
+  &:nth-child(5), &:nth-child(9) {
     --fighter-color: var(--green);
-    --fighter-color-dk: var(greenDk);
+    --fighter-color-dk: var(--greenDk);
+  }
+  &:nth-child(6) {
+    --fighter-color: var(--red);
+  --fighter-color-dk: var(--redDk);
   }
 
   & > * {

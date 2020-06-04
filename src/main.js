@@ -132,6 +132,12 @@ var theApp = new Vue({
         matches: [],
         matchResults: {}
       },
+      future_data: {
+        matches: [],
+        picks: [],
+        ids: [],
+        matchResults: {}
+      },
       archive_data: {
         matches: [],
         matchResults: {}

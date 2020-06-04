@@ -1,69 +1,103 @@
 module.exports = {
     matches: {
         data: [{
-            "match_id": "206",
-            "stage": "Random",
-            "fighters": [{
-                "name": "ness",
-                "placement": null
+                "match_id": "206",
+                "stage": "Random",
+                "fighters": [{
+                    "name": "ness",
+                    "placement": null
+                }, {
+                    "name": "link",
+                    "placement": null
+                }],
+                "in_progress": null,
+                "timestamp": "2020-05-28 16:04:50",
+                "winning_fighter": null,
+                "complete": 0,
+                "hidden": "0",
+                "match_type": "also special",
+                "system": "N64",
+                "game": "Super Smash Bros",
+                "match_idx": "1",
+                "show_in_standings": 1
             }, {
-                "name": "link",
-                "placement": null
-            }],
-            "in_progress": null,
-            "timestamp": "2020-05-28 16:04:50",
-            "winning_fighter": null,
-            "complete": 0,
-            "hidden": "0",
-            "match_type": "also special",
-            "system": "N64",
-            "game": "Super Smash Bros",
-            "match_idx": "1",
-            "show_in_standings": 1
-        }, {
-            "match_id": "207",
-            "stage": "hyril",
-            "fighters": [{
-                "name": "ted",
-                "placement": null
+                "match_id": "207",
+                "stage": "hyril",
+                "fighters": [{
+                    "name": "ted",
+                    "placement": null
+                }, {
+                    "name": "rusty",
+                    "placement": null
+                }, {
+                    "name": "fd",
+                    "placement": null
+                }],
+                "in_progress": null,
+                "timestamp": "2020-05-29 11:50:53",
+                "winning_fighter": null,
+                "complete": 0,
+                "hidden": "0",
+                "match_type": "sss",
+                "system": "N64",
+                "game": "Super Smash Bros",
+                "match_idx": "1",
+                "show_in_standings": 1
             }, {
-                "name": "rusty",
-                "placement": null
-            }, {
-                "name": "fd",
-                "placement": null
-            }],
-            "in_progress": null,
-            "timestamp": "2020-05-29 11:50:53",
-            "winning_fighter": null,
-            "complete": 0,
-            "hidden": "0",
-            "match_type": "sss",
-            "system": "N64",
-            "game": "Super Smash Bros",
-            "match_idx": "1",
-            "show_in_standings": 1
-        }, {
-            "match_id": "208",
-            "stage": "Hyrule",
-            "fighters": [{
-                "name": "baby boy",
-                "placement": null
-            }, {
-                "name": "manly man",
-                "placement": null
-            }],
-            "in_progress": null,
-            "timestamp": "2020-05-29 14:42:33",
-            "winning_fighter": null,
-            "complete": 0,
-            "hidden": "0",
-            "match_type": "Swords",
-            "system": "N64",
-            "game": "Super Smash Bros",
-            "match_idx": "3",
-            "show_in_standings": 1
-        }]
+                "match_id": "208",
+                "stage": "Hyrule",
+                "fighters": [{
+                    "name": "baby boy",
+                    "placement": null
+                }, {
+                    "name": "manly man",
+                    "placement": null
+                }],
+                "in_progress": null,
+                "timestamp": "2020-05-29 14:42:33",
+                "winning_fighter": null,
+                "complete": 0,
+                "hidden": "0",
+                "match_type": "Swords",
+                "system": "N64",
+                "game": "Super Smash Bros",
+                "match_idx": "3",
+                "show_in_standings": 1
+            },
+            {
+                "match_id": 209,
+                "stage": "Various",
+                "fighters": [{
+                    "name": "Ted",
+                    "placement": null
+                }, {
+                    "name": "Sarah",
+                    "placement": null
+                }, {
+                    "name": "Rusty",
+                    "placement": null
+                }, {
+                    "name": "Kristen",
+                    "placement": null
+                }, {
+                    "name": "The Mailman",
+                    "placement": null
+                }, {
+                    "name": "A volleyball",
+                    "placement": null
+                }],
+                "in_progress": null,
+                "timestamp": "2020-06-03 23:55:54",
+                "winning_fighter": null,
+                "complete": 0,
+                "hidden": 0,
+                "match_type": "1v1 bracket",
+                "system": "N64",
+                "game": "Super Smash Bros",
+                "match_idx": 4,
+                "show_in_standings": 1
+            }
+        ]
     },
     picks: {
         data: [{

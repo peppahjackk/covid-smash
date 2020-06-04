@@ -1,10 +1,11 @@
 <template>
   <div class="matchup-container" :class="[status]">
     <div class="table-header">
-      <h3 class="fight-label">Fight #{{fightNumber}}</h3>
+      <h3 v-if="content.fightNumber" class="fight-label">Fight #{{fightNumber}}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
       <h3 v-if="content.match_type" class="bg-yellow c-base">{{ content.match_type }}</h3>
       <h3 v-if="content.stage" class="bg-baseAccent2">@ {{ content.stage }}</h3>
+      <h3 class="status">{{status}}</h3>
     </div>
     <div class="matchup-grid">
       <div class="matchup-head fighter-header">
@@ -26,7 +27,7 @@
             pendingPick === fighter.name ? 'chosen' : '',
             currentPick === fighter.name ? 'chosen' : '',
             matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
-            $root.COLORS_NAME[i]]"
+            $root.COLORS_NAME[i % $root.COLORS_NAME.length]]"
           >{{ pendingPick === fighter.name || currentPick === fighter.name ? 'X' : $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
         </div>
         <div v-if="$root.store.clientInfo.isDesktop" class="fighter">
@@ -41,7 +42,7 @@
             </div>
             <div
               class="bar-container"
-              :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i] : '#666'] }"
+              :style="{ width: [matchPicks && matchPicks[fighter.name] ? `${matchPicks[fighter.name].length / totalPicks * 100}%` : 0], backgroundColor: [matchPicks != null && matchPicks[fighter.name] ? $root.COLORS[i % $root.COLORS.length] : '#666'] }"
             ></div>
             <p
               class="picker"
@@ -62,7 +63,6 @@
         </div>
       </div>
     </div>
-    <h3 class="status">Match status: {{status}}</h3>
     <div class="badge horizontal">
       <p>Total Picks:</p>
       <h2>{{ totalPicks }}</h2>

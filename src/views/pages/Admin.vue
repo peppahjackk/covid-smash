@@ -14,6 +14,10 @@
         :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
       >Active Matches</h2>
       <h2
+        @click="$root.store.activeView = 'futures'"
+        :class="[$root.store.activeView === 'futures' ? 'bg-baseAccent' : '']"
+      >Futures</h2>
+      <h2
         @click="$root.store.activeView = 'archive'"
         :class="[$root.store.activeView === 'archive' ? 'bg-baseAccent' : '']"
       >Archive</h2>
@@ -44,6 +48,14 @@
             :key="match.id"
           ></MatchAdmin>
           <MatchAdmin
+            v-show="$root.store.activeView === 'futures'"
+            class="matchup-wrapper"
+            v-for="(match) in $root.store.future_data.matches"
+            :content="match"
+            :pickNames="$root.store.active_data.pickNames"
+            :key="match.id"
+          ></MatchAdmin>
+          <MatchAdmin
             v-show="$root.store.activeView === 'archive'"
             class="matchup-wrapper"
             v-for="(match, i) in $root.store.archive_data.matches"
@@ -51,7 +63,7 @@
             :fightNumber="i + 1"
             :key="match.id"
           ></MatchAdmin>
-          <tr v-show="$root.store.activeView === 'home'">
+          <tr v-show="$root.store.activeView === 'home' || $root.store.activeView === 'futures'">
             <td colspan="11">
               <button @click="addMatch">+Add Match</button>
             </td>
@@ -59,12 +71,22 @@
         </table>
       </div>
     </div>
-    <div class="user-list" v-if="$root.store.active_data.picks && !$root.store.active_data.picks['undefined']">
+    <div class="user-list" v-if="$root.store.activeView === 'home' && $root.store.active_data.picks && !$root.store.active_data.picks['undefined']">
+      <h3>Weekly Picks</h3>
         <UserPicks
           v-for="(picker) in Object.keys($root.store.active_data.picks)" 
           :key="'active-' + picker"
           :content="$root.store.active_data.picks[picker]"
           :picker="$root.store.active_data.picks[picker].name"
+          @delete="ON_PICK_DELETE"></UserPicks>
+    </div>
+    <div class="user-list" v-if="$root.store.activeView === 'futures' && $root.store.future_data.picks && !$root.store.future_data.picks['undefined']">
+      <h3>Futures Picks</h3>
+        <UserPicks
+          v-for="(picker) in Object.keys($root.store.future_data.picks)" 
+          :key="'active-' + picker"
+          :content="$root.store.future_data.picks[picker]"
+          :picker="$root.store.future_data.picks[picker].name"
           @delete="ON_PICK_DELETE"></UserPicks>
     </div>
   </section>

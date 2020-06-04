@@ -40,6 +40,11 @@
             :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
           >Pick some Winners</h2>
           <h2
+            v-if="$root.store.future_data.matches"
+            @click="$root.store.activeView = 'futures'"
+            :class="[$root.store.activeView === 'futures' ? 'bg-baseAccent' : '']"
+          >Playoffs</h2>
+          <h2
             v-if="false"
             @click="$root.store.activeView = 'previews'"
             :class="[$root.store.activeView === 'previews' ? 'bg-baseAccent' : '']"
@@ -56,6 +61,24 @@
             :key="match.match_id"
           >
             <Matchup :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
+          </div>
+          <button class="blue back-to-top" @click="toTop">Back to top</button>
+        </div>
+        <div class="matchups" v-show="$root.store.activeView === 'futures'">
+          <div class="bg-blue p-md cta">
+            <div class="text-container">
+              <h2>8 players enter. Only one will be crowned the ultimate N64 smash fighter.</h2>
+              
+              <h3 class="left">For 3 weeks, beginning 06/05/2020, the fighters will duke it out 1v1 in Best of 3 format, loser goes home, until we crown the ultimate smash fighter. These are one time picks that will lock once the playoffs begin, and will be resolved after a champion is crowned.</h3>
+              <h3 class="bg-yellow c-base">4 stock || Stages in order: Hyrule Temple, Corneria, and Dreamland (if neccessary)</h3>
+            </div>
+          </div>
+          <div
+            class="matchup-wrapper"
+            v-for="(match) in $root.store.future_data.matches"
+            :key="match.match_id"
+          >
+            <Matchup :content="match" @pickSelected="selectPicks"></Matchup>
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>

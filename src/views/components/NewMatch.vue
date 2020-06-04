@@ -4,11 +4,11 @@
       <div class="modal-body">
         <h1>New Match</h1>
         <div class="form">
-          <label for="stage">System:</label>
-          <input type="text" placeholder="stage" id="stage" v-model="system" />
-          <label for="stage">Game:</label>
-          <input type="text" placeholder="stage" id="stage" v-model="game" />
-          <label for="stage">Stage:</label>
+          <label for="system">System:</label>
+          <input type="text" placeholder="system" id="system" v-model="system" />
+          <label for="game">Game:</label>
+          <input type="text" placeholder="game" id="game" v-model="game" />
+          <label for="stage">Stage: (to make a future, stage should be 'Various')</label>
           <input type="text" placeholder="stage" id="stage" v-model="stage" />
           <label for="fighter1">Fighters:</label>
           <div class="fighter-group">
