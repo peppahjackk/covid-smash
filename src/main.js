@@ -34,7 +34,7 @@ firebase.auth().onAuthStateChanged(user => {
     // setting of the user will happen there
     return;
   }
-
+  
   theApp.store.User.loggedIn = user !== null;
   if (user) {
     // User is signed in.
@@ -43,30 +43,31 @@ firebase.auth().onAuthStateChanged(user => {
     theApp.store.User.id = user.uid;
     theApp.store.User.referrer = user.referrer;
     theApp.store.User.isAdmin = (process.env.VUE_APP_ADMIN.indexOf(user.email) >= 0);
-
+    
     if (theApp.$route.path === '/login') {
       theApp.$router.replace({
         path: "/"
       });
     }
-
+    
     // TODO Abstract this to fire mixins
-    if (theApp.store.user_meta.ids.indexOf(user.uid) < 0) {
+    if (theApp.store.user_meta.ids && theApp.store.user_meta.ids.indexOf(user.uid) < 0) {
       let userMeta = {
         'id': user.uid,
         'name': user.displayName
       };
       userMeta.referrer = user.referrer || '';
-
+      
       firebase.firestore().collection('user_meta').add(userMeta)
-        .then(result => {
-          console.log(result);
-        })
-        .catch(err => {
-          console.error(err);
-        })
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.error(err);
+      })
     }
-
+    
+    eventHub.$emit('login_COMPLETE');
     localStorage.setItem('auth', true);
   } else {
     // No user is signed in.
@@ -99,7 +100,10 @@ Vue.directive('resize', {
         window.removeEventListener('resize', f);
       }
     };
-    window.addEventListener('resize', utils.throttle(f, 16, { trailing: false, leading: true }));
+    window.addEventListener('resize', utils.throttle(f, 16, {
+      trailing: false,
+      leading: true
+    }));
   },
 });
 

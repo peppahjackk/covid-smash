@@ -37,8 +37,6 @@ export default {
       this.activeModal = modalName;
     });
 
-    this.fetchMatches();
-    this.fetchArchive();
 
     if (this.isAdmin) {
       window.setInterval(()=>{
@@ -49,6 +47,11 @@ export default {
     } else {
       window.setInterval(this.fetchMatches, 10000);
     }
+
+    this.$root.eventHub.$on("login_COMPLETE", ()=> {
+      this.fetchMatches();
+    this.fetchArchive();
+    })
 
     this.$root.eventHub.$on("fetchMatches", () => {
       this.fetchMatches();
