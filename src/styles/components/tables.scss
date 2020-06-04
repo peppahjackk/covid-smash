@@ -237,14 +237,32 @@ td {
   display: flex;
 }
 
+.pick {
+  min-width: 90px;
+  button {
+    min-width: 68px;
+  }
+}
+
+.fighter-row,
+.fighter-header {
+  display: grid;
+  grid-template-columns: 85px 3fr 50px;
+  grid-template-rows: auto;
+}
+
+.fighter-header {
+  padding: $spacing-sm 0;
+  h4 {
+    margin: 0;
+  }
+}
+
 .fighter-row {
   --fighter-color: var(--red);
   --fighter-color-dk: var(--redDk);
   height: 72px;
   padding: $spacing-xs 0;
-  display: grid;
-  grid-template-columns: 85px 3fr 50px;
-  grid-template-rows: auto;
 
   &:nth-child(3) {
     --fighter-color: var(--blue);
@@ -267,6 +285,21 @@ td {
 
     &:first-child {
       padding-left: 0;
+    }
+  }
+
+  &.current {
+    position: relative;
+    z-index: 1;
+    background: var(--fighter-color);
+
+    &:before {
+      @include psuedo;
+      background: $base;
+      width: calc(100% - #{$spacing-sm});
+      height: calc(100% - #{$spacing-sm});
+      left: calc(#{$spacing-sm} / 2);
+      top: calc(#{$spacing-sm} / 2);
     }
   }
 
@@ -380,7 +413,8 @@ td {
 }
 
 @media screen and (min-width: $breakpoint-md) {
-  .fighter-row {
+  .fighter-row,
+  .fighter-header {
     grid-template-columns: 85px 10vmin 3fr 50px;
   }
 

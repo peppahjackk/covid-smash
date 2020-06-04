@@ -1,5 +1,5 @@
 <template>
-  <div class="matchup-container" :class="[admin ? 'admin' : '', status]">
+  <div class="matchup-container" :class="[status]">
     <div class="table-header">
       <h3 class="fight-label">Fight #{{fightNumber}}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
@@ -7,8 +7,8 @@
       <h3 v-if="content.stage" class="bg-baseAccent2">@ {{ content.stage }}</h3>
     </div>
     <div class="matchup-grid">
-      <div class="matchup-head">
-        <h4>Action</h4>
+      <div class="matchup-head fighter-header">
+        <h4 v-if="$root.store.clientInfo.isDesktop">Action</h4>
         <h4>Fighter</h4>
         <h4>Picks</h4>
         <h4>Public %</h4>
@@ -17,22 +17,17 @@
         v-for="(fighter,i) in content.fighters"
         :key="fighter.name"
         class="fighter-row"
-        :class="[checkWinner(fighter.name), currentPick === fighter.name ? 'pending' : '']"
+        :class="[checkWinner(fighter.name), pendingPick === fighter.name ? 'pending' : '', currentPick === fighter.name ? 'current' : '']"
       >
-        <div v-if="!admin" class="pick">
+        <div class="pick">
           <button
             @click="addBet(fighter.name);"
             :class="[status === 'Open for picks' ? '' : 'disabled',
+            pendingPick === fighter.name ? 'chosen' : '',
             currentPick === fighter.name ? 'chosen' : '',
             matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
             $root.COLORS_NAME[i]]"
-          >{{ $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
-        </div>
-        <div v-if="admin">
-          <button
-            @click="selectWinner(fighter.name);"
-            :class="[status === 'COMPLETE' || betsOpen === 0 ? 'disabled' : '']"
-          >Winner</button>
+          >{{ pendingPick === fighter.name || currentPick === fighter.name ? 'X' : $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
         </div>
         <div v-if="$root.store.clientInfo.isDesktop" class="fighter">
           <h3>{{ fighter.name }}</h3>
@@ -80,85 +75,19 @@ import crud from "@/mixins/crud.js";
 
 export default {
   props: {
-    admin: Boolean,
     betsOpen: Number,
     content: Object,
     fightNumber: Number
   },
-  data: function() {
+  mixins: [crud],
+  data() {
     return {
+      pendingPick: "",
       currentPick: ""
     };
   },
-  mixins: [crud],
-  methods: {
-    addBet(fighterName) {
-      console.log(this.content);
-      if (this.currentPick === fighterName) {
-        this.currentPick = "";
-        this.$emit("pickSelected", {
-          match_id: this.content.match_id,
-          delete: true
-        });
-
-        return;
-      }
-
-      this.currentPick = fighterName;
-
-      this.$emit("pickSelected", {
-        user_id: this.$root.store.User.id,
-        match_id: this.content.match_id,
-        match_idx: this.fightNumber,
-        name: this.$root.store.User.name,
-        referrer: this.$root.store.User.referrer,
-        net_value: 0,
-        fighter: fighterName
-      });
-
-    },
-    // calcPayout: function(picks) {
-    //   if (picks) {
-    //     return (
-    //       (this.content.pick_value * this.totalPicks -
-    //         picks.length * this.content.pick_value) /
-    //       picks.length
-    //     ).toFixed(2);
-    //   } else {
-    //     return 0;
-    //   }
-    // },
-    calcPercent: function(picks) {
-      if (picks) {
-        return ((picks.length / this.totalPicks) * 100).toFixed(0);
-      }
-    },
-    printFirstName: function(name) {
-      var spaceIdx = name.indexOf(" ");
-      return name.substring(0, spaceIdx != -1 ? spaceIdx : name.length);
-    },
-    checkWinner: function(name) {
-      if (!this.content.winning_fighter) {
-        return "";
-      }
-
-      if (name === this.content.winning_fighter) {
-        return "winner";
-      } else {
-        return "loser";
-      }
-    },
-    selectWinner: function(name) {
-      this.updateMatches({
-        winning_fighter: name,
-        filter: `match_id=${this.content.match_id}`
-      }).then(() => {
-        this.$root.eventHub.$emit("fetchMatches");
-      });
-    }
-  },
   computed: {
-    status: function() {
+    status() {
       if (this.content.in_progress === 1) {
         return "IN_PROGRESS";
       } else if (this.content.complete === 1) {
@@ -167,17 +96,16 @@ export default {
         return "Open for picks";
       }
     },
-    matchPicks: function() {
+    matchPicks() {
       if (this.$root.store.active_data.pickNames) {
         return this.$root.store.active_data.pickNames[
           "match-" + this.content.match_id
         ];
       } else {
-        console.log("picks null");
         return null;
       }
     },
-    totalPicks: function() {
+    totalPicks() {
       let total = 0;
 
       for (let pickI in this.matchPicks) {
@@ -188,8 +116,72 @@ export default {
 
       return total;
     },
-    totalValue: function() {
+    totalValue() {
       return this.totalPicks * this.content.pick_value;
+    }
+  },
+  mounted() {
+    this.checkCurrentPick();
+
+    console.log("mounted match: ", this.content.match_id);
+    this.$root.eventHub.$on("fetchMatches_COMPLETE", () => {
+      this.checkCurrentPick();
+    });
+
+    this.$root.eventHub.$on("picksSubmitted_COMPLETE", ()=> {
+      this.pendingPick = "";
+    })
+  },
+  methods: {
+    addBet(fighterName) {
+      console.log(this.content);
+      if (this.pendingPick === fighterName) {
+        this.pendingPick = "";
+        this.$emit("pickSelected", {
+          match_id: this.content.match_id,
+          delete: true
+        });
+        return;
+      }
+
+      this.pendingPick = fighterName;
+
+      this.$emit("pickSelected", {
+        user_id: this.$root.store.User.id,
+        match_id: this.content.match_id,
+        match_idx: this.fightNumber,
+        name: this.$root.store.User.name,
+        referrer: this.$root.store.User.referrer,
+        net_value: 0,
+        fighter: fighterName
+      });
+    },
+    calcPercent(picks) {
+      if (picks) {
+        return ((picks.length / this.totalPicks) * 100).toFixed(0);
+      }
+    },
+    printFirstName(name) {
+      var spaceIdx = name.indexOf(" ");
+      return name.substring(0, spaceIdx != -1 ? spaceIdx : name.length);
+    },
+    checkCurrentPick() {
+      for (let pick of this.$root.store.User.picks) {
+        if (parseInt(pick.match_id) === this.content.match_id) {
+          this.currentPick = pick.fighter;
+        }
+      }
+    },
+    checkWinner(name) {
+      if (!this.content.winning_fighter) {
+        return "";
+      }
+
+      if (name === this.content.winning_fighter) {
+        return "winner";
+      } else {
+        return "loser";
+      }
     }
   }
 };

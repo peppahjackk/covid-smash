@@ -172,7 +172,13 @@ export default {
           console.log(result);
           delete this.$root.store.pendingPicks[pick];
 
-          if (lastPick) this.$root.eventHub.$emit("fetchMatches");
+          if (lastPick) {
+            this.$root.eventHub.$emit("fetchMatches");
+            
+            this.$root.eventHub.$once("fetchMatches_COMPLETE", ()=>{
+              this.$root.eventHub.$emit("picksSubmitted_COMPLETE");
+            })
+          }
         });
       }
     },

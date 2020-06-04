@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     matches: {
         data: [{
             "match_id": "206",
@@ -97,7 +97,7 @@ export default {
             "pick_value": "0",
             "timestamp": "2020-05-28 20:44:49",
             "match_id": "207",
-            "user_id": "u4jpNnHFcSbDpxjbiZ4pfMsIzRv1",
+            "user_id": "iXYLdzt8PKcsHsqG9gih0dKaN5C2",
             "pick_id": "207_u4jpNnHFcSbDpxjbiZ4pfMsIzRv1",
             "net_value": "0",
             "referrer": "",
@@ -109,7 +109,7 @@ export default {
             "pick_value": "0",
             "timestamp": "2020-05-28 20:44:49",
             "match_id": "206",
-            "user_id": "u4jpNnHFcSbDpxjbiZ4pfMsIzRv1",
+            "user_id": "iXYLdzt8PKcsHsqG9gih0dKaN5C2",
             "pick_id": "206_u4jpNnHFcSbDpxjbiZ4pfMsIzRv1",
             "net_value": "0",
             "referrer": "",

@@ -10,7 +10,7 @@
 import Navbar from "./views/components/Navbar";
 import crud from "@/mixins/crud";
 
-import FAKE_DATA from "./data/FAKE_data.js";
+// import FAKE_DATA from "./data/FAKE_data.js";
 
 export default {
   name: "App",
@@ -63,11 +63,11 @@ export default {
       if (this.fetching) return;
       this.fetching = true;
       console.log('Fetching Data...');
-      this.getData_FAKE(FAKE_DATA.matches).then(results => {
-        // this.getMatches().then(results => {
+      // this.getData_FAKE(FAKE_DATA.matches).then(results => {
+        this.getMatches().then(results => {
           console.log('Getmatches: ', results);
-          this.getData_FAKE(FAKE_DATA.picks).then(pickResults => {
-          // this.fetchPicks(results).then(pickResults => {
+          // this.getData_FAKE(FAKE_DATA.picks).then(pickResults => {
+          this.fetchPicks(results).then(pickResults => {
           console.log('FetchPicks: ', pickResults);
           let matchPicks = {};
           let userPicks = [];
@@ -142,11 +142,6 @@ export default {
           this.fetching = false;
         });
       });
-
-      // this.getData_FAKE(FAKE_MATCHES).then(results => {
-      //   console.log(results);
-      //   this.$root.store.active_data.matches = results;
-      // })
     },
     fetchPicks: function(match_ids) {
       return this.getPicks(match_ids).then(results => {
