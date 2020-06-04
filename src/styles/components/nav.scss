@@ -12,7 +12,7 @@ nav {
         text-decoration: underline;
         display: inline-block;
         padding: $spacing-sm 12px;
-        min-height: 100%;
+        font-size: 12px;
         margin-bottom: 0;
 
         &:hover {
@@ -39,9 +39,23 @@ nav {
     display: flex;
     align-items: center;
 
-    font-size: 24px;
+    font-size: 16px;
+    line-height: 1.1;
     font-weight: 700;
     margin-bottom: 0;
     text-decoration: none;
     margin-right: $spacing-md;
+}
+
+@media screen and (min-width: $breakpoint-sm) {
+    nav {
+        a {
+            min-height: 100%;
+            font-size: 16px;
+        }
+    }
+
+    .nav-title {
+        font-size: 24px;
+    }
 }

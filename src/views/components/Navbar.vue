@@ -8,7 +8,7 @@
         <a @click="$router.push('/admin')" :class="[$route.name === 'Admin' ? 'active' : '']" v-if="$root.store.User.isAdmin"><p>Admin</p></a>
       </div>
       <div class="nav-right nav-container">
-        <a @click="$router.push('/profile')" :class="[$route.name === 'Profile' ? 'active' : '']"><p>My Profile</p></a>
+        <a v-if="$root.store.clientInfo.isDesktop" @click="$router.push('/profile')" :class="[$route.name === 'Profile' ? 'active' : '']"><p>Profile</p></a>
         <a class="underline" @click="signOut"><p>Logout</p></a>
       </div>
     </div>
