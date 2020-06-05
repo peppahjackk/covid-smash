@@ -68,10 +68,17 @@
           <div class="bg-blue p-md cta">
             <div class="text-container">
               <h2>8 players enter. Only one will be crowned the ultimate N64 smash fighter.</h2>
-              
-              <h3 class="left">For 3 weeks, beginning 06/05/2020, the fighters will duke it out 1v1 in Best of 3 format, loser goes home, until we crown the ultimate smash fighter. These are one time picks that will lock once the playoffs begin, and will be resolved after a champion is crowned.</h3>
-              <h3 class="bg-yellow c-base">4 stock || Stages in order: Hyrule Temple, Corneria, and Dreamland (if neccessary)</h3>
+
+              <h3
+                class="left"
+              >For 3 weeks, beginning 06/05, the fighters will duke it out 1v1 in Best of 3 format, loser goes home, until we crown the ultimate smash fighter. These are one time picks that will lock once the playoffs begin.</h3>
             </div>
+          </div>
+          <div class="cta p-lg">
+              <h3
+                class="bg-yellow c-base"
+              >4 stock || Dreamland only</h3>
+            <img src="@/assets/bracket_06_04.png" />
           </div>
           <div
             class="matchup-wrapper"
@@ -79,6 +86,17 @@
             :key="match.match_id"
           >
             <Matchup :content="match" @pickSelected="selectPicks"></Matchup>
+          </div>
+          <div class="b-yellow cta">
+            <div class="text-container p-sm">
+              <h3 class="bg-yellow c-base">The bettors of the winning character split the pot like a regular match.</h3>
+              <h3
+                class="left"
+              >In the event of the championship having 1 character with no bettors and that character wins, the house keeps the money.</h3>
+              <h3
+                class="left"
+              >In the event of the championship having both characters with no bettors, future bets will re-open for those two for all original bettors (no additional $$ needed), and winning bettors win 1/2 pot, the house keeps 1/2 pot.</h3>
+            </div>
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
@@ -121,7 +139,7 @@
           </table>
           <!-- <p>Total picks: {{ pendingPicks.length }}</p> -->
           <button @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
-          <h4 class="p-sm">Text Rusty with technical issues, or about his favorite soup.</h4> 
+          <h4 class="p-sm">Text Rusty with technical issues, or about his favorite soup.</h4>
         </div>
         <div class="sidebar-picks-container">
           <h4>SUBMITTED</h4>
@@ -197,10 +215,10 @@ export default {
 
           if (lastPick) {
             this.$root.eventHub.$emit("fetchMatches");
-            
-            this.$root.eventHub.$once("fetchMatches_COMPLETE", ()=>{
+
+            this.$root.eventHub.$once("fetchMatches_COMPLETE", () => {
               this.$root.eventHub.$emit("picksSubmitted_COMPLETE");
-            })
+            });
           }
         });
       }

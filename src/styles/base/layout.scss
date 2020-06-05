@@ -5,6 +5,7 @@ section {
 .pick-header {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
   margin: auto;
   padding: 0px 16px;
 
@@ -186,6 +187,10 @@ section {
 
 .cta {
   margin: $spacing-md 0;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 @media screen and (min-width: $breakpoint-md) {

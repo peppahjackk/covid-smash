@@ -1,7 +1,7 @@
 <template>
   <div class="matchup-container" :class="[status]">
     <div class="table-header">
-      <h3 v-if="content.fightNumber" class="fight-label">Fight #{{fightNumber}}</h3>
+      <h3 v-if="fightNumber" class="fight-label">Fight #{{fightNumber}}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
       <h3 v-if="content.match_type" class="bg-yellow c-base">{{ content.match_type }}</h3>
       <h3 v-if="content.stage" class="bg-baseAccent2">@ {{ content.stage }}</h3>
