@@ -47,10 +47,13 @@ module.exports = {
                 "match_id": "208",
                 "stage": "Hyrule",
                 "fighters": [{
-                    "name": "baby boy",
+                    "name": "ganondorfff",
                     "placement": null
                 }, {
-                    "name": "manly man",
+                    "name": "pikachu",
+                    "placement": null
+                }, {
+                    "name": "captain falcon",
                     "placement": null
                 }],
                 "in_progress": null,

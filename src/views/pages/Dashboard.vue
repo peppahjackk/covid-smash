@@ -50,6 +50,7 @@
             :class="[$root.store.activeView === 'previews' ? 'bg-baseAccent' : '']"
           >Match Previews</h2>
           <h2
+          v-if="false"
             @click="$root.store.activeView = 'standings'"
             :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
           >Standings</h2>
@@ -93,9 +94,6 @@
               <h3
                 class="left"
               >In the event of the championship having 1 character with no bettors and that character wins, the house keeps the money.</h3>
-              <h3
-                class="left"
-              >In the event of the championship having both characters with no bettors, future bets will re-open for those two for all original bettors (no additional $$ needed), and winning bettors win 1/2 pot, the house keeps 1/2 pot.</h3>
             </div>
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>

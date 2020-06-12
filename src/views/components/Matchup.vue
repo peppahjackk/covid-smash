@@ -28,7 +28,7 @@
             currentPick === fighter.name ? 'chosen' : '',
             matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
             $root.COLORS_NAME[i % $root.COLORS_NAME.length]]"
-          >{{ pendingPick === fighter.name || currentPick === fighter.name ? 'X' : $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
+          >{{ !$root.store.clientInfo.isDesktop && (pendingPick === fighter.name || currentPick === fighter.name) ? 'X' : $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
         </div>
         <div v-if="$root.store.clientInfo.isDesktop" class="fighter">
           <h3>{{ fighter.name }}</h3>
@@ -46,7 +46,7 @@
             ></div>
             <p
               class="picker"
-              v-if="matchPicks && matchPicks[fighter.name] && matchPicks[fighter.name].length < 10"
+              v-if="matchPicks && matchPicks[fighter.name]"
             >
               <span
                 v-for="(picker) in matchPicks[fighter.name]"
