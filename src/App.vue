@@ -1,6 +1,6 @@
 <template>
   <div id="app" ref="app" v-resize="ON_RESIZE">
-    <Navbar v-if="$root.store.User && $root.store.User.loggedIn"></Navbar>
+    <Navbar v-if="$route.name != 'Login'"></Navbar>
     <router-view></router-view>
     <div
       v-if="activeModal"
@@ -31,10 +31,6 @@ export default {
   },
   mounted: function() {
     this.checkClientInfo();
-
-    if (!this.$root.store.User.loggedIn && this.$route.path != "/login") {
-      this.$router.replace({ path: "/login" });
-    }
 
     this.$root.eventHub.$on("activeModal", modalName => {
       this.$root.store.activeModal = modalName;

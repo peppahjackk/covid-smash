@@ -11,12 +11,16 @@
       <label for="email">*Password</label>
       <input type="password" placeholder="password" v-model="form.password" required />
     </div>
+    <h5>*Required field</h5>
     <div class="auth-error-msg" v-if="this.error">
       <p>{{this.error}}</p>
     </div>
     <button type="submit" class="blue">Fight!</button>
-    <h5>*Required field</h5>
   </form>
+  <a class="underline m-t-md" @click="ON_FORGOT_PASSWORD">I forgot my password.</a>
+  <div class="auth-success-msg bg-green p-sm m-t-md" v-if="this.success">
+    <p>{{this.success}}</p>
+  </div>
 </div>
 </template>
 
@@ -30,7 +34,8 @@ export default {
         email: '',
         password: ''
       },
-      error: null
+      error: null,
+      success: null
     }
   },
   methods: {
@@ -45,6 +50,17 @@ export default {
       .catch(err => {
         this.error = err.message;
         console.log(err.message);
+      })
+    },
+    ON_FORGOT_PASSWORD() {
+      firebase
+      .auth()
+      .sendPasswordResetEmail(this.form.email)
+      .then(() => {
+        this.success = 'Email sent!'
+      })
+      .catch((err) => {
+        this.error = err;
       })
     }
   }

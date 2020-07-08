@@ -82,12 +82,6 @@ firebase.auth().onAuthStateChanged(user => {
       isAdmin: false,
     };
 
-    if (theApp.$route.path != '/login') {
-      theApp.$router.replace({
-        path: "/login"
-      });
-    }
-
     localStorage.setItem('auth', false);
   }
 });

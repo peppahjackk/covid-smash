@@ -168,8 +168,67 @@ a {
   padding: $spacing-lg;
 }
 
+.p-lr-xs {
+  padding-left: $spacing-xs;
+  padding-right: $spacing-xs;
+}
+
+.p-lr-sm {
+  padding-left: $spacing-sm;
+  padding-right: $spacing-sm;
+}
+
+.p-lr-md {
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+}
+
+.p-lr-lg {
+  padding-left: $spacing-lg;
+  padding-right: $spacing-lg;
+}
+
 .m-0 {
   margin: 0;
+}
+
+.m-t-sm {
+  margin-top: $spacing-sm;
+}
+
+.m-t-md {
+  margin-top: $spacing-md;
+}
+
+.m-t-lg {
+  margin-top: $spacing-lg;
+}
+
+.m-b-sm {
+  margin-bottom: $spacing-sm;
+}
+
+.m-b-md {
+  margin-bottom: $spacing-md;
+}
+
+.m-b-lg {
+  margin-bottom: $spacing-lg;
+}
+
+.m-lr-sm {
+  margin-left: $spacing-sm;
+  margin-right: $spacing-sm;
+}
+
+.m-lr-md {
+  margin-left: $spacing-md;
+  margin-right: $spacing-md;
+}
+
+.m-lr-lg {
+  margin-left: $spacing-lg;
+  margin-right: $spacing-lg;
 }
 
 .w-auto {

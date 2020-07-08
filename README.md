@@ -1,12 +1,11 @@
 # bros-picks
 
 ### TODO
-* rework submitted/pending selections to highlight over match
+* form error states
+* add past results view
+* add user results
+* lock submit if not logged in/bounce to login
 * shrink sidebar, add as mobile modal? or overlay icon to jump down
-* post pick right away then fetch. maybe add skipNextInterval when firing?
-* User auth
-* figure out way to show winnings
-* stream & chat embed
 
 ## Project setup
 ```
