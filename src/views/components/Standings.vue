@@ -45,11 +45,6 @@ export default {
   mixins: [utils],
   computed: {
     fighterList: function() {
-      console.log(this.$root.store.archive_data.matches);
-      for (let match in this.$root.store.archive_data.matches) {
-        console.log("match: ", match);
-      }
-
       return this.$root.store.archive_data.matches;
     }
   },

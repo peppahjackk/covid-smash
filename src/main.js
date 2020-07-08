@@ -6,7 +6,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 import styles from './styles/main.scss'; // eslint-disable-line no-unused-vars
-import utils from './mixins/utils';
+import utils from './scripts/utils';
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
@@ -82,6 +82,7 @@ firebase.auth().onAuthStateChanged(user => {
       isAdmin: false,
     };
 
+    eventHub.$emit('login_COMPLETE');
     localStorage.setItem('auth', false);
   }
 });
@@ -109,7 +110,7 @@ var theApp = new Vue({
     COLORS_NAME: ['red', 'blue', 'yellow', 'green'],
     store: {
       activeTab: 'n64',
-      activeView: 'home',
+      activeView: 'standings',
       newUser: false,
       User: {
         id: null,

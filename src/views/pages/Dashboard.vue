@@ -8,7 +8,7 @@
           </div>
           <div class="description b-yellow">
             <h2>CPU vs CPU Super Smash Bros Matches and more!</h2>
-            <h3>Starting Fridays @ 9:00pm&nbsp;EST (usually about 1 hour)</h3>
+            <h3>Starting quarantined Fridays @ 9:00pm&nbsp;EST (usually about 1 hour)</h3>
           </div>
           <div class="text-lockup">
             <svg
@@ -38,7 +38,11 @@
           <h2
             @click="$root.store.activeView = 'home'"
             :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
-          >Pick some Winners</h2>
+          >Pick Winners</h2>
+          <h2
+            @click="$root.store.activeView = 'standings'"
+            :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
+          >Standings</h2>
           <h2
             v-if="$root.store.future_data.matches"
             @click="$root.store.activeView = 'futures'"
@@ -49,10 +53,6 @@
             @click="$root.store.activeView = 'previews'"
             :class="[$root.store.activeView === 'previews' ? 'bg-baseAccent' : '']"
           >Match Previews</h2>
-          <h2
-            @click="$root.store.activeView = 'standings'"
-            :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
-          >Standings</h2>
         </div>
         <div class="matchups" v-show="$root.store.activeView === 'home'">
           <div v-if="$root.store.active_data.matches.length > 0">
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="m-lr-md m-b-md p-lg b-baseAccent" v-else>
-            <h3>Sorry, there are no matches schedules at this time!</h3>
+            <h3>Sorry, there are no matches scheduled at this time!</h3>
           </div>
           <button class="blue back-to-top" @click="toTop">Back to top</button>
         </div>
@@ -94,7 +94,6 @@
           >
             <Matchup :content="match" @pickSelected="selectPicks"></Matchup>
           </div>
-          <button class="blue back-to-top m-b-md" @click="toTop">Back to top</button>
         </div>
         <div class="standings" v-show="$root.store.activeView === 'standings'">
           <div class="matchup-wrapper">
@@ -113,7 +112,7 @@
             <Standings v-show="$root.store.activeTab === 'n64'" system="n64" game="super smash"></Standings>
             <Standings
               v-show="$root.store.activeTab === 'gamecube'"
-              system="gamecube"
+              system="GC"
               game="super smash"
             ></Standings>
           </div>
@@ -134,7 +133,8 @@
             </tr>
           </table>
           <!-- <p>Total picks: {{ pendingPicks.length }}</p> -->
-          <button @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
+          <button v-if="$root.store.User && $root.store.User.loggedIn" @click="submitPicks()" :class="[betsClosed ? 'disabled' : '']">Submit picks!</button>
+          <button v-else @click="$router.push({name: 'Login'})" class="yellow">Login to pick</button>
           <h4 class="p-sm">Text Rusty with technical issues, or about his favorite soup.</h4>
         </div>
         <div class="sidebar-picks-container">

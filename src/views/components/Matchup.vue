@@ -123,7 +123,6 @@ export default {
   mounted() {
     this.checkCurrentPick();
 
-    console.log("mounted match: ", this.content.match_id);
     this.$root.eventHub.$on("fetchMatches_COMPLETE", () => {
       this.checkCurrentPick();
     });

@@ -63,13 +63,10 @@ export default {
     fetchMatches: function() {
       if (this.fetching) return;
       this.fetching = true;
-      console.log("Fetching Data...");
       // this.getData_FAKE(FAKE_DATA.matches).then(results => {
         this.getMatches().then(results => {
-        console.log("Getmatches: ", results);
         // this.getData_FAKE(FAKE_DATA.picks).then(pickResults => {
           this.fetchPicks(results).then(pickResults => {
-          console.log("FetchPicks: ", pickResults);
           let matchPicks = {};
           let userPicks = [];
           let users = {};
@@ -156,9 +153,9 @@ export default {
           if (this.initialLoad) {
             this.initialLoad = false;
 
-            // if (!this.isAdmin && this.$root.store.active_data.matches.length <= 0) {
-            //   this.$root.store.activeView = 'standings';
-            // }
+            if (!this.isAdmin && this.$root.store.active_data.matches.length > 0) {
+              this.$root.store.activeView = 'home';
+            }
           }
 
           this.fetching = false;
@@ -295,7 +292,6 @@ export default {
       this.checkClientInfo();
     },
     checkClientInfo() {
-      console.log("checkClient: ", this.$root.store.clientInfo.isDesktop);
       let box = this.$refs.app.getBoundingClientRect();
 
       if (box.width > 992 && this.$root.store.clientInfo.isDesktop != true) {
