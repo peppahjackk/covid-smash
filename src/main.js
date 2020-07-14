@@ -110,7 +110,7 @@ var theApp = new Vue({
     COLORS_NAME: ['red', 'blue', 'yellow', 'green'],
     store: {
       activeTab: 'n64',
-      activeView: 'standings',
+      activeView: 'results',
       newUser: false,
       User: {
         id: null,
@@ -135,6 +135,7 @@ var theApp = new Vue({
       },
       archive_data: {
         matches: [],
+        ids: [],
         matchResults: {}
       },
       pendingPicks: {},

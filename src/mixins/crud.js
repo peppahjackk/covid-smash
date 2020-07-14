@@ -70,7 +70,7 @@ const crud = {
         console.error(error)
       })
     },
-    getMatches(archive = false) {
+    getMatches(archive = false, page = null, numPerPage = 10) {
       let sqlConfig = {
         table: 'matches',
         sort: 'match_id ASC',
@@ -80,6 +80,10 @@ const crud = {
       if (archive) {
         sqlConfig.filter = 'hidden=1';
         sqlConfig.sort = 'match_id DESC';
+      }
+
+      if (page != null) {
+        sqlConfig.limit = `${page * numPerPage},${numPerPage}`;
       }
 
       return axios.post('php/crud.php', sqlConfig)

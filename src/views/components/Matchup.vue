@@ -9,7 +9,7 @@
     </div>
     <div class="matchup-grid">
       <div class="matchup-head fighter-header">
-        <h4 v-if="$root.store.clientInfo.isDesktop">Action</h4>
+        <h4 v-if="$root.store.clientInfo.isDesktop">{{ content.complete ? 'Placement' : 'Action' }}</h4>
         <h4>Fighter</h4>
         <h4>Picks</h4>
         <h4>Public %</h4>
@@ -20,7 +20,7 @@
         class="fighter-row"
         :class="[checkWinner(fighter.name), pendingPick === fighter.name ? 'pending' : '', currentPick === fighter.name ? 'current' : '']"
       >
-        <div class="pick">
+        <div class="pick" v-if="!content.complete">
           <button
             @click="addBet(fighter.name);"
             :class="[status === 'Open for picks' ? '' : 'disabled',
@@ -28,7 +28,10 @@
             currentPick === fighter.name ? 'chosen' : '',
             matchPicks != null && !matchPicks[fighter.name] ? 'unpicked' : '',
             $root.COLORS_NAME[i % $root.COLORS_NAME.length]]"
-          >{{ !$root.store.clientInfo.isDesktop && (pendingPick === fighter.name || currentPick === fighter.name) ? 'X' : $root.store.clientInfo.isDesktop === true ? 'Pick' : fighter.name }}</button>
+          >{{ $root.store.clientInfo.isDesktop ? 'Pick' : fighter.name }}</button>
+        </div>
+        <div class="result" :style="{ backgroundColor: [parseInt(fighter.placement) === 1 ? $root.COLORS[i % $root.COLORS.length]: '']}" v-else>
+          <h2 :class="[i === 2 && parseInt(fighter.placement) === 1 ? 'c-baseAccent' : '']">{{ fighter.placement + getPlacementString(fighter.placement) }}<span v-if="!$root.store.clientInfo.isDesktop">: {{ fighter.name }}</span></h2>
         </div>
         <div v-if="$root.store.clientInfo.isDesktop" class="fighter">
           <h3>{{ fighter.name }}</h3>
@@ -77,7 +80,8 @@ export default {
   props: {
     betsOpen: Number,
     content: Object,
-    fightNumber: Number
+    fightNumber: Number,
+    archive: Boolean
   },
   mixins: [crud],
   data() {
@@ -97,12 +101,22 @@ export default {
       }
     },
     matchPicks() {
-      if (this.$root.store.active_data.pickNames) {
-        return this.$root.store.active_data.pickNames[
-          "match-" + this.content.match_id
-        ];
+      if (this.archive) {
+        if (this.$root.store.archive_data.pickNames) {
+          return this.$root.store.archive_data.pickNames[
+            "match-" + this.content.match_id
+          ];
+        } else {
+          return null;
+        }
       } else {
-        return null;
+        if (this.$root.store.active_data.pickNames) {
+          return this.$root.store.active_data.pickNames[
+            "match-" + this.content.match_id
+          ];
+        } else {
+          return null;
+        }
       }
     },
     totalPicks() {
@@ -158,6 +172,18 @@ export default {
     calcPercent(picks) {
       if (picks) {
         return ((picks.length / this.totalPicks) * 100).toFixed(0);
+      }
+    },
+    getPlacementString(placement) {
+      switch (placement % 10) {
+        case 1:
+          return 'st'
+        case 2:
+          return 'nd'
+        case 3:
+          return 'rd'
+        default:
+          return 'th'
       }
     },
     printFirstName(name) {

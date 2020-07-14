@@ -143,7 +143,7 @@ export default {
           this.$root.store.active_data.users = users;
           this.$root.store.User.picks = userPicks;
 
-          let filteredPicks = this.filterPicks(pickResults);
+          let filteredPicks = this.filterPicks(pickResults); 
 
           this.$root.store.active_data.picks = filteredPicks.active;
           this.$root.store.future_data.picks = filteredPicks.future;
@@ -168,11 +168,37 @@ export default {
       });
     },
     fetchArchive: function() {
-      this.getMatches(true).then(results => {
+      this.getMatches(true, 0).then(results => {
         this.fetchPicks(results).then(pickResults => {
+          let matchPicks = {};
+
           this.$root.store.archive_data.matches = results;
-          // this.$root.store.archive_data.matchResults = this.filterMatchResults(results);
-          this.$root.store.archive_data.picks = this.filterPicks(pickResults);
+
+          this.$root.store.archive_data.ids = results.map((result)=> {
+            return parseInt(result.match_id)
+          })
+
+          if (typeof pickResults != "string") {
+            for (let i = 0; i < pickResults.length; i++) {
+              let pick = pickResults[i];
+
+              let matchName = "match-" + pick.match_id;
+
+              if (!matchPicks[matchName]) {
+                matchPicks[matchName] = {};
+              }
+
+              if (!matchPicks[matchName][pick.fighter]) {
+                matchPicks[matchName][pick.fighter] = [];
+              }
+
+              matchPicks[matchName][pick.fighter].push(pick.name);
+
+            }
+          }
+
+          this.$root.store.archive_data.pickNames = matchPicks;
+          this.$root.store.archive_data.picks = this.filterPicksArchive(pickResults);
         });
       });
     },
@@ -219,12 +245,27 @@ export default {
         if (this.$root.store.future_data.ids.indexOf(parseInt(pick.match_id)) >= 0) {
           matchList = pickerList.future;
         }
-        
+
         if (!matchList["picker-" + pick.user_id]) {
           matchList["picker-" + pick.user_id] = [];
         }
 
+        // Since matchList and pickerList are pointed to the same array, this will update pickerList (which is returned)
         matchList["picker-" + pick.user_id].push(pick);
+      }
+
+      return pickerList;
+    },
+    filterPicksArchive: function(picks) {
+      let pickerList = {};
+
+      for (let pick of picks) {
+        if (!pickerList["picker-" + pick.user_id]) {
+          pickerList["picker-" + pick.user_id] = [];
+        }
+
+        // Since matchList and pickerList are pointed to the same array, this will update pickerList (which is returned)
+        pickerList["picker-" + pick.user_id].push(pick);
       }
 
       return pickerList;
@@ -288,7 +329,6 @@ export default {
       return matchResults;
     },
     ON_RESIZE() {
-      console.log("resizing");
       this.checkClientInfo();
     },
     checkClientInfo() {

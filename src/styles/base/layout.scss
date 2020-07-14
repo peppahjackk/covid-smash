@@ -170,6 +170,12 @@ section {
   margin-top: -3px;
 }
 
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .auth-error-msg {
   padding: $spacing-sm;
   background: $red;

@@ -40,6 +40,10 @@
             :class="[$root.store.activeView === 'home' ? 'bg-baseAccent' : '']"
           >Pick Winners</h2>
           <h2
+            @click="$root.store.activeView = 'results'"
+            :class="[$root.store.activeView === 'results' ? 'bg-baseAccent' : '']"
+          >Results</h2>
+          <h2
             @click="$root.store.activeView = 'standings'"
             :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
           >Standings</h2>
@@ -93,6 +97,29 @@
             :key="match.match_id"
           >
             <Matchup :content="match" @pickSelected="selectPicks"></Matchup>
+          </div>
+        </div>
+        <div class="results" v-show="$root.store.activeView === 'results'">
+          <div class="matchup-wrapper">
+            <div class="inner-tab-wrapper pick-header">
+              <h2
+                @click="$root.store.activeTab = 'n64'"
+                :class="[$root.store.activeTab === 'n64' ? 'bg-baseAccent' : '']"
+                class="underline inner-tab-selection"
+              >N64</h2>
+              <h2
+                @click="$root.store.activeTab = 'gamecube'"
+                :class="[$root.store.activeTab === 'gamecube' ? 'bg-baseAccent' : '']"
+                class="underline inner-tab-selection"
+              >Gamecube</h2>
+            </div>
+            <div
+              class="matchup-wrapper"
+              v-for="(match, i) in $root.store.archive_data.matches"
+              :key="match.match_id"
+            >
+              <Matchup archive :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
+            </div>
           </div>
         </div>
         <div class="standings" v-show="$root.store.activeView === 'standings'">
