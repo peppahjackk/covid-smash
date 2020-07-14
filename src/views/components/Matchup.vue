@@ -1,7 +1,8 @@
 <template>
   <div class="matchup-container" :class="[status]">
     <div class="table-header">
-      <h3 v-if="fightNumber" class="fight-label">Fight #{{fightNumber}}</h3>
+      <h3 v-if="!archive && fightNumber" class="fight-label">Fight #{{fightNumber}}</h3>
+      <h3 v-else class="fight-label">{{ content.timestamp.split(' ')[0] }}</h3>
       <h3 v-if="content.system" class="bg-baseAccent">{{ content.system }}: {{ content.game }}</h3>
       <h3 v-if="content.match_type" class="bg-yellow c-base">{{ content.match_type }}</h3>
       <h3 v-if="content.stage" class="bg-baseAccent2">@ {{ content.stage }}</h3>
@@ -92,10 +93,10 @@ export default {
   },
   computed: {
     status() {
-      if (this.content.in_progress === 1) {
-        return "IN_PROGRESS";
-      } else if (this.content.complete === 1) {
+      if (this.content.complete === 1) {
         return "COMPLETE";
+      } else if (this.content.in_progress === 1) {
+        return "IN_PROGRESS";
       } else {
         return "Open for picks";
       }

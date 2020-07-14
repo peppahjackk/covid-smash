@@ -111,6 +111,7 @@ var theApp = new Vue({
     store: {
       activeTab: 'n64',
       activeView: 'results',
+      activeArchivePage: 0,
       newUser: false,
       User: {
         id: null,

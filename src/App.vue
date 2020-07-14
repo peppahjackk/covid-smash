@@ -55,6 +55,10 @@ export default {
       this.fetchMatches();
     });
 
+    this.$root.eventHub.$on("fetchArchive", () => {
+      this.fetchArchive();
+    });
+
     this.$root.eventHub.$on("updateUser", () => {
       this.updateUser();
     });
@@ -168,7 +172,7 @@ export default {
       });
     },
     fetchArchive: function() {
-      this.getMatches(true, 0).then(results => {
+      this.getMatches(true, this.$root.store.activeArchivePage).then(results => {
         this.fetchPicks(results).then(pickResults => {
           let matchPicks = {};
 

@@ -111,6 +111,14 @@ button {
       background-color: $yellowDk;
     }
   }
+
+  &.base-accent {
+    background: $baseAccent2;
+
+    &::before {
+      background-color: $baseAccent;
+    }
+  }
 }
 
 .modal {

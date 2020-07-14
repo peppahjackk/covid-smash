@@ -364,6 +364,25 @@ td {
   }
 }
 
+.page-selection {
+  display: flex;
+  padding: 0 $spacing-lg;
+  justify-content: center;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.page-selector-container {
+  padding: $spacing-sm;
+
+  &.active {
+    background: $blue;
+  }
+}
+
 // .to-win {
 //   flex-basis: 40px;
 // }

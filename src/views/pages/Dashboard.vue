@@ -44,6 +44,7 @@
             :class="[$root.store.activeView === 'results' ? 'bg-baseAccent' : '']"
           >Results</h2>
           <h2
+            v-if="false"
             @click="$root.store.activeView = 'standings'"
             :class="[$root.store.activeView === 'standings' ? 'bg-baseAccent' : '']"
           >Standings</h2>
@@ -100,25 +101,26 @@
           </div>
         </div>
         <div class="results" v-show="$root.store.activeView === 'results'">
-          <div class="matchup-wrapper">
-            <div class="inner-tab-wrapper pick-header">
-              <h2
-                @click="$root.store.activeTab = 'n64'"
-                :class="[$root.store.activeTab === 'n64' ? 'bg-baseAccent' : '']"
-                class="underline inner-tab-selection"
-              >N64</h2>
-              <h2
-                @click="$root.store.activeTab = 'gamecube'"
-                :class="[$root.store.activeTab === 'gamecube' ? 'bg-baseAccent' : '']"
-                class="underline inner-tab-selection"
-              >Gamecube</h2>
-            </div>
+          <div
+            class="matchup-wrapper"
+            v-for="(match, i) in $root.store.archive_data.matches"
+            :key="match.match_id"
+          >
+            <Matchup archive :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
+          </div>
+          <div class="page-selection" v-if="$root.store.archive_data.matches.length">
+            <h3>Pages:</h3>
             <div
-              class="matchup-wrapper"
-              v-for="(match, i) in $root.store.archive_data.matches"
-              :key="match.match_id"
+              class="page-selector-container"
+              v-for="(i) in numMatches"
+              :key="i"
             >
-              <Matchup archive :content="match" :fightNumber="i + 1" @pickSelected="selectPicks"></Matchup>
+              <button 
+                :class="[ i === $root.store.activeArchivePage ? 'green' : 'base-accent' ]"
+                class="button-small"
+                @click="onPageSelection(i)">
+                {{ i + 1 }}
+              </button>
             </div>
           </div>
         </div>
@@ -205,6 +207,9 @@ export default {
       } else {
         return 0;
       }
+    },
+    numMatches: function() {
+      return [0,1,2,3,4,5,6,7,8,9]
     }
   },
   mixins: [crud],
@@ -222,6 +227,10 @@ export default {
       this.$forceUpdate();
       // let vnmName = this.$root.store.User.vnm;
       // this.$root.store.pendingPicks[matchName].vnm = vnmName;
+    },
+    onPageSelection: function(i) {
+      this.$root.store.activeArchivePage = i;
+      this.$root.eventHub.$emit('fetchArchive');
     },
     submitPicks: function() {
       for (let pick in this.$root.store.pendingPicks) {
