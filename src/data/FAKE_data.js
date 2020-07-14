@@ -5,15 +5,21 @@ module.exports = {
                 "stage": "Random",
                 "fighters": [{
                     "name": "ness",
-                    "placement": null
+                    "placement": 3
                 }, {
                     "name": "link",
-                    "placement": null
+                    "placement": 2
+                }, {
+                    "name": "mario",
+                    "placement": 1
+                }, {
+                    "name": "pikachu",
+                    "placement": 4
                 }],
                 "in_progress": null,
                 "timestamp": "2020-05-28 16:04:50",
                 "winning_fighter": null,
-                "complete": 0,
+                "complete": 1,
                 "hidden": "0",
                 "match_type": "also special",
                 "system": "N64",
@@ -22,21 +28,24 @@ module.exports = {
                 "show_in_standings": 1
             }, {
                 "match_id": "207",
-                "stage": "hyril",
+                "stage": "hyrule",
                 "fighters": [{
-                    "name": "ted",
-                    "placement": null
+                    "name": "ness",
+                    "placement": 4
                 }, {
-                    "name": "rusty",
-                    "placement": null
+                    "name": "link",
+                    "placement": 1
                 }, {
-                    "name": "fd",
-                    "placement": null
+                    "name": "mario",
+                    "placement": 2
+                }, {
+                    "name": "pikachu",
+                    "placement": 3
                 }],
                 "in_progress": null,
                 "timestamp": "2020-05-29 11:50:53",
                 "winning_fighter": null,
-                "complete": 0,
+                "complete": 1,
                 "hidden": "0",
                 "match_type": "sss",
                 "system": "N64",
@@ -118,7 +127,7 @@ module.exports = {
         }, {
             "name": "Ted",
             "venmo": "",
-            "fighter": "ted",
+            "fighter": "pikachu",
             "pick_value": "0",
             "timestamp": "2020-05-28 16:34:07",
             "match_id": "207",
@@ -130,7 +139,7 @@ module.exports = {
         }, {
             "name": "Theo",
             "venmo": "",
-            "fighter": "rusty",
+            "fighter": "ness",
             "pick_value": "0",
             "timestamp": "2020-05-28 20:44:49",
             "match_id": "207",
@@ -166,7 +175,7 @@ module.exports = {
         }, {
             "name": "James",
             "venmo": "",
-            "fighter": "ted",
+            "fighter": "pikachu",
             "pick_value": "0",
             "timestamp": "2020-05-28 21:41:09",
             "match_id": "207",
@@ -190,7 +199,7 @@ module.exports = {
         }, {
             "name": "iskahbibblebaby",
             "venmo": "",
-            "fighter": "ted",
+            "fighter": "ness",
             "pick_value": "0",
             "timestamp": "2020-05-29 01:01:01",
             "match_id": "207",
